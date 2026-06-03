@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog – App Icon Studio</title>
+  <meta name="description" content="Tips, guides, and best practices for designing iOS and Android app icons. Learn about icon sizes, design principles, and export workflows." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/website/styles.css" />
+  <style>
+    .blog-hero {
+      padding: 64px 24px 48px;
+      text-align: center;
+    }
+    .blog-hero .eyebrow {
+      display: inline-block;
+      background: #f0f4ff;
+      color: #5a78e8;
+      border-radius: 999px;
+      padding: 4px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+    .blog-hero h1 {
+      font-size: 38px;
+      font-weight: 700;
+      color: #1a2130;
+      letter-spacing: -1px;
+      margin-bottom: 14px;
+    }
+    .blog-hero p {
+      font-size: 16px;
+      color: #6b7280;
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 24px 72px;
+    }
+
+    .blog-card {
+      background: #fff;
+      border: 1px solid #e8ecf4;
+      border-radius: 14px;
+      overflow: hidden;
+      transition: box-shadow .2s, transform .2s;
+      text-decoration: none;
+      display: block;
+    }
+    .blog-card:hover {
+      box-shadow: 0 8px 32px rgba(108,143,245,.14);
+      transform: translateY(-2px);
+    }
+    .blog-card-thumb {
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+    }
+    .blog-card-body { padding: 20px 22px 24px; }
+    .blog-card-tag {
+      display: inline-block;
+      background: #f0f4ff;
+      color: #5a78e8;
+      border-radius: 999px;
+      padding: 3px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      margin-bottom: 10px;
+    }
+    .blog-card h2 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1a2130;
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+    .blog-card p {
+      font-size: 13px;
+      color: #6b7280;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    .blog-card-meta {
+      font-size: 12px;
+      color: #9ca3af;
+    }
+  </style>
+</head>
+<body class="theme-public">
+<div class="site-shell">
+  <header class="workspace-header">
+    <div class="brand-lockup">
+      <img class="brand-mark brand-mark-img" src="/website/assets/icons/Gemini_Generated_Image_wc0y3fwc0y3fwc0y-removebg-preview.png" alt="App Icon Studio logo" width="100" height="100" />
+      <div><h1><a href="/website/index.html" style="text-decoration:none;color:inherit;">App Icon Studio</a></h1></div>
+    </div>
+  </header>
+
+  <main>
+    <div class="blog-hero">
+      <span class="eyebrow">Blog</span>
+      <h1>Icon design tips &amp; guides</h1>
+      <p>Everything you need to design, size, and ship great app icons for iOS and Android.</p>
+    </div>
+
+    <div class="blog-grid">
+      <a href="/website/blog-ios-icon-sizes.html" class="blog-card">
+        <div class="blog-card-thumb" style="background: linear-gradient(135deg, #e8f0ff, #d4e0ff);">📐</div>
+        <div class="blog-card-body">
+          <span class="blog-card-tag">iOS</span>
+          <h2>Complete guide to iOS app icon sizes in 2026</h2>
+          <p>Every size Apple requires, from the home screen to the App Store listing — with a downloadable size reference.</p>
+          <div class="blog-card-meta">June 2026 · 5 min read</div>
+        </div>
+      </a>
+
+      <a href="/website/blog-android-icon-guide.html" class="blog-card">
+        <div class="blog-card-thumb" style="background: linear-gradient(135deg, #e8fff0, #d4f5e0);">🤖</div>
+        <div class="blog-card-body">
+          <span class="blog-card-tag">Android</span>
+          <h2>Android adaptive icons: a practical design guide</h2>
+          <p>How to design icons that look great across all Android launchers, shapes, and density buckets.</p>
+          <div class="blog-card-meta">June 2026 · 6 min read</div>
+        </div>
+      </a>
+
+      <a href="/website/blog-app-icon-design-tips.html" class="blog-card">
+        <div class="blog-card-thumb" style="background: linear-gradient(135deg, #fff4e8, #fde8cc);">🎨</div>
+        <div class="blog-card-body">
+          <span class="blog-card-tag">Design</span>
+          <h2>5 app icon design tips that make your app stand out</h2>
+          <p>Simple principles used by top apps on the App Store to create icons that are memorable and tap-worthy.</p>
+          <div class="blog-card-meta">June 2026 · 4 min read</div>
+        </div>
+      </a>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Pilach. @Developed by Rosdeb Koch</p>
+    <div class="site-footer-links">
+      <a href="/about">About</a>
+      <a href="/website/index.html">Generator</a>
+      <a href="/privacy-policy">Privacy Policy</a>
+      <a href="/sitemap.xml">Sitemap</a>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

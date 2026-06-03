@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Android Adaptive Icons: A Practical Design Guide – App Icon Studio</title>
+  <meta name="description" content="How to design Android app icons that look great across all launchers and density buckets. Covers adaptive icons, mipmap sizes, and Google Play requirements." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/website/styles.css" />
+  <style>
+    .article-wrap { max-width: 720px; margin: 0 auto; padding: 48px 24px 80px; }
+    .article-back { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: #6b7280; text-decoration: none; margin-bottom: 32px; }
+    .article-back:hover { color: #6c8ff5; }
+    .article-tag { display: inline-block; background: #edfff4; color: #22a34a; border-radius: 999px; padding: 4px 12px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 16px; }
+    .article-wrap h1 { font-size: 36px; font-weight: 700; color: #1a2130; line-height: 1.2; letter-spacing: -.8px; margin-bottom: 16px; }
+    .article-meta { font-size: 13px; color: #9ca3af; margin-bottom: 36px; padding-bottom: 36px; border-bottom: 1px solid #e8ecf4; }
+    .article-wrap h2 { font-size: 22px; font-weight: 700; color: #1a2130; margin: 40px 0 14px; letter-spacing: -.4px; }
+    .article-wrap h3 { font-size: 17px; font-weight: 600; color: #1a2130; margin: 28px 0 10px; }
+    .article-wrap p { font-size: 15px; color: #374151; line-height: 1.8; margin-bottom: 18px; }
+    .article-wrap ul { margin: 0 0 18px 20px; }
+    .article-wrap ul li { font-size: 15px; color: #374151; line-height: 1.8; margin-bottom: 6px; }
+    .callout { background: #edfff4; border-left: 3px solid #22a34a; border-radius: 0 8px 8px 0; padding: 16px 18px; margin: 24px 0; font-size: 14px; color: #374151; line-height: 1.7; }
+    .callout strong { color: #22a34a; }
+    .size-table { width: 100%; border-collapse: collapse; margin: 24px 0 32px; font-size: 14px; }
+    .size-table th { background: #f5f7fb; color: #1a2130; font-weight: 600; text-align: left; padding: 11px 14px; border-bottom: 2px solid #e0e4ea; }
+    .size-table td { padding: 10px 14px; border-bottom: 1px solid #e8ecf4; color: #374151; }
+    .size-table tr:last-child td { border-bottom: none; }
+    .size-table code { background: #edfff4; color: #22a34a; border-radius: 4px; padding: 2px 6px; font-size: 12px; }
+    .article-cta { background: linear-gradient(135deg, #22a34a, #3dd68c); border-radius: 14px; padding: 36px 28px; text-align: center; margin-top: 48px; }
+    .article-cta h3 { color: #fff; font-size: 22px; font-weight: 700; margin-bottom: 10px; }
+    .article-cta p { color: rgba(255,255,255,.85); margin-bottom: 20px; }
+    .btn-white { background: #fff; color: #22a34a; border: none; border-radius: 8px; padding: 11px 26px; font-size: 14px; font-weight: 700; text-decoration: none; }
+  </style>
+</head>
+<body class="theme-public">
+<div class="site-shell">
+  <header class="workspace-header">
+    <div class="brand-lockup">
+      <img class="brand-mark brand-mark-img" src="/website/assets/icons/Gemini_Generated_Image_wc0y3fwc0y3fwc0y-removebg-preview.png" alt="App Icon Studio logo" width="100" height="100" />
+      <div><h1><a href="/website/index.html" style="text-decoration:none;color:inherit;">App Icon Studio</a></h1></div>
+    </div>
+  </header>
+  <main>
+    <div class="article-wrap">
+      <a href="/website/blog-index.html" class="article-back">← Back to blog</a>
+      <span class="article-tag">Android</span>
+      <h1>Android adaptive icons: a practical design guide</h1>
+      <div class="article-meta">June 2026 · 6 min read · App Icon Studio</div>
+
+      <p>Android icon design is more complex than iOS because icons must look good across dozens of different launcher apps, each of which may apply a different shape mask — circle, squircle, rounded square, or even a teardrop. This is where Android's <strong>adaptive icon</strong> system comes in.</p>
+      <p>This guide explains how Android icons work, what sizes you need for each density bucket, and how to export them correctly.</p>
+
+      <h2>Understanding Android density buckets</h2>
+      <p>Android devices span a massive range of screen densities. Rather than ship a single image that gets scaled at runtime, Android uses density-specific resource folders called <strong>mipmap buckets</strong>. Each bucket contains an icon sized for a specific screen density range.</p>
+
+      <table class="size-table">
+        <thead>
+          <tr><th>Folder</th><th>Density</th><th>Icon size (px)</th><th>Used on</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>mipmap-mdpi</code></td><td>160 dpi</td><td>48×48</td><td>Low-density devices</td></tr>
+          <tr><td><code>mipmap-hdpi</code></td><td>240 dpi</td><td>72×72</td><td>Older mid-range phones</td></tr>
+          <tr><td><code>mipmap-xhdpi</code></td><td>320 dpi</td><td>96×96</td><td>Mid-range phones</td></tr>
+          <tr><td><code>mipmap-xxhdpi</code></td><td>480 dpi</td><td>144×144</td><td>Most modern phones</td></tr>
+          <tr><td><code>mipmap-xxxhdpi</code></td><td>640 dpi</td><td>192×192</td><td>High-end flagships</td></tr>
+          <tr><td><strong>Google Play</strong></td><td>—</td><td><strong>512×512</strong></td><td>Store listing</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout">
+        <strong>Important:</strong> Always include all five mipmap sizes. Android will pick the closest match to the device's actual screen density. Missing a bucket causes the system to upscale a smaller image, resulting in a blurry icon.
+      </div>
+
+      <h2>What are adaptive icons?</h2>
+      <p>Introduced in Android 8.0 (API 26), adaptive icons split the icon into two layers: a <strong>foreground</strong> layer containing your logo, and a <strong>background</strong> layer with your chosen color or pattern. The launcher then applies its own shape mask to the combined result.</p>
+      <p>This means your icon automatically becomes a circle on a Samsung launcher, a squircle on Pixel, and a rounded square on Xiaomi — all from the same source assets. You don't need to create separate versions for each shape.</p>
+
+      <h3>Adaptive icon canvas size</h3>
+      <p>The full adaptive icon canvas is <strong>108×108dp</strong>. The center <strong>72×72dp</strong> is the "safe zone" — the area guaranteed to be visible regardless of the mask shape. Keep all important visual elements within this safe zone. The outer ring (18dp on each side) is used for parallax and motion effects by some launchers.</p>
+
+      <h2>Google Play Store icon requirements</h2>
+      <p>The Play Store listing uses a separate 512×512px icon — this is not the same as your in-app icon. Requirements:</p>
+      <ul>
+        <li>Exactly 512×512 pixels</li>
+        <li>32-bit PNG with alpha channel</li>
+        <li>Maximum file size: 1024KB</li>
+        <li>No transparency in the final visible area (the store crops to a rounded square)</li>
+        <li>Must not include screenshots, promotional text, or device frames</li>
+      </ul>
+
+      <h2>Design tips for Android icons</h2>
+      <ul>
+        <li><strong>Design for the safe zone.</strong> Keep your logo and key visual elements within the central 72dp of the 108dp canvas.</li>
+        <li><strong>Use a solid background layer.</strong> Transparent backgrounds on the background layer will show as black on some launchers.</li>
+        <li><strong>Test multiple shapes.</strong> Always preview your icon in at least circle, squircle, and rounded-square masks before shipping.</li>
+        <li><strong>Avoid thin lines.</strong> Detail that looks fine at 192px becomes invisible at 48px. Use bold, thick shapes.</li>
+        <li><strong>Consistent style with iOS.</strong> If you're shipping on both platforms, keep color and shape consistent so users recognize the brand across stores.</li>
+      </ul>
+
+      <h2>Exporting Android icons with App Icon Studio</h2>
+      <p>App Icon Studio generates all six Android outputs from your single source image:</p>
+      <ul>
+        <li>Upload your image (1024×1024 recommended)</li>
+        <li>Adjust padding so your logo sits within the safe zone</li>
+        <li>Check the Android checkbox in the export panel</li>
+        <li>Click <strong>Generate Export Plan</strong></li>
+        <li>Unzip and copy each <code>mipmap-*</code> folder into your Android project's <code>app/src/main/res/</code> directory</li>
+      </ul>
+      <p>The Google Play 512×512 icon is also included — just upload it directly in the Play Console under Store listing → App icon.</p>
+
+      <div class="article-cta">
+        <h3>Generate your Android icon pack</h3>
+        <p>All 6 density sizes + Google Play icon — free, no sign-up required.</p>
+        <a href="/website/index.html#editor" class="btn-white">Open App Icon Studio</a>
+      </div>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <p>&copy; 2026 Pilach. @Developed by Rosdeb Koch</p>
+    <div class="site-footer-links">
+      <a href="/about">About</a>
+      <a href="/website/blog-index.html">Blog</a>
+      <a href="/privacy-policy">Privacy Policy</a>
+      <a href="/sitemap.xml">Sitemap</a>
+    </div>
+  </footer>
+</div>
+</body>
+</html>
