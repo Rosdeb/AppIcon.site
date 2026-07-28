@@ -5,6 +5,9 @@ const maxIconTextLength = 3;
 const maxUploadSizeBytes = 10 * 1024 * 1024;
 const maxNormalizedAssetDimension = 2048;
 const trimAlphaThreshold = 8;
+const backgroundRemovalEdgeStride = 4;
+const backgroundRemovalMinOpaqueEdgeSamples = 24;
+const backgroundRemovalMinRemovedPixels = 48;
 const sessionTimeoutMs = 30 * 60 * 1000;
 const minimumExportLoadingMs = 0;
 
@@ -40,10 +43,14 @@ const state = {
   assetDataUrl: null,
   assetName: "",
   assetMimeType: "",
+  originalAssetDataUrl: null,
+  originalAssetMimeType: "",
+  backgroundRemoved: false,
   blendWhiteBackground: false,
   lastExportFileName: "",
   lastExportAt: "",
-  isExporting: false
+  isExporting: false,
+  isRemovingBackground: false
 };
 
 const EXPORT_COUNTS = {
@@ -97,6 +104,7 @@ const elements = {
   assetUpload: document.querySelector("#asset-upload"),
   uploadMeta: document.querySelector("#upload-meta"),
   blendBgCheckbox: document.querySelector("#blend-bg-checkbox"),
+  removeBgButton: document.querySelector("#remove-bg-button"),
   clearUploadButton: document.querySelector("#clear-upload-button"),
   editorIcon: document.querySelector("#editor-icon"),
   editorIconText: document.querySelector("#editor-icon-text"),
@@ -172,6 +180,7 @@ function buildExportSummary(fileName, platforms) {
     `Shape: ${describeShape(state.shape)}`,
     `Background: ${state.backgroundColor.toUpperCase()}`,
     `Foreground: ${state.foregroundColor.toUpperCase()}`,
+    `Background removed: ${state.backgroundRemoved ? "Yes" : "No"}`,
     `Zoom: ${Math.round(state.zoom * 100)}%`,
     `Padding: ${state.padding}px`,
     `Source asset: ${state.assetName || "Text-only icon"}`,
@@ -589,6 +598,174 @@ function inferMimeTypeFromDataUrl(source, fallback = "image/png") {
   return match?.[1] || fallback;
 }
 
+function getPixelIndex(width, x, y) {
+  return ((y * width) + x) * 4;
+}
+
+function colorDistanceSq(a, b) {
+  const dr = a.r - b.r;
+  const dg = a.g - b.g;
+  const db = a.b - b.b;
+
+  return (dr * dr) + (dg * dg) + (db * db);
+}
+
+function quantizeColorChannel(value, step = 24) {
+  return Math.max(0, Math.min(255, Math.round(value / step) * step));
+}
+
+function sampleDominantEdgeBackground(data, width, height) {
+  const buckets = new Map();
+  const stride = Math.max(1, backgroundRemovalEdgeStride);
+
+  function pushSample(x, y) {
+    const index = getPixelIndex(width, x, y);
+    const alpha = data[index + 3];
+
+    if (alpha < trimAlphaThreshold) {
+      return;
+    }
+
+    const r = data[index];
+    const g = data[index + 1];
+    const b = data[index + 2];
+    const key = [
+      quantizeColorChannel(r),
+      quantizeColorChannel(g),
+      quantizeColorChannel(b)
+    ].join("-");
+    const bucket = buckets.get(key) || {
+      count: 0,
+      r: 0,
+      g: 0,
+      b: 0
+    };
+
+    bucket.count += 1;
+    bucket.r += r;
+    bucket.g += g;
+    bucket.b += b;
+    buckets.set(key, bucket);
+  }
+
+  for (let x = 0; x < width; x += stride) {
+    pushSample(x, 0);
+    pushSample(x, height - 1);
+  }
+
+  for (let y = stride; y < height - 1; y += stride) {
+    pushSample(0, y);
+    pushSample(width - 1, y);
+  }
+
+  let bestBucket = null;
+
+  buckets.forEach((bucket) => {
+    if (!bestBucket || bucket.count > bestBucket.count) {
+      bestBucket = bucket;
+    }
+  });
+
+  if (!bestBucket || bestBucket.count < backgroundRemovalMinOpaqueEdgeSamples) {
+    return null;
+  }
+
+  return {
+    r: Math.round(bestBucket.r / bestBucket.count),
+    g: Math.round(bestBucket.g / bestBucket.count),
+    b: Math.round(bestBucket.b / bestBucket.count)
+  };
+}
+
+function removeConnectedBackground(context, width, height) {
+  const imageData = context.getImageData(0, 0, width, height);
+  const { data } = imageData;
+  const backgroundColor = sampleDominantEdgeBackground(data, width, height);
+
+  if (!backgroundColor) {
+    return { changed: false, removedPixels: 0 };
+  }
+
+  const toleranceSq = 46 * 46;
+  const visited = new Uint8Array(width * height);
+  const queue = new Uint32Array(width * height);
+  let head = 0;
+  let tail = 0;
+  let removedPixels = 0;
+
+  function matchesBackground(pixelNumber) {
+    const index = pixelNumber * 4;
+    const alpha = data[index + 3];
+
+    if (alpha < trimAlphaThreshold) {
+      return true;
+    }
+
+    return colorDistanceSq(
+      backgroundColor,
+      {
+        r: data[index],
+        g: data[index + 1],
+        b: data[index + 2]
+      }
+    ) <= toleranceSq;
+  }
+
+  function enqueue(x, y) {
+    const pixelNumber = (y * width) + x;
+
+    if (visited[pixelNumber]) {
+      return;
+    }
+
+    visited[pixelNumber] = 1;
+
+    if (!matchesBackground(pixelNumber)) {
+      return;
+    }
+
+    queue[tail] = pixelNumber;
+    tail += 1;
+  }
+
+  for (let x = 0; x < width; x += 1) {
+    enqueue(x, 0);
+    enqueue(x, height - 1);
+  }
+
+  for (let y = 1; y < height - 1; y += 1) {
+    enqueue(0, y);
+    enqueue(width - 1, y);
+  }
+
+  while (head < tail) {
+    const pixelNumber = queue[head];
+    head += 1;
+    const x = pixelNumber % width;
+    const y = Math.floor(pixelNumber / width);
+    const index = pixelNumber * 4;
+
+    data[index + 3] = 0;
+    removedPixels += 1;
+
+    if (x > 0) enqueue(x - 1, y);
+    if (x + 1 < width) enqueue(x + 1, y);
+    if (y > 0) enqueue(x, y - 1);
+    if (y + 1 < height) enqueue(x, y + 1);
+  }
+
+  if (removedPixels < backgroundRemovalMinRemovedPixels) {
+    return { changed: false, removedPixels: 0 };
+  }
+
+  context.putImageData(imageData, 0, 0);
+
+  return {
+    changed: true,
+    removedPixels
+  };
+}
+
 function findVisibleAlphaBounds(context, width, height) {
   const { data } = context.getImageData(0, 0, width, height);
   let left = width;
@@ -695,6 +872,88 @@ async function normalizeAssetForRender(source) {
     dataUrl: trimmedCanvas.toDataURL("image/png"),
     mimeType: "image/png",
     wasTrimmed: true
+  };
+}
+
+async function removeBackgroundFromAsset(source) {
+  const image = await loadImageSource(source);
+  const { width: sourceWidth, height: sourceHeight } = getImageSourceDimensions(image);
+
+  if (!sourceWidth || !sourceHeight) {
+    return {
+      dataUrl: source,
+      mimeType: inferMimeTypeFromDataUrl(source),
+      wasRemoved: false
+    };
+  }
+
+  const analysisScale = Math.min(1, maxNormalizedAssetDimension / Math.max(sourceWidth, sourceHeight));
+  const analysisWidth = Math.max(1, Math.round(sourceWidth * analysisScale));
+  const analysisHeight = Math.max(1, Math.round(sourceHeight * analysisScale));
+  const analysisCanvas = createRenderCanvas(analysisWidth, analysisHeight);
+  const analysisContext = analysisCanvas.getContext("2d", { willReadFrequently: true });
+
+  if (!analysisContext) {
+    return {
+      dataUrl: source,
+      mimeType: inferMimeTypeFromDataUrl(source),
+      wasRemoved: false
+    };
+  }
+
+  configureCanvasContext(analysisContext);
+  analysisContext.clearRect(0, 0, analysisWidth, analysisHeight);
+  analysisContext.drawImage(image, 0, 0, analysisWidth, analysisHeight);
+
+  const removalResult = removeConnectedBackground(analysisContext, analysisWidth, analysisHeight);
+
+  if (!removalResult.changed) {
+    return {
+      dataUrl: source,
+      mimeType: inferMimeTypeFromDataUrl(source),
+      wasRemoved: false
+    };
+  }
+
+  const bounds = findVisibleAlphaBounds(analysisContext, analysisWidth, analysisHeight);
+
+  if (!bounds) {
+    return {
+      dataUrl: source,
+      mimeType: inferMimeTypeFromDataUrl(source),
+      wasRemoved: false
+    };
+  }
+
+  const trimmedCanvas = createRenderCanvas(bounds.width, bounds.height);
+  const trimmedContext = trimmedCanvas.getContext("2d");
+
+  if (!trimmedContext) {
+    return {
+      dataUrl: source,
+      mimeType: inferMimeTypeFromDataUrl(source),
+      wasRemoved: false
+    };
+  }
+
+  configureCanvasContext(trimmedContext);
+  trimmedContext.clearRect(0, 0, bounds.width, bounds.height);
+  trimmedContext.drawImage(
+    analysisCanvas,
+    bounds.left,
+    bounds.top,
+    bounds.width,
+    bounds.height,
+    0,
+    0,
+    bounds.width,
+    bounds.height
+  );
+
+  return {
+    dataUrl: trimmedCanvas.toDataURL("image/png"),
+    mimeType: "image/png",
+    wasRemoved: true
   };
 }
 
@@ -1045,6 +1304,16 @@ function updateColorChip(chipId, hexId, colorValue) {
   if (chip) chip.style.border = isLight ? '1px solid #e0e4ea' : '1px solid transparent';
 }
 
+async function applyStudioAssetFromSource(source, options = {}) {
+  const normalizedAsset = await normalizeAssetForRender(source);
+
+  state.assetDataUrl = normalizedAsset.dataUrl;
+  state.assetMimeType = normalizedAsset.mimeType || inferMimeTypeFromDataUrl(source);
+  state.backgroundRemoved = Boolean(options.backgroundRemoved);
+
+  return normalizedAsset;
+}
+
 function render() {
   const zoomPct = Math.round((state.zoom - 1) * 100);
   const zoomEl = document.querySelector("#zoom-output");
@@ -1074,6 +1343,16 @@ function render() {
   if (elements.uploadMeta) {
     elements.uploadMeta.textContent = state.assetName ? `Selected: ${state.assetName}` : "No asset selected";
     elements.uploadMeta.title = state.assetName ? `Selected: ${state.assetName}` : "No asset selected";
+  }
+  if (elements.removeBgButton) {
+    const hasOriginalAsset = Boolean(state.originalAssetDataUrl);
+    elements.removeBgButton.hidden = !hasOriginalAsset;
+    elements.removeBgButton.disabled = state.isRemovingBackground || !hasOriginalAsset;
+    elements.removeBgButton.textContent = state.isRemovingBackground
+      ? "Processing..."
+      : state.backgroundRemoved
+        ? "Restore Original"
+        : "Remove BG";
   }
   if (elements.clearUploadButton) {
     elements.clearUploadButton.hidden = !state.assetDataUrl;
@@ -1154,11 +1433,10 @@ async function loadUploadedAsset(file) {
   }
 
   const dataUrl = await readFileAsDataUrl(file);
-  const normalizedAsset = await normalizeAssetForRender(dataUrl);
-
-  state.assetDataUrl = normalizedAsset.dataUrl;
+  state.originalAssetDataUrl = dataUrl;
+  state.originalAssetMimeType = file.type || inferMimeTypeFromDataUrl(dataUrl);
   state.assetName = file.name;
-  state.assetMimeType = normalizedAsset.mimeType || file.type;
+  const normalizedAsset = await applyStudioAssetFromSource(dataUrl, { backgroundRemoved: false });
   elements.apiStatus.textContent = normalizedAsset.wasTrimmed
     ? `Asset loaded and centered: ${file.name}`
     : `Asset loaded: ${file.name}`;
@@ -1174,6 +1452,10 @@ function clearUploadedAsset() {
   state.assetDataUrl = null;
   state.assetName = "";
   state.assetMimeType = "";
+  state.originalAssetDataUrl = null;
+  state.originalAssetMimeType = "";
+  state.backgroundRemoved = false;
+  state.isRemovingBackground = false;
   if (elements.assetUpload) {
     elements.assetUpload.value = "";
   }
@@ -1211,6 +1493,9 @@ async function saveProject() {
   state.assetDataUrl = data.project.icon.assetDataUrl || null;
   state.assetName = data.project.icon.assetName || "";
   state.assetMimeType = data.project.icon.assetMimeType || "";
+  state.originalAssetDataUrl = data.project.icon.originalAssetDataUrl || data.project.icon.assetDataUrl || null;
+  state.originalAssetMimeType = data.project.icon.originalAssetMimeType || data.project.icon.assetMimeType || "";
+  state.backgroundRemoved = Boolean(data.project.icon.backgroundRemoved);
   state.exportFileName = defaultExportFileName;
   state.blendWhiteBackground = Boolean(data.project.icon.blendWhiteBackground);
   if (elements.apiStatus) {
@@ -1240,6 +1525,9 @@ function buildProjectPayload() {
       assetDataUrl: state.assetDataUrl,
       assetName: state.assetName,
       assetMimeType: state.assetMimeType,
+      originalAssetDataUrl: state.originalAssetDataUrl,
+      originalAssetMimeType: state.originalAssetMimeType,
+      backgroundRemoved: state.backgroundRemoved,
       exportFileName: defaultExportFileName,
       text: iconText,
       autoText: true,
@@ -1274,6 +1562,48 @@ async function refreshPreview() {
   if (elements.apiStatus) {
     elements.apiStatus.textContent =
       `Preview synced: Android ${data.preview.android.cornerStyle}, iOS ${data.preview.ios.cornerStyle}`;
+  }
+}
+
+async function toggleBackgroundRemoval() {
+  if (!state.originalAssetDataUrl || state.isRemovingBackground) {
+    return;
+  }
+
+  state.isRemovingBackground = true;
+  render();
+
+  try {
+    if (state.backgroundRemoved) {
+      await applyStudioAssetFromSource(state.originalAssetDataUrl, { backgroundRemoved: false });
+      if (elements.apiStatus) {
+        elements.apiStatus.textContent = `Original image restored: ${state.assetName}`;
+      }
+      return;
+    }
+
+    if (elements.apiStatus) {
+      elements.apiStatus.textContent = `Removing background from ${state.assetName}...`;
+    }
+
+    const removedAsset = await removeBackgroundFromAsset(state.originalAssetDataUrl);
+
+    if (!removedAsset.wasRemoved) {
+      if (elements.apiStatus) {
+        elements.apiStatus.textContent = "No clean edge background was detected for removal.";
+      }
+      return;
+    }
+
+    state.assetDataUrl = removedAsset.dataUrl;
+    state.assetMimeType = removedAsset.mimeType;
+    state.backgroundRemoved = true;
+    if (elements.apiStatus) {
+      elements.apiStatus.textContent = `Background removed: ${state.assetName}`;
+    }
+  } finally {
+    state.isRemovingBackground = false;
+    render();
   }
 }
 
@@ -1407,6 +1737,20 @@ function bindEvents() {
 
   if (elements.clearUploadButton) {
     elements.clearUploadButton.addEventListener("click", clearUploadedAsset);
+  }
+
+  if (elements.removeBgButton) {
+    elements.removeBgButton.addEventListener("click", async () => {
+      try {
+        await toggleBackgroundRemoval();
+      } catch (error) {
+        state.isRemovingBackground = false;
+        render();
+        if (elements.apiStatus) {
+          elements.apiStatus.textContent = error.message;
+        }
+      }
+    });
   }
 
   elements.exportPlatformInputs.forEach((input) => {

@@ -640,6 +640,13 @@ input[type="range"],
   white-space: nowrap;
 }
 
+.upload-action-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
 #clear-upload-button {
   flex-shrink: 0;
 }
@@ -2042,6 +2049,7 @@ input[type="range"],
   color: #5e6878;
 }
 
+#remove-bg-button,
 #clear-upload-button {
   min-height: 0;
   padding: 4px 10px;
