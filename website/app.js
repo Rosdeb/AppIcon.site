@@ -3,6 +3,8 @@ const defaultProjectName = "AppIcon";
 const defaultExportFileName = "appicon";
 const maxIconTextLength = 3;
 const maxUploadSizeBytes = 10 * 1024 * 1024;
+const maxNormalizedAssetDimension = 2048;
+const trimAlphaThreshold = 8;
 const sessionTimeoutMs = 30 * 60 * 1000;
 const minimumExportLoadingMs = 0;
 
@@ -80,7 +82,9 @@ const iosExportSpecs = [
 ];
 const masterIconSize = 1024;
 const editorReferenceSize = 280;
-const iosArtworkScaleMultiplier = 0.75;
+// Keep iOS export sizing aligned with the live previews so the downloaded
+// icon pack does not introduce unexpected extra whitespace.
+const iosArtworkScaleMultiplier = 1;
 
 const elements = {
   bgColor: document.querySelector("#bg-color"),
@@ -573,6 +577,127 @@ function canvasToBlob(canvas, type = "image/png", quality) {
   });
 }
 
+function getImageSourceDimensions(image) {
+  return {
+    width: Number(image.naturalWidth || image.width || 0),
+    height: Number(image.naturalHeight || image.height || 0)
+  };
+}
+
+function inferMimeTypeFromDataUrl(source, fallback = "image/png") {
+  const match = String(source || "").match(/^data:([^;,]+)[;,]/i);
+  return match?.[1] || fallback;
+}
+
+function findVisibleAlphaBounds(context, width, height) {
+  const { data } = context.getImageData(0, 0, width, height);
+  let left = width;
+  let top = height;
+  let right = -1;
+  let bottom = -1;
+
+  for (let y = 0; y < height; y += 1) {
+    const rowOffset = y * width * 4;
+
+    for (let x = 0; x < width; x += 1) {
+      const alpha = data[rowOffset + (x * 4) + 3];
+
+      if (alpha < trimAlphaThreshold) {
+        continue;
+      }
+
+      if (x < left) left = x;
+      if (y < top) top = y;
+      if (x > right) right = x;
+      if (y > bottom) bottom = y;
+    }
+  }
+
+  if (right < left || bottom < top) {
+    return null;
+  }
+
+  return {
+    left,
+    top,
+    width: (right - left) + 1,
+    height: (bottom - top) + 1,
+    isFullFrame: left === 0 && top === 0 && right === width - 1 && bottom === height - 1
+  };
+}
+
+async function normalizeAssetForRender(source) {
+  const image = await loadImageSource(source);
+  const { width: sourceWidth, height: sourceHeight } = getImageSourceDimensions(image);
+
+  if (!sourceWidth || !sourceHeight) {
+    return {
+      dataUrl: source,
+      mimeType: inferMimeTypeFromDataUrl(source),
+      wasTrimmed: false
+    };
+  }
+
+  const analysisScale = Math.min(1, maxNormalizedAssetDimension / Math.max(sourceWidth, sourceHeight));
+  const analysisWidth = Math.max(1, Math.round(sourceWidth * analysisScale));
+  const analysisHeight = Math.max(1, Math.round(sourceHeight * analysisScale));
+  const analysisCanvas = createRenderCanvas(analysisWidth, analysisHeight);
+  const analysisContext = analysisCanvas.getContext("2d", { willReadFrequently: true });
+
+  if (!analysisContext) {
+    return {
+      dataUrl: source,
+      mimeType: inferMimeTypeFromDataUrl(source),
+      wasTrimmed: false
+    };
+  }
+
+  configureCanvasContext(analysisContext);
+  analysisContext.clearRect(0, 0, analysisWidth, analysisHeight);
+  analysisContext.drawImage(image, 0, 0, analysisWidth, analysisHeight);
+
+  const bounds = findVisibleAlphaBounds(analysisContext, analysisWidth, analysisHeight);
+
+  if (!bounds || bounds.isFullFrame) {
+    return {
+      dataUrl: source,
+      mimeType: inferMimeTypeFromDataUrl(source),
+      wasTrimmed: false
+    };
+  }
+
+  const trimmedCanvas = createRenderCanvas(bounds.width, bounds.height);
+  const trimmedContext = trimmedCanvas.getContext("2d");
+
+  if (!trimmedContext) {
+    return {
+      dataUrl: source,
+      mimeType: inferMimeTypeFromDataUrl(source),
+      wasTrimmed: false
+    };
+  }
+
+  configureCanvasContext(trimmedContext);
+  trimmedContext.clearRect(0, 0, bounds.width, bounds.height);
+  trimmedContext.drawImage(
+    analysisCanvas,
+    bounds.left,
+    bounds.top,
+    bounds.width,
+    bounds.height,
+    0,
+    0,
+    bounds.width,
+    bounds.height
+  );
+
+  return {
+    dataUrl: trimmedCanvas.toDataURL("image/png"),
+    mimeType: "image/png",
+    wasTrimmed: true
+  };
+}
+
 function loadImageSource(source) {
   return new Promise((resolve, reject) => {
     const image = new Image();
@@ -1029,10 +1154,14 @@ async function loadUploadedAsset(file) {
   }
 
   const dataUrl = await readFileAsDataUrl(file);
-  state.assetDataUrl = dataUrl;
+  const normalizedAsset = await normalizeAssetForRender(dataUrl);
+
+  state.assetDataUrl = normalizedAsset.dataUrl;
   state.assetName = file.name;
-  state.assetMimeType = file.type;
-  elements.apiStatus.textContent = `Asset loaded: ${file.name}`;
+  state.assetMimeType = normalizedAsset.mimeType || file.type;
+  elements.apiStatus.textContent = normalizedAsset.wasTrimmed
+    ? `Asset loaded and centered: ${file.name}`
+    : `Asset loaded: ${file.name}`;
   render();
 }
 

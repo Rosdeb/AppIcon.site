@@ -68,7 +68,9 @@ function buildContentsJson() {
 
 const masterIconSize = 2048;
 const editorReferenceSize = 280;
-const iosArtworkScaleMultiplier = 0.75;
+// Match iOS export sizing to the live preview so the generated files do not
+// add export-only whitespace around the artwork.
+const iosArtworkScaleMultiplier = 1;
 
 function sanitizePackageName(name) {
   const normalized = String(name || "app-icons")
