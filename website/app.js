@@ -589,7 +589,22 @@ function getTrackingHeaders() {
   };
 }
 
+function isLocalDevelopmentHost() {
+  const hostname = window.location.hostname || "";
+
+  return (
+    hostname === "localhost" ||
+    hostname === "127.0.0.1" ||
+    hostname === "::1" ||
+    hostname.endsWith(".local")
+  );
+}
+
 async function trackClientEvent(type, metadata = {}) {
+  if (isLocalDevelopmentHost()) {
+    return;
+  }
+
   try {
     const analytics = getAnalyticsContext(metadata);
 

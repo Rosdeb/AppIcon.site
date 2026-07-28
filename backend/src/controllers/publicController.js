@@ -133,6 +133,19 @@ function getPresets(_req, res) {
   });
 }
 
+async function getPublicStats(_req, res) {
+  const overview = await analyticsService.getOverview();
+
+  res.json({
+    totals: {
+      visitors: overview.totals.visitors,
+      projects: overview.totals.projects,
+      exports: overview.totals.exports,
+      countries: overview.totals.uniqueCountries
+    }
+  });
+}
+
 async function createProject(req, res) {
   const project = await projectService.createProject(req.body);
   const hasUploadedAsset = Boolean(
@@ -234,6 +247,7 @@ async function trackEvent(req, res) {
 
 export const publicController = {
   getPresets,
+  getPublicStats,
   createProject,
   getProject,
   updateProject,
