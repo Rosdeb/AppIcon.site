@@ -329,6 +329,16 @@
                   <span class="export-platform-check"></span>
                   <span>Android</span>
                 </label>
+                <label class="export-platform-option">
+                  <input type="checkbox" data-export-platform="windows" />
+                  <span class="export-platform-check"></span>
+                  <span>Windows</span>
+                </label>
+                <label class="export-platform-option">
+                  <input type="checkbox" data-export-platform="macos" />
+                  <span class="export-platform-check"></span>
+                  <span>macOS</span>
+                </label>
               </div>
 
               <div class="api-status" id="api-status">
@@ -352,7 +362,7 @@
       <section class="export-section" id="export-kit">
         <div class="section-heading simple-heading">
           <h2>Export Kit</h2>
-          <p>Build the package and download the zip file for Android and iOS.</p>
+          <p>Build the package and download ZIP exports for mobile and desktop app icons.</p>
         </div>
 
         <div class="export-layout">
@@ -360,7 +370,7 @@
             <div class="manifest-header">
               <div>
                 <h3>Generated size matrix</h3>
-                <p>Android and iOS required outputs.</p>
+                <p>Android, iOS, Windows, and macOS export outputs.</p>
               </div>
               <div class="export-platform-selector export-platform-selector-inline">
                 <label class="export-platform-option">
@@ -372,6 +382,16 @@
                   <input type="checkbox" data-export-platform="android" checked />
                   <span class="export-platform-check"></span>
                   <span>Android</span>
+                </label>
+                <label class="export-platform-option">
+                  <input type="checkbox" data-export-platform="windows" />
+                  <span class="export-platform-check"></span>
+                  <span>Windows</span>
+                </label>
+                <label class="export-platform-option">
+                  <input type="checkbox" data-export-platform="macos" />
+                  <span class="export-platform-check"></span>
+                  <span>macOS</span>
                 </label>
               </div>
               <button class="button button-primary button-gold" id="generate-export-button"
@@ -401,13 +421,31 @@
                   <li><span>Total Apple Pack</span><strong>20 files</strong></li>
                 </ul>
               </div>
+              <div>
+                <h4>Windows</h4>
+                <ul class="size-list">
+                  <li><span>PNG Sizes</span><strong>10 files</strong></li>
+                  <li><span>ICO Bundle</span><strong>1 file</strong></li>
+                  <li><span>Includes</span><strong>16 to 256</strong></li>
+                  <li><span>Total Windows Pack</span><strong>11 files</strong></li>
+                </ul>
+              </div>
+              <div>
+                <h4>macOS</h4>
+                <ul class="size-list">
+                  <li><span>Iconset PNGs</span><strong>10 files</strong></li>
+                  <li><span>ICNS Bundle</span><strong>1 file</strong></li>
+                  <li><span>Includes</span><strong>16 to 1024</strong></li>
+                  <li><span>Total macOS Pack</span><strong>11 files</strong></li>
+                </ul>
+              </div>
             </div>
           </div>
 
           <div class="panel code-panel">
             <div class="panel-heading">
               <h3 data-export-panel-title>Generate Export Plan</h3>
-              <p data-export-panel-copy>Upload your image, then generate the Android and iOS export package.</p>
+              <p data-export-panel-copy>Upload your image, then generate the selected mobile and desktop export package.</p>
             </div>
             <div class="export-progress-panel" id="export-progress-panel" hidden>
               <span class="export-progress-spinner" aria-hidden="true"></span>

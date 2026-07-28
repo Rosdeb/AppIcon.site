@@ -43,6 +43,30 @@ const iosAppIconSpecs = [
   { idiom: "ipad", size: "83.5x83.5", scale: "2x", file: "ipad-pro-83.5@2x.png" },
   { idiom: "ios-marketing", size: "1024x1024", scale: "1x", file: "ios-marketing-1024@1x.png" }
 ];
+const windowsIconSpecs = [
+  { size: 16, file: "icon-16x16.png" },
+  { size: 20, file: "icon-20x20.png" },
+  { size: 24, file: "icon-24x24.png" },
+  { size: 32, file: "icon-32x32.png" },
+  { size: 40, file: "icon-40x40.png" },
+  { size: 48, file: "icon-48x48.png" },
+  { size: 64, file: "icon-64x64.png" },
+  { size: 96, file: "icon-96x96.png" },
+  { size: 128, file: "icon-128x128.png" },
+  { size: 256, file: "icon-256x256.png" }
+];
+const macosIconsetSpecs = [
+  { size: 16, file: "icon_16x16.png", icnsType: "icp4" },
+  { size: 32, file: "icon_16x16@2x.png", icnsType: "icp5" },
+  { size: 32, file: "icon_32x32.png", icnsType: "icp5" },
+  { size: 64, file: "icon_32x32@2x.png", icnsType: "icp6" },
+  { size: 128, file: "icon_128x128.png", icnsType: "ic07" },
+  { size: 256, file: "icon_128x128@2x.png", icnsType: "ic08" },
+  { size: 256, file: "icon_256x256.png", icnsType: "ic08" },
+  { size: 512, file: "icon_256x256@2x.png", icnsType: "ic09" },
+  { size: 512, file: "icon_512x512.png", icnsType: "ic09" },
+  { size: 1024, file: "icon_512x512@2x.png", icnsType: "ic10" }
+];
 
 function getIosImageSpecs() {
   return iosAppIconSpecs.map((item) => ({
@@ -64,6 +88,20 @@ function buildContentsJson() {
       version: 1
     }
   };
+}
+
+function getWindowsIconFiles() {
+  return [
+    "windows/appicon.ico",
+    ...windowsIconSpecs.map((item) => `windows/png/${item.file}`)
+  ];
+}
+
+function getMacosIconsetFiles() {
+  return [
+    "macos/AppIcon.icns",
+    ...macosIconsetSpecs.map((item) => `macos/AppIcon.iconset/${item.file}`)
+  ];
 }
 
 const masterIconSize = 2048;
@@ -119,6 +157,90 @@ function escapeXml(value) {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&apos;");
+}
+
+function getExportTargetValue(platforms) {
+  if (platforms.length === 0) {
+    return "none";
+  }
+
+  if (platforms.length === 1) {
+    return platforms[0];
+  }
+
+  return platforms.join("+");
+}
+
+function encodeAsciiBuffer(value) {
+  return Buffer.from(value, "ascii");
+}
+
+function buildWindowsIcoBuffer(images) {
+  const entryCount = images.length;
+  const headerSize = 6 + (entryCount * 16);
+  const totalSize = headerSize + images.reduce((sum, image) => sum + image.data.length, 0);
+  const output = Buffer.alloc(totalSize);
+  let offset = 0;
+
+  output.writeUInt16LE(0, offset);
+  offset += 2;
+  output.writeUInt16LE(1, offset);
+  offset += 2;
+  output.writeUInt16LE(entryCount, offset);
+  offset += 2;
+
+  let imageOffset = headerSize;
+
+  images.forEach((image) => {
+    const dimension = image.size >= 256 ? 0 : image.size;
+    output.writeUInt8(dimension, offset);
+    output.writeUInt8(dimension, offset + 1);
+    output.writeUInt8(0, offset + 2);
+    output.writeUInt8(0, offset + 3);
+    output.writeUInt16LE(1, offset + 4);
+    output.writeUInt16LE(32, offset + 6);
+    output.writeUInt32LE(image.data.length, offset + 8);
+    output.writeUInt32LE(imageOffset, offset + 12);
+    offset += 16;
+    imageOffset += image.data.length;
+  });
+
+  let writeOffset = headerSize;
+
+  images.forEach((image) => {
+    image.data.copy(output, writeOffset);
+    writeOffset += image.data.length;
+  });
+
+  return output;
+}
+
+function buildMacosIcnsBuffer(images) {
+  const uniqueImages = [];
+  const seenTypes = new Set();
+
+  images.forEach((image) => {
+    if (seenTypes.has(image.icnsType)) {
+      return;
+    }
+
+    seenTypes.add(image.icnsType);
+    uniqueImages.push(image);
+  });
+
+  const chunks = uniqueImages.map((image) => {
+    const header = Buffer.alloc(8);
+    encodeAsciiBuffer(image.icnsType).copy(header, 0);
+    header.writeUInt32BE(8 + image.data.length, 4);
+    return Buffer.concat([header, image.data]);
+  });
+  const totalLength = 8 + chunks.reduce((sum, chunk) => sum + chunk.length, 0);
+  const fileHeader = Buffer.alloc(8);
+
+  encodeAsciiBuffer("icns").copy(fileHeader, 0);
+  fileHeader.writeUInt32BE(totalLength, 4);
+
+  return Buffer.concat([fileHeader, ...chunks]);
 }
 
 function getOutputPixelSize(sizeLabel, scaleLabel = "1x") {
@@ -308,12 +430,18 @@ function buildZipPath(...segments) {
 
 async function createArchiveEntries(project, platforms) {
   const sourceAsset = await loadProjectAsset(project);
-  const [renderedAndroidMasterIcon, renderedIosMasterIcon] = await Promise.all([
+  const [renderedAndroidMasterIcon, renderedIosMasterIcon, renderedWindowsMasterIcon, renderedMacosMasterIcon] = await Promise.all([
     platforms.includes("android")
       ? renderMasterIcon(project, sourceAsset)
       : Promise.resolve(null),
     platforms.includes("ios")
       ? renderMasterIcon(project, sourceAsset, { scaleMultiplier: iosArtworkScaleMultiplier })
+      : Promise.resolve(null),
+    platforms.includes("windows")
+      ? renderMasterIcon(project, sourceAsset)
+      : Promise.resolve(null),
+    platforms.includes("macos")
+      ? renderMasterIcon(project, sourceAsset)
       : Promise.resolve(null)
   ]);
   const entries = [];
@@ -364,6 +492,66 @@ async function createArchiveEntries(project, platforms) {
         compressionOptions: {
           level: 6
         }
+      }
+    });
+  }
+
+  if (platforms.includes("windows")) {
+    const windowsEntries = await Promise.all(
+      windowsIconSpecs.map(async (item) => ({
+        path: buildZipPath("windows", "png", item.file),
+        data: await renderOutputIcon(renderedWindowsMasterIcon, item.size),
+        options: {
+          compression: "STORE"
+        },
+        size: item.size
+      }))
+    );
+
+    entries.push(...windowsEntries.map(({ path: entryPath, data, options }) => ({
+      path: entryPath,
+      data,
+      options
+    })));
+
+    entries.push({
+      path: buildZipPath("windows", "appicon.ico"),
+      data: buildWindowsIcoBuffer(windowsEntries.map((item) => ({
+        size: item.size,
+        data: item.data
+      }))),
+      options: {
+        compression: "STORE"
+      }
+    });
+  }
+
+  if (platforms.includes("macos")) {
+    const macosEntries = await Promise.all(
+      macosIconsetSpecs.map(async (item) => ({
+        path: buildZipPath("macos", "AppIcon.iconset", item.file),
+        data: await renderOutputIcon(renderedMacosMasterIcon, item.size),
+        options: {
+          compression: "STORE"
+        },
+        icnsType: item.icnsType
+      }))
+    );
+
+    entries.push(...macosEntries.map(({ path: entryPath, data, options }) => ({
+      path: entryPath,
+      data,
+      options
+    })));
+
+    entries.push({
+      path: buildZipPath("macos", "AppIcon.icns"),
+      data: buildMacosIcnsBuffer(macosEntries.map((item) => ({
+        icnsType: item.icnsType,
+        data: item.data
+      }))),
+      options: {
+        compression: "STORE"
       }
     });
   }
@@ -421,6 +609,12 @@ async function createExport(projectId, payload = {}, projectOverride = null) {
             ...getIosImageSpecs().map((item) => `Assets.xcassets/AppIcon.appiconset/${item.file}`),
             "Assets.xcassets/AppIcon.appiconset/Contents.json"
           ]
+        : [],
+      windows: platforms.includes("windows")
+        ? getWindowsIconFiles()
+        : [],
+      macos: platforms.includes("macos")
+        ? getMacosIconsetFiles()
         : []
     }
   };
@@ -430,13 +624,12 @@ async function createExport(projectId, payload = {}, projectOverride = null) {
   await analyticsService.trackEvent({
     type: "export_completed",
     country,
-    platform:
-      platforms.length === 2 ? "android-ios" : platforms[0],
+    platform: platforms.length === 1 ? platforms[0] : "multi-platform",
     deviceType: payload.deviceType || payload.analytics?.deviceType || "desktop",
     metadata: {
       exportId,
       projectId,
-      exportTarget: platforms.length === 2 ? "both" : platforms[0],
+      exportTarget: getExportTargetValue(platforms),
       ...((payload.sessionId || payload.analytics?.sessionId)
         ? { sessionId: payload.sessionId || payload.analytics?.sessionId }
         : {})
@@ -450,7 +643,9 @@ async function createExport(projectId, payload = {}, projectOverride = null) {
     platforms,
     manifest: {
       android: platforms.includes("android") ? androidSizes : [],
-      ios: platforms.includes("ios") ? getIosImageSpecs() : []
+      ios: platforms.includes("ios") ? getIosImageSpecs() : [],
+      windows: platforms.includes("windows") ? windowsIconSpecs : [],
+      macos: platforms.includes("macos") ? macosIconsetSpecs : []
     },
     files: exportRecord.files
   };

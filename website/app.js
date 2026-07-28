@@ -55,7 +55,9 @@ const state = {
 
 const EXPORT_COUNTS = {
   android: 6,
-  iosImages: 19
+  iosImages: 19,
+  windows: 11,
+  macos: 11
 };
 
 const exportZipLibrary = window.JSZip;
@@ -87,6 +89,36 @@ const iosExportSpecs = [
   { idiom: "ipad", size: "83.5x83.5", scale: "2x", file: "ipad-pro-83.5@2x.png" },
   { idiom: "ios-marketing", size: "1024x1024", scale: "1x", file: "ios-marketing-1024@1x.png" }
 ];
+const windowsExportSpecs = [
+  { size: 16, file: "icon-16x16.png" },
+  { size: 20, file: "icon-20x20.png" },
+  { size: 24, file: "icon-24x24.png" },
+  { size: 32, file: "icon-32x32.png" },
+  { size: 40, file: "icon-40x40.png" },
+  { size: 48, file: "icon-48x48.png" },
+  { size: 64, file: "icon-64x64.png" },
+  { size: 96, file: "icon-96x96.png" },
+  { size: 128, file: "icon-128x128.png" },
+  { size: 256, file: "icon-256x256.png" }
+];
+const macosIconsetSpecs = [
+  { size: 16, file: "icon_16x16.png", icnsType: "icp4" },
+  { size: 32, file: "icon_16x16@2x.png", icnsType: "icp5" },
+  { size: 32, file: "icon_32x32.png", icnsType: "icp5" },
+  { size: 64, file: "icon_32x32@2x.png", icnsType: "icp6" },
+  { size: 128, file: "icon_128x128.png", icnsType: "ic07" },
+  { size: 256, file: "icon_128x128@2x.png", icnsType: "ic08" },
+  { size: 256, file: "icon_256x256.png", icnsType: "ic08" },
+  { size: 512, file: "icon_256x256@2x.png", icnsType: "ic09" },
+  { size: 512, file: "icon_512x512.png", icnsType: "ic09" },
+  { size: 1024, file: "icon_512x512@2x.png", icnsType: "ic10" }
+];
+const platformDisplayLabels = {
+  android: "Android",
+  ios: "iOS",
+  windows: "Windows",
+  macos: "macOS"
+};
 const masterIconSize = 1024;
 const editorReferenceSize = 280;
 // Keep iOS export sizing aligned with the live previews so the downloaded
@@ -147,6 +179,36 @@ function setExportMessage(message) {
   }
 }
 
+function getPlatformLabel(platform) {
+  return platformDisplayLabels[platform] || platform;
+}
+
+function describeSelectedPlatforms(platforms) {
+  const labels = platforms.map((platform) => getPlatformLabel(platform));
+
+  if (labels.length <= 1) {
+    return labels[0] || "No platform";
+  }
+
+  if (labels.length === 2) {
+    return `${labels[0]} and ${labels[1]}`;
+  }
+
+  return `${labels.slice(0, -1).join(", ")}, and ${labels[labels.length - 1]}`;
+}
+
+function getExportTargetValue(platforms) {
+  if (platforms.length === 0) {
+    return "none";
+  }
+
+  if (platforms.length === 1) {
+    return platforms[0];
+  }
+
+  return platforms.join("+");
+}
+
 function describeShape(shape) {
   if (shape === "circle") {
     return "Circle";
@@ -163,11 +225,9 @@ function buildExportSummary(fileName, platforms) {
   const selectedPlatforms = [...platforms];
   const includesAndroid = selectedPlatforms.includes("android");
   const includesIos = selectedPlatforms.includes("ios");
-  const platformLabel = includesAndroid && includesIos
-    ? "Android + iOS"
-    : includesIos
-      ? "iOS only"
-      : "Android only";
+  const includesWindows = selectedPlatforms.includes("windows");
+  const includesMacos = selectedPlatforms.includes("macos");
+  const platformLabel = describeSelectedPlatforms(selectedPlatforms);
 
   return [
     "Export package generated",
@@ -176,6 +236,10 @@ function buildExportSummary(fileName, platforms) {
     `Android outputs: ${includesAndroid ? `${EXPORT_COUNTS.android} files` : "Not included"}`,
     `iOS outputs: ${includesIos ? `${EXPORT_COUNTS.iosImages} image files + Contents.json` : "Not included"}`,
     `iOS folder: ${includesIos ? "Assets.xcassets/AppIcon.appiconset" : "Not included"}`,
+    `Windows outputs: ${includesWindows ? `${EXPORT_COUNTS.windows} files including .ico` : "Not included"}`,
+    `Windows folder: ${includesWindows ? "windows" : "Not included"}`,
+    `macOS outputs: ${includesMacos ? `${EXPORT_COUNTS.macos} files including .icns` : "Not included"}`,
+    `macOS folder: ${includesMacos ? "macos/AppIcon.iconset" : "Not included"}`,
     `Icon label: ${getCurrentIconText() || "Image asset"}`,
     `Shape: ${describeShape(state.shape)}`,
     `Background: ${state.backgroundColor.toUpperCase()}`,
@@ -258,6 +322,27 @@ function buildIosContentsJson() {
       version: 1
     }
   };
+}
+
+function getWindowsExportFiles() {
+  return [
+    "windows/appicon.ico",
+    ...windowsExportSpecs.map((item) => `windows/png/${item.file}`)
+  ];
+}
+
+function getMacosIconsetSpecs() {
+  return macosIconsetSpecs.map((item) => ({
+    ...item,
+    pixelSize: item.size
+  }));
+}
+
+function getMacosExportFiles() {
+  return [
+    "macos/AppIcon.icns",
+    ...getMacosIconsetSpecs().map((item) => `macos/AppIcon.iconset/${item.file}`)
+  ];
 }
 
 function deriveIconText(value) {
@@ -419,17 +504,21 @@ function hasSelectedPlatform() {
 
 function syncPlatformSelectionFromInputs() {
   const selected = [];
-  const seen = new Set();
+  const selectedByPlatform = new Map();
 
   elements.exportPlatformInputs.forEach((input) => {
-    if (seen.has(input.dataset.exportPlatform)) {
+    const platform = input.dataset.exportPlatform;
+
+    if (!platform) {
       return;
     }
 
-    seen.add(input.dataset.exportPlatform);
+    selectedByPlatform.set(platform, Boolean(selectedByPlatform.get(platform) || input.checked));
+  });
 
-    if (input.checked) {
-      selected.push(input.dataset.exportPlatform);
+  selectedByPlatform.forEach((isChecked, platform) => {
+    if (isChecked) {
+      selected.push(platform);
     }
   });
 
@@ -584,6 +673,103 @@ function canvasToBlob(canvas, type = "image/png", quality) {
       reject(new Error("Unable to prepare the export image"));
     }, type, quality);
   });
+}
+
+async function blobToUint8Array(blob) {
+  return new Uint8Array(await blob.arrayBuffer());
+}
+
+function concatUint8Arrays(chunks) {
+  const totalLength = chunks.reduce((sum, chunk) => sum + chunk.length, 0);
+  const combined = new Uint8Array(totalLength);
+  let offset = 0;
+
+  chunks.forEach((chunk) => {
+    combined.set(chunk, offset);
+    offset += chunk.length;
+  });
+
+  return combined;
+}
+
+function encodeAsciiBytes(text) {
+  return new TextEncoder().encode(text);
+}
+
+function buildWindowsIcoBytes(images) {
+  const entryCount = images.length;
+  const headerSize = 6 + (entryCount * 16);
+  const imageBuffers = images.map((image) => image.bytes);
+  const totalSize = headerSize + imageBuffers.reduce((sum, bytes) => sum + bytes.length, 0);
+  const output = new Uint8Array(totalSize);
+  const view = new DataView(output.buffer);
+  let offset = 0;
+
+  view.setUint16(offset, 0, true);
+  offset += 2;
+  view.setUint16(offset, 1, true);
+  offset += 2;
+  view.setUint16(offset, entryCount, true);
+  offset += 2;
+
+  let imageOffset = headerSize;
+
+  images.forEach((image) => {
+    const dimension = image.size >= 256 ? 0 : image.size;
+    output[offset] = dimension;
+    output[offset + 1] = dimension;
+    output[offset + 2] = 0;
+    output[offset + 3] = 0;
+    view.setUint16(offset + 4, 1, true);
+    view.setUint16(offset + 6, 32, true);
+    view.setUint32(offset + 8, image.bytes.length, true);
+    view.setUint32(offset + 12, imageOffset, true);
+    offset += 16;
+    imageOffset += image.bytes.length;
+  });
+
+  let writeOffset = headerSize;
+
+  imageBuffers.forEach((bytes) => {
+    output.set(bytes, writeOffset);
+    writeOffset += bytes.length;
+  });
+
+  return output;
+}
+
+function buildMacosIcnsBytes(images) {
+  const uniqueImages = [];
+  const seenTypes = new Set();
+
+  images.forEach((image) => {
+    if (seenTypes.has(image.icnsType)) {
+      return;
+    }
+
+    seenTypes.add(image.icnsType);
+    uniqueImages.push(image);
+  });
+
+  const chunks = uniqueImages.map((image) => {
+    const bytes = image.bytes;
+    const chunk = new Uint8Array(8 + bytes.length);
+    const chunkView = new DataView(chunk.buffer);
+
+    chunk.set(encodeAsciiBytes(image.icnsType), 0);
+    chunkView.setUint32(4, 8 + bytes.length, false);
+    chunk.set(bytes, 8);
+    return chunk;
+  });
+
+  const totalLength = 8 + chunks.reduce((sum, chunk) => sum + chunk.length, 0);
+  const output = new Uint8Array(totalLength);
+  const view = new DataView(output.buffer);
+
+  output.set(encodeAsciiBytes("icns"), 0);
+  view.setUint32(4, totalLength, false);
+  output.set(concatUint8Arrays(chunks), 8);
+  return output;
 }
 
 function getImageSourceDimensions(image) {
@@ -1067,6 +1253,12 @@ async function buildClientExportZip(project, platforms) {
       : null,
     ios: platforms.includes("ios")
       ? renderMasterIconCanvas(project, sourceImage, { scaleMultiplier: iosArtworkScaleMultiplier })
+      : null,
+    windows: platforms.includes("windows")
+      ? renderMasterIconCanvas(project, sourceImage)
+      : null,
+    macos: platforms.includes("macos")
+      ? renderMasterIconCanvas(project, sourceImage)
       : null
   };
 
@@ -1108,6 +1300,44 @@ async function buildClientExportZip(project, platforms) {
     );
   }
 
+  if (platforms.includes("windows")) {
+    const windowsImages = await Promise.all(
+      windowsExportSpecs.map(async (item) => {
+        const outputBlob = await renderOutputBlob(masterIcons.windows, item.size);
+        zip.file(`${packageRootName}/windows/png/${item.file}`, outputBlob, { compression: "STORE" });
+        return {
+          size: item.size,
+          bytes: await blobToUint8Array(outputBlob)
+        };
+      })
+    );
+
+    zip.file(
+      `${packageRootName}/windows/appicon.ico`,
+      buildWindowsIcoBytes(windowsImages),
+      { compression: "STORE" }
+    );
+  }
+
+  if (platforms.includes("macos")) {
+    const macosImages = await Promise.all(
+      getMacosIconsetSpecs().map(async (item) => {
+        const outputBlob = await renderOutputBlob(masterIcons.macos, item.pixelSize);
+        zip.file(`${packageRootName}/macos/AppIcon.iconset/${item.file}`, outputBlob, { compression: "STORE" });
+        return {
+          icnsType: item.icnsType,
+          bytes: await blobToUint8Array(outputBlob)
+        };
+      })
+    );
+
+    zip.file(
+      `${packageRootName}/macos/AppIcon.icns`,
+      buildMacosIcnsBytes(macosImages),
+      { compression: "STORE" }
+    );
+  }
+
   return zip.generateAsync({
     type: "blob",
     compression: "DEFLATE",
@@ -1121,7 +1351,7 @@ async function syncExportRecord(projectPayload, selectedPlatforms) {
   const analytics = getAnalyticsContext({
     projectId: state.projectId,
     projectName: resolveProjectName(state.projectName),
-    exportTarget: selectedPlatforms.length === 2 ? "both" : selectedPlatforms[0],
+    exportTarget: getExportTargetValue(selectedPlatforms),
     selectedPlatforms
   });
   const response = await fetch("/api/public/exports", {
@@ -1631,7 +1861,7 @@ async function generateExportPlan() {
   state.isExporting = true;
   renderPlatformSelection();
   const exportStartedAt = Date.now();
-  const platformLabel = selectedPlatforms.length === 2 ? "Android and iOS" : selectedPlatforms[0] === "ios" ? "iOS" : "Android";
+  const platformLabel = describeSelectedPlatforms(selectedPlatforms);
   setExportMessage(`Preparing your ${platformLabel} export package in the browser. The download will start automatically.`);
   if (elements.apiStatus) {
     elements.apiStatus.textContent = `Building ${platformLabel} export zip in your browser...`;
@@ -1641,7 +1871,7 @@ async function generateExportPlan() {
   void trackClientEvent("export_started", {
     projectId: state.projectId,
     projectName: resolveProjectName(state.projectName),
-    exportTarget: selectedPlatforms.length === 2 ? "both" : selectedPlatforms[0],
+    exportTarget: getExportTargetValue(selectedPlatforms),
     selectedPlatforms
   });
 
@@ -1759,7 +1989,7 @@ function bindEvents() {
       renderPlatformSelection();
 
       if (!hasSelectedPlatform() && elements.apiStatus) {
-        elements.apiStatus.textContent = "Select Android, iOS, or both to generate an export.";
+        elements.apiStatus.textContent = "Select at least one platform to generate an export.";
       }
     });
   });
