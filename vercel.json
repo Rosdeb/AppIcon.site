@@ -24,6 +24,18 @@
       "destination": "/privacy-policy.html"
     },
     {
+      "source": "/how-it-works",
+      "destination": "/how-it-works.html"
+    },
+    {
+      "source": "/faq",
+      "destination": "/faq.html"
+    },
+    {
+      "source": "/terms-of-service",
+      "destination": "/terms-of-service.html"
+    },
+    {
       "source": "/android-icon-generator",
       "destination": "/website/android-icon-generator.html"
     },

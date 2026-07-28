@@ -41,12 +41,40 @@ app.get("/about", (_req, res) => {
   res.sendFile(path.join(projectRootDirectory, "about.html"));
 });
 
+app.get("/about.html", (_req, res) => {
+  res.sendFile(path.join(projectRootDirectory, "about.html"));
+});
+
 app.get("/privacy-policy", (_req, res) => {
   res.sendFile(path.join(projectRootDirectory, "privacy-policy.html"));
 });
 
 app.get("/privacy-policy.html", (_req, res) => {
   res.sendFile(path.join(projectRootDirectory, "privacy-policy.html"));
+});
+
+app.get("/how-it-works", (_req, res) => {
+  res.sendFile(path.join(projectRootDirectory, "how-it-works.html"));
+});
+
+app.get("/how-it-works.html", (_req, res) => {
+  res.sendFile(path.join(projectRootDirectory, "how-it-works.html"));
+});
+
+app.get("/faq", (_req, res) => {
+  res.sendFile(path.join(projectRootDirectory, "faq.html"));
+});
+
+app.get("/faq.html", (_req, res) => {
+  res.sendFile(path.join(projectRootDirectory, "faq.html"));
+});
+
+app.get("/terms-of-service", (_req, res) => {
+  res.sendFile(path.join(projectRootDirectory, "terms-of-service.html"));
+});
+
+app.get("/terms-of-service.html", (_req, res) => {
+  res.sendFile(path.join(projectRootDirectory, "terms-of-service.html"));
 });
 
 app.get("/sitemap.xml", (_req, res) => {
