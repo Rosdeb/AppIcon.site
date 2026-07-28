@@ -621,20 +621,22 @@ async function createExport(projectId, payload = {}, projectOverride = null) {
 
   await exports.insertOne(exportRecord);
 
-  await analyticsService.trackEvent({
-    type: "export_completed",
-    country,
-    platform: platforms.length === 1 ? platforms[0] : "multi-platform",
-    deviceType: payload.deviceType || payload.analytics?.deviceType || "desktop",
-    metadata: {
-      exportId,
-      projectId,
-      exportTarget: getExportTargetValue(platforms),
-      ...((payload.sessionId || payload.analytics?.sessionId)
-        ? { sessionId: payload.sessionId || payload.analytics?.sessionId }
-        : {})
-    }
-  });
+  if (!payload.skipAnalytics) {
+    await analyticsService.trackEvent({
+      type: "export_completed",
+      country,
+      platform: platforms.length === 1 ? platforms[0] : "multi-platform",
+      deviceType: payload.deviceType || payload.analytics?.deviceType || "desktop",
+      metadata: {
+        exportId,
+        projectId,
+        exportTarget: getExportTargetValue(platforms),
+        ...((payload.sessionId || payload.analytics?.sessionId)
+          ? { sessionId: payload.sessionId || payload.analytics?.sessionId }
+          : {})
+      }
+    });
+  }
 
   return {
     exportId,

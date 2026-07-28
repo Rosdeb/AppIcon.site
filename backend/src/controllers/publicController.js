@@ -1,6 +1,7 @@
 import { analyticsService } from "../services/analyticsService.js";
 import { exportService } from "../services/exportService.js";
 import { projectService } from "../services/projectService.js";
+import { shouldSkipAnalyticsForRequest } from "../utils/analyticsRequest.js";
 import { createHttpError } from "../utils/httpError.js";
 
 const regionDisplayNames = typeof Intl.DisplayNames === "function"
@@ -119,7 +120,11 @@ function normalizeTrackingContext(req, overrides = {}) {
   };
 }
 
-async function trackEventSafely(payload) {
+async function trackEventSafely(req, payload) {
+  if (shouldSkipAnalyticsForRequest(req)) {
+    return null;
+  }
+
   try {
     return await analyticsService.trackEvent(payload);
   } catch {
@@ -153,7 +158,7 @@ async function createProject(req, res) {
   );
 
   if (hasUploadedAsset || project.sourceType === "upload") {
-    await trackEventSafely({
+    await trackEventSafely(req, {
       type: "upload_completed",
       ...normalizeTrackingContext(req, {
         projectId: project.id,
@@ -190,7 +195,7 @@ async function updateProject(req, res) {
 async function getPreview(req, res) {
   const preview = await projectService.buildPreview(req.params.projectId);
 
-  await trackEventSafely({
+  await trackEventSafely(req, {
     type: "preview_opened",
     ...normalizeTrackingContext(req, {
       projectId: req.params.projectId,
@@ -220,7 +225,14 @@ async function createExport(req, res, next) {
     if (!project) {
       throw createHttpError(400, "Project data is required to generate an export");
     }
-    const exportResult = await exportService.createExport(project.id, req.body, project);
+    const exportResult = await exportService.createExport(
+      project.id,
+      {
+        ...req.body,
+        skipAnalytics: shouldSkipAnalyticsForRequest(req)
+      },
+      project
+    );
 
     res.status(201).json({
       project,
@@ -232,7 +244,7 @@ async function createExport(req, res, next) {
 }
 
 async function trackEvent(req, res) {
-  const event = await trackEventSafely({
+  const event = await trackEventSafely(req, {
     ...req.body,
     ...normalizeTrackingContext(req, {
       metadata: req.body?.metadata || {}
