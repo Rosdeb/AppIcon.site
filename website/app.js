@@ -502,28 +502,6 @@ function hasSelectedPlatform() {
   return state.selectedPlatforms.length > 0;
 }
 
-function syncPlatformSelectionFromInputs() {
-  const selected = [];
-  const selectedByPlatform = new Map();
-
-  elements.exportPlatformInputs.forEach((input) => {
-    const platform = input.dataset.exportPlatform;
-
-    if (!platform) {
-      return;
-    }
-
-    selectedByPlatform.set(platform, Boolean(selectedByPlatform.get(platform) || input.checked));
-  });
-
-  selectedByPlatform.forEach((isChecked, platform) => {
-    if (isChecked) {
-      selected.push(platform);
-    }
-  });
-
-  state.selectedPlatforms = selected;
-}
 
 function renderPlatformSelection() {
   const selected = new Set(state.selectedPlatforms);
@@ -1999,8 +1977,18 @@ function bindEvents() {
   }
 
   elements.exportPlatformInputs.forEach((input) => {
-    input.addEventListener("change", () => {
-      syncPlatformSelectionFromInputs();
+    input.addEventListener("change", (e) => {
+      const platform = e.target.dataset.exportPlatform;
+      const isChecked = e.target.checked;
+      const platformSet = new Set(state.selectedPlatforms);
+      
+      if (isChecked) {
+        platformSet.add(platform);
+      } else {
+        platformSet.delete(platform);
+      }
+      
+      state.selectedPlatforms = Array.from(platformSet);
       renderPlatformSelection();
 
       if (!hasSelectedPlatform() && elements.apiStatus) {
