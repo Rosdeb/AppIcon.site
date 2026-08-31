@@ -1,3 +1,17 @@
+/* Screen-reader-only text: keeps supplementary keyword/context wording in the
+   DOM for search engines and assistive tech without any visual change. */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 :root {
   --bg: #ffffff;
   --panel-warm: #ffffff;
@@ -322,61 +336,77 @@ p {
 }
 
 .legal-shell {
-  width: min(980px, calc(100% - 32px));
+  width: min(760px, calc(100% - 40px));
+}
+
+/* Simple, flowing document — no cards, no section-by-section boxes. Just a
+   title, an intro, then plain headings and paragraphs down the page. */
+.legal-hero,
+.legal-card {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: none;
 }
 
 .legal-hero {
-  margin-bottom: 18px;
-  padding: 28px;
+  margin-bottom: 6px;
+}
+
+.legal-hero .eyebrow {
+  margin-bottom: 8px;
 }
 
 .legal-hero h2 {
-  margin-bottom: 10px;
-  font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: 12px;
+  font-size: clamp(1.9rem, 4vw, 2.6rem);
   color: #023d79;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.04em;
 }
 
 .legal-hero p {
-  max-width: 70ch;
-  color: var(--muted);
-  line-height: 1.7;
+  max-width: 68ch;
+  color: var(--text);
+  line-height: 1.75;
 }
 
 .legal-grid {
-  display: grid;
-  gap: 16px;
+  display: block;
 }
 
 .legal-card {
-  padding: 24px 26px;
+  margin-top: 30px;
 }
 
 .legal-card h3 {
-  margin-bottom: 10px;
-  font-size: 1.1rem;
+  margin-bottom: 8px;
+  font-size: 1.15rem;
+  font-weight: 700;
   color: var(--ink);
 }
 
 .legal-card p {
-  color: var(--muted);
+  max-width: 68ch;
+  color: var(--text);
   line-height: 1.75;
 }
 
 .legal-card p+p,
 .legal-card ul {
-  margin-top: 12px;
+  margin-top: 10px;
 }
 
 .legal-list {
-  margin: 12px 0 0;
-  padding-left: 18px;
-  color: var(--muted);
+  margin: 10px 0 0;
+  padding-left: 20px;
+  max-width: 68ch;
+  color: var(--text);
   line-height: 1.75;
 }
 
 .legal-list li+li {
-  margin-top: 8px;
+  margin-top: 6px;
 }
 
 .legal-back-link {
@@ -2426,9 +2456,8 @@ input[type="range"],
     align-items: center;
   }
 
-  .legal-hero,
   .legal-card {
-    padding: 20px;
+    margin-top: 26px;
   }
 }
 

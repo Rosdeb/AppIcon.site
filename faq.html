@@ -3,14 +3,40 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FAQ | App Icon Studio</title>
+    <title>App Icon Generator FAQ — Files, Sizes &amp; Exports | App Icon Studio</title>
     <meta
       name="description"
-      content="Frequently asked questions about App Icon Studio, including supported files, exports, background removal, and app icon workflow guidance."
+      content="Answers to common app icon generator questions: supported upload formats, iOS and Android sizes, transparency rules, background removal, and Windows/macOS exports."
     />
-    <meta name="robots" content="index,follow" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="theme-color" content="#7b9ef0" />
     <link rel="canonical" href="https://www.appicon.site/faq" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="App Icon Studio" />
+    <meta property="og:url" content="https://www.appicon.site/faq" />
+    <meta property="og:title" content="App Icon Generator FAQ" />
+    <meta property="og:description" content="Supported formats, iOS/Android sizes, transparency rules, background removal, and desktop exports." />
+    <meta property="og:image" content="https://www.appicon.site/website/assets/icons/screenshot1.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "What file should I upload?", "acceptedAnswer": { "@type": "Answer", "text": "A square source image is the easiest starting point. The recommended source is 1024x1024 PNG or larger, but JPG, SVG, and WebP are also supported in the browser workflow." } },
+        { "@type": "Question", "name": "Does the tool only work for mobile icons?", "acceptedAnswer": { "@type": "Answer", "text": "No. The public workflow supports Android and iOS exports, and it can also generate desktop icon outputs for Windows and macOS." } },
+        { "@type": "Question", "name": "Can I remove a solid background?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. If the uploaded image has a simple edge-connected background, the optional Remove BG action can make that area transparent. This works best when the background color is relatively uniform around the outer edge." } },
+        { "@type": "Question", "name": "Will Apple accept a transparent iOS icon?", "acceptedAnswer": { "@type": "Answer", "text": "In general, iOS app icons should not be submitted with transparency. The studio lets users work with transparent artwork internally, but the selected background color should be used when preparing the final icon design for Apple submission." } },
+        { "@type": "Question", "name": "What does the padding slider change?", "acceptedAnswer": { "@type": "Answer", "text": "Padding controls how much empty space surrounds the visible artwork inside the icon canvas. This helps prevent logos from looking cramped and improves how the icon reads at smaller sizes." } },
+        { "@type": "Question", "name": "Why preview different icon shapes?", "acceptedAnswer": { "@type": "Answer", "text": "Different launchers and surfaces can mask app icons in different ways. Previewing circle, squircle, and rounded-square variations helps users catch clipping and spacing problems before export." } },
+        { "@type": "Question", "name": "What is included in the Windows export?", "acceptedAnswer": { "@type": "Answer", "text": "The Windows package includes multiple PNG sizes and a bundled ICO file. This is intended to make the exported files easier to review during desktop development work." } },
+        { "@type": "Question", "name": "What is included in the macOS export?", "acceptedAnswer": { "@type": "Answer", "text": "The macOS package includes an iconset folder with the expected PNG naming pattern plus an ICNS file for desktop app workflows." } },
+        { "@type": "Question", "name": "Do I need an account to use the public workflow?", "acceptedAnswer": { "@type": "Answer", "text": "The public site is designed to let users upload, preview, and export without a complex onboarding flow. Some project and analytics data may still be processed so the service can operate correctly." } }
+      ]
+    }
+    </script>
 
     <link rel="icon" href="/website/assets/icons/favicon.ico" sizes="any" />
     <link rel="icon" href="/website/assets/icons/favicon-32x32.png" type="image/png" sizes="32x32" />

@@ -81,8 +81,23 @@ app.get("/sitemap.xml", (_req, res) => {
   res.sendFile(path.join(projectRootDirectory, "sitemap.xml"));
 });
 
+app.get("/robots.txt", (_req, res) => {
+  res.sendFile(path.join(projectRootDirectory, "robots.txt"));
+});
+
 app.get("/ads.txt", (_req, res) => {
   res.sendFile(path.join(projectRootDirectory, "ads.txt"));
+});
+
+app.get(["/blog", "/blog/ios-app-icon-sizes", "/blog/android-adaptive-icons", "/blog/app-icon-design-tips"], (req, res) => {
+  const blogFiles = {
+    "/blog": "blog-index.html",
+    "/blog/ios-app-icon-sizes": "blog-ios-icon-sizes.html",
+    "/blog/android-adaptive-icons": "blog-android-icon-guide.html",
+    "/blog/app-icon-design-tips": "blog-app-icon-design-tips.html"
+  };
+
+  res.sendFile(path.join(websiteDirectory, blogFiles[req.path] || "blog-index.html"));
 });
 
 app.get("/android-icon-generator", (_req, res) => {

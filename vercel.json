@@ -6,6 +6,23 @@
       "maxDuration": 60
     }
   },
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "appicon.site" }],
+      "destination": "https://www.appicon.site/:path*",
+      "permanent": true
+    },
+    { "source": "/website/blog-index.html", "destination": "/blog", "permanent": true },
+    { "source": "/website/blog-ios-icon-sizes.html", "destination": "/blog/ios-app-icon-sizes", "permanent": true },
+    { "source": "/website/blog-android-icon-guide.html", "destination": "/blog/android-adaptive-icons", "permanent": true },
+    { "source": "/website/blog-app-icon-design-tips.html", "destination": "/blog/app-icon-design-tips", "permanent": true },
+    { "source": "/about.html", "destination": "/about", "permanent": true },
+    { "source": "/faq.html", "destination": "/faq", "permanent": true },
+    { "source": "/how-it-works.html", "destination": "/how-it-works", "permanent": true },
+    { "source": "/privacy-policy.html", "destination": "/privacy-policy", "permanent": true },
+    { "source": "/terms-of-service.html", "destination": "/terms-of-service", "permanent": true }
+  ],
   "rewrites": [
     {
       "source": "/api/:path*",
@@ -14,6 +31,22 @@
     {
       "source": "/admin",
       "destination": "/admin/index.html"
+    },
+    {
+      "source": "/blog",
+      "destination": "/website/blog-index.html"
+    },
+    {
+      "source": "/blog/ios-app-icon-sizes",
+      "destination": "/website/blog-ios-icon-sizes.html"
+    },
+    {
+      "source": "/blog/android-adaptive-icons",
+      "destination": "/website/blog-android-icon-guide.html"
+    },
+    {
+      "source": "/blog/app-icon-design-tips",
+      "destination": "/website/blog-app-icon-design-tips.html"
     },
     {
       "source": "/about",

@@ -1,8 +1,8 @@
 {
-  "name": "IconForge Studio",
-  "short_name": "IconForge",
-  "description": "Professional app icon workshop for iOS and Android",
-  "start_url": "/website/",
+  "name": "App Icon Studio - App Icon Generator for iOS & Android",
+  "short_name": "App Icon Studio",
+  "description": "Free app icon generator. Upload one image and export every required iOS, Android, Windows and macOS app icon size.",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#7b9ef0",
