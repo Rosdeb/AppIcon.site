@@ -250,27 +250,24 @@ function getOutputPixelSize(sizeLabel, scaleLabel = "1x") {
   return Math.round(baseSize * scale);
 }
 
-function getAssetSizePercentFromPadding(paddingValue, mode = "preview") {
-  const padding = Number(paddingValue ?? 18);
-
-  if (mode === "ios-preview") {
-    const baseSize = 84 - Math.min(14, padding * 0.42);
-    return Math.max(62, baseSize);
-  }
-
-  const baseSize = mode === "editor"
-    ? 100 - Math.min(42, padding * 1.35)
-    : 96 - Math.min(24, padding * 0.55);
-
-  return Math.max(mode === "editor" ? 68 : 76, baseSize);
+// Must stay in sync with getIconArtworkFraction in website/app.js so a
+// server-rendered pack matches the studio previews exactly. padding 0 fills
+// the frame; larger padding shrinks the artwork linearly to a 35% floor.
+function getIconArtworkFraction(paddingValue) {
+  const padding = clamp(Number(paddingValue ?? 0), 0, 40);
+  return clamp(1 - ((padding / 100) * 0.9), 0.35, 1);
 }
 
 function getExportArtworkScale(project, scaleMultiplier = 1) {
-  const padding = Number(project.icon?.padding ?? 18);
+  const padding = Number(project.icon?.padding ?? 0);
   const zoom = Number(project.icon?.zoom ?? 1);
-  const sizePercent = getAssetSizePercentFromPadding(padding, "preview");
 
-  return clamp((sizePercent / 100) * zoom * scaleMultiplier, 0.1, 2);
+  return clamp(getIconArtworkFraction(padding) * zoom * scaleMultiplier, 0.1, 2);
+}
+
+function isFillModeProject(project) {
+  const fillMode = project?.icon?.fillMode;
+  return (fillMode === "fill" || fillMode === "cover") && Number(project?.icon?.padding ?? 0) === 0;
 }
 
 function getArtworkOffset(project, size) {
@@ -323,7 +320,7 @@ async function buildArtworkLayer(project, sourceAsset, size, scaleMultiplier = 1
     .resize({
       width: scaledSize,
       height: scaledSize,
-      fit: "contain",
+      fit: isFillModeProject(project) ? "fill" : "contain",
       withoutEnlargement: false,
       background: transparent,
       kernel: sharp.kernel.lanczos3
@@ -356,7 +353,15 @@ async function buildArtworkLayer(project, sourceAsset, size, scaleMultiplier = 1
 
 async function renderMasterIcon(project, sourceAsset, options = {}) {
   const scaleMultiplier = options.scaleMultiplier ?? 1;
-  const backgroundColor = project.icon.backgroundColor || "#ffffff";
+  // NOTE: the authoritative export path is the in-browser renderer in
+  // website/app.js (renderMasterIconCanvas). If this server path is ever wired
+  // to a route, port these over from there to keep downloads identical:
+  //  - per-platform corners (iOS/Android/Windows square, macOS squircle+padding)
+  //  - full-bleed detection filling transparent corners with the artwork's own
+  //    edge colour (project.icon.autoBackgroundColor) instead of white.
+  const backgroundColor = (isFillModeProject(project) && project.icon.autoBackgroundColor)
+    || project.icon.backgroundColor
+    || "#ffffff";
   const canvas = sharp({
     create: {
       width: masterIconSize,

@@ -1107,8 +1107,10 @@ input[type="range"],
   place-items: center;
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  /* Use an inset ring instead of a real border so the artwork content-box
+     stays a full 30px and the mockup matches the export pixel for pixel. */
   box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.6),
     inset 0 1px 0 rgba(255, 255, 255, 0.35),
     0 5px 10px rgba(15, 23, 42, 0.12);
   transition: transform 180ms ease, border-radius 180ms ease, padding 180ms ease;
@@ -1216,8 +1218,8 @@ input[type="range"],
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 86%;
-  height: 86%;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
   pointer-events: none;
   transform: translate(-50%, -50%);

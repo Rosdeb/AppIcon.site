@@ -47,6 +47,8 @@ const state = {
   originalAssetMimeType: "",
   backgroundRemoved: false,
   blendWhiteBackground: false,
+  assetFullBleed: false,
+  assetEdgeColor: "",
   lastExportFileName: "",
   lastExportAt: "",
   isExporting: false,
@@ -241,6 +243,7 @@ function buildExportSummary(fileName, platforms) {
     `macOS outputs: ${includesMacos ? `${EXPORT_COUNTS.macos} files including .icns` : "Not included"}`,
     `macOS folder: ${includesMacos ? "macos/AppIcon.iconset" : "Not included"}`,
     `Icon label: ${getCurrentIconText() || "Image asset"}`,
+    `Corners: iOS / Android / Windows ship a full square (the store and the OS apply the rounded mask); macOS is pre-rounded to Apple's squircle`,
     `Shape: ${describeShape(state.shape)}`,
     `Background: ${state.backgroundColor.toUpperCase()}`,
     `Foreground: ${state.foregroundColor.toUpperCase()}`,
@@ -609,27 +612,162 @@ function clampNumber(value, min, max) {
   return Math.min(Math.max(value, min), max);
 }
 
-function getAssetSizePercentFromPadding(paddingValue, mode = "preview") {
-  const padding = Number(paddingValue ?? 18);
+// Single source of truth for how large the uploaded artwork sits inside the
+// icon square. Every live preview (editor, iPhone mockup, variants, iOS mini
+// preview) and every exported PNG runs through this so the download always
+// matches what the studio shows. padding 0 => the artwork fills the frame
+// edge to edge; larger padding shrinks it linearly toward a 35% minimum.
+function getIconArtworkFraction(paddingValue) {
+  const padding = clampNumber(Number(paddingValue ?? 0), 0, 40);
+  return clampNumber(1 - ((padding / 100) * 0.9), 0.35, 1);
+}
 
-  if (mode === "ios-preview") {
-    const baseSize = 84 - Math.min(14, padding * 0.42);
-    return Math.max(62, baseSize);
-  }
-
-  const baseSize = mode === "editor"
-    ? 100 - Math.min(42, padding * 1.35)
-    : 96 - Math.min(24, padding * 0.55);
-
-  return Math.max(mode === "editor" ? 68 : 76, baseSize);
+// Kept for call-site compatibility. `mode` is intentionally ignored now that
+// all surfaces share one sizing rule.
+function getAssetSizePercentFromPadding(paddingValue) {
+  return getIconArtworkFraction(paddingValue) * 100;
 }
 
 function getExportArtworkScale(project, scaleMultiplier = 1) {
-  const padding = Number(project.icon?.padding ?? 18);
+  const padding = Number(project.icon?.padding ?? 0);
   const zoom = Number(project.icon?.zoom ?? 1);
-  const sizePercent = getAssetSizePercentFromPadding(padding, "preview");
 
-  return clampNumber((sizePercent / 100) * zoom * scaleMultiplier, 0.1, 2);
+  return clampNumber(getIconArtworkFraction(padding) * zoom * scaleMultiplier, 0.1, 2);
+}
+
+function isFillModeProject(project) {
+  const fillMode = project?.icon?.fillMode;
+  return (fillMode === "fill" || fillMode === "cover") && Number(project?.icon?.padding ?? 0) === 0;
+}
+
+// Per-platform corner rules that mirror how each store / OS actually treats an
+// app icon file:
+//  - iOS, Android, Windows: ship a full square. The launcher / OS applies the
+//    rounded mask on-device, and the App Store / Play Store require a square
+//    marketing icon. We keep them square but fill any transparent corners with
+//    the artwork's own edge colour instead of white so the raw file still
+//    reads as a finished icon.
+//  - macOS: the app is responsible for its own shape. Apple's HIG icon is a
+//    rounded "squircle" sitting on transparency with ~18% breathing room, so
+//    macOS output is masked to that shape.
+function getPlatformIconPolicy(platform) {
+  if (platform === "macos") {
+    return { shape: "squircle", artScale: 0.82, forceOpaque: false };
+  }
+
+  return { shape: "square", artScale: 1, forceOpaque: true };
+}
+
+function getShapeRadiusFraction(shape) {
+  switch (shape) {
+    case "circle":
+      return 0.5;
+    case "squircle":
+      return 0.28;
+    case "legacy":
+      return 0.1;
+    case "rounded-square":
+    default:
+      return 0.22;
+  }
+}
+
+function clipCanvasToShape(context, size, shape) {
+  if (!shape || shape === "square") {
+    return;
+  }
+
+  const radius = shape === "circle"
+    ? size / 2
+    : Math.min(size / 2, getShapeRadiusFraction(shape) * size);
+
+  context.save();
+  context.globalCompositeOperation = "destination-in";
+  context.beginPath();
+
+  if (typeof context.roundRect === "function") {
+    context.roundRect(0, 0, size, size, radius);
+  } else {
+    context.moveTo(radius, 0);
+    context.arcTo(size, 0, size, size, radius);
+    context.arcTo(size, size, 0, size, radius);
+    context.arcTo(0, size, 0, 0, radius);
+    context.arcTo(0, 0, size, 0, radius);
+    context.closePath();
+  }
+
+  context.fillStyle = "#000000";
+  context.fill();
+  context.restore();
+}
+
+function resolveIconBackgroundFill(project) {
+  if (isFillModeProject(project) && project?.icon?.autoBackgroundColor) {
+    return project.icon.autoBackgroundColor;
+  }
+
+  return project?.icon?.backgroundColor || "#ffffff";
+}
+
+function rgbToHex(color) {
+  const channel = (value) => clampNumber(Math.round(value), 0, 255).toString(16).padStart(2, "0");
+  return `#${channel(color.r)}${channel(color.g)}${channel(color.b)}`;
+}
+
+// Average of the opaque pixels around the border of the artwork. Used to fill
+// the transparent corners of a full-bleed icon on the square platforms so the
+// exported file never shows a white "L" around a rounded design.
+function getImageEdgeColorHex(image, fallbackHex) {
+  try {
+    const size = 64;
+    const canvas = createRenderCanvas(size);
+    const context = canvas.getContext("2d", { willReadFrequently: true });
+
+    if (!context) {
+      return fallbackHex;
+    }
+
+    configureCanvasContext(context);
+    context.clearRect(0, 0, size, size);
+    context.drawImage(image, 0, 0, size, size);
+
+    const { data } = context.getImageData(0, 0, size, size);
+    let r = 0;
+    let g = 0;
+    let b = 0;
+    let count = 0;
+
+    const consider = (x, y) => {
+      const index = ((y * size) + x) * 4;
+
+      if (data[index + 3] < 128) {
+        return;
+      }
+
+      r += data[index];
+      g += data[index + 1];
+      b += data[index + 2];
+      count += 1;
+    };
+
+    for (let x = 0; x < size; x += 1) {
+      consider(x, 0);
+      consider(x, size - 1);
+    }
+
+    for (let y = 1; y < size - 1; y += 1) {
+      consider(0, y);
+      consider(size - 1, y);
+    }
+
+    if (!count) {
+      return fallbackHex;
+    }
+
+    return rgbToHex({ r: r / count, g: g / count, b: b / count });
+  } catch {
+    return fallbackHex;
+  }
 }
 
 function getArtworkOffset(project, size) {
@@ -982,6 +1120,17 @@ function findVisibleAlphaBounds(context, width, height) {
   };
 }
 
+// An upload counts as a "finished icon" when its visible pixels reach every
+// edge (opaque, no transparent margin to trim) and it is close to square.
+// Those are the icons a user expects to fill the frame with no padding.
+function isSquarishRatio(width, height) {
+  if (!width || !height) {
+    return false;
+  }
+
+  return Math.abs((width / height) - 1) <= 0.12;
+}
+
 async function normalizeAssetForRender(source) {
   const image = await loadImageSource(source);
   const { width: sourceWidth, height: sourceHeight } = getImageSourceDimensions(image);
@@ -990,7 +1139,8 @@ async function normalizeAssetForRender(source) {
     return {
       dataUrl: source,
       mimeType: inferMimeTypeFromDataUrl(source),
-      wasTrimmed: false
+      wasTrimmed: false,
+      isFullBleed: false
     };
   }
 
@@ -1004,7 +1154,8 @@ async function normalizeAssetForRender(source) {
     return {
       dataUrl: source,
       mimeType: inferMimeTypeFromDataUrl(source),
-      wasTrimmed: false
+      wasTrimmed: false,
+      isFullBleed: isSquarishRatio(sourceWidth, sourceHeight)
     };
   }
 
@@ -1018,7 +1169,8 @@ async function normalizeAssetForRender(source) {
     return {
       dataUrl: source,
       mimeType: inferMimeTypeFromDataUrl(source),
-      wasTrimmed: false
+      wasTrimmed: false,
+      isFullBleed: isSquarishRatio(sourceWidth, sourceHeight)
     };
   }
 
@@ -1029,7 +1181,8 @@ async function normalizeAssetForRender(source) {
     return {
       dataUrl: source,
       mimeType: inferMimeTypeFromDataUrl(source),
-      wasTrimmed: false
+      wasTrimmed: false,
+      isFullBleed: false
     };
   }
 
@@ -1050,7 +1203,8 @@ async function normalizeAssetForRender(source) {
   return {
     dataUrl: trimmedCanvas.toDataURL("image/png"),
     mimeType: "image/png",
-    wasTrimmed: true
+    wasTrimmed: true,
+    isFullBleed: false
   };
 }
 
@@ -1159,6 +1313,13 @@ function getTextOverlayFontSize(text, size, scaleMultiplier = 1) {
 
 function renderMasterIconCanvas(project, sourceImage, options = {}) {
   const scaleMultiplier = options.scaleMultiplier ?? 1;
+  const policy = getPlatformIconPolicy(options.platform);
+  const fillFrame = isFillModeProject(project);
+  const backgroundFill = resolveIconBackgroundFill(project);
+  // Square platforms are always flattened. macOS keeps transparency for a
+  // full-bleed icon (so its corners round cleanly) but still needs a solid
+  // ground behind a logo-on-background design.
+  const shouldPrefill = policy.forceOpaque || !fillFrame;
   const canvas = createRenderCanvas(masterIconSize);
   const context = canvas.getContext("2d");
 
@@ -1168,8 +1329,11 @@ function renderMasterIconCanvas(project, sourceImage, options = {}) {
 
   configureCanvasContext(context);
   context.clearRect(0, 0, masterIconSize, masterIconSize);
-  context.fillStyle = project.icon.backgroundColor || "#ffffff";
-  context.fillRect(0, 0, masterIconSize, masterIconSize);
+
+  if (shouldPrefill) {
+    context.fillStyle = backgroundFill;
+    context.fillRect(0, 0, masterIconSize, masterIconSize);
+  }
 
   if (!sourceImage) {
     const text = String(project.icon.text ?? "");
@@ -1178,10 +1342,11 @@ function renderMasterIconCanvas(project, sourceImage, options = {}) {
     context.textBaseline = "middle";
     context.font = `700 ${getTextOverlayFontSize(text, masterIconSize, scaleMultiplier)}px Inter, Arial, sans-serif`;
     context.fillText(text, masterIconSize / 2, Math.round(masterIconSize * 0.52));
+    clipCanvasToShape(context, masterIconSize, policy.shape);
     return canvas;
   }
 
-  const artworkScale = getExportArtworkScale(project, scaleMultiplier);
+  const artworkScale = getExportArtworkScale(project, scaleMultiplier) * policy.artScale;
   const scaledSize = Math.max(1, Math.round(masterIconSize * artworkScale));
   const { x, y } = getArtworkOffset(project, masterIconSize);
   const left = clampNumber(Math.round((masterIconSize - scaledSize) / 2 + x), 0, masterIconSize - scaledSize);
@@ -1198,8 +1363,12 @@ function renderMasterIconCanvas(project, sourceImage, options = {}) {
   const sourceWidth = Number(sourceImage.naturalWidth || sourceImage.width || 0);
   const sourceHeight = Number(sourceImage.naturalHeight || sourceImage.height || 0);
   const aspectRatio = sourceWidth > 0 && sourceHeight > 0 ? sourceWidth / sourceHeight : 1;
-  const targetWidth = aspectRatio >= 1 ? scaledSize : Math.max(1, Math.round(scaledSize * aspectRatio));
-  const targetHeight = aspectRatio >= 1 ? Math.max(1, Math.round(scaledSize / aspectRatio)) : scaledSize;
+  const targetWidth = fillFrame
+    ? scaledSize
+    : (aspectRatio >= 1 ? scaledSize : Math.max(1, Math.round(scaledSize * aspectRatio)));
+  const targetHeight = fillFrame
+    ? scaledSize
+    : (aspectRatio >= 1 ? Math.max(1, Math.round(scaledSize / aspectRatio)) : scaledSize);
   const containedLeft = left + Math.round((scaledSize - targetWidth) / 2);
   const containedTop = top + Math.round((scaledSize - targetHeight) / 2);
 
@@ -1209,6 +1378,8 @@ function renderMasterIconCanvas(project, sourceImage, options = {}) {
   context.globalCompositeOperation = project.icon.blendWhiteBackground ? "multiply" : "source-over";
   context.drawImage(artworkCanvas, 0, 0);
   context.restore();
+
+  clipCanvasToShape(context, masterIconSize, policy.shape);
 
   return canvas;
 }
@@ -1242,16 +1413,16 @@ async function buildClientExportZip(project, platforms) {
     : null;
   const masterIcons = {
     android: platforms.includes("android")
-      ? renderMasterIconCanvas(project, sourceImage)
+      ? renderMasterIconCanvas(project, sourceImage, { platform: "android" })
       : null,
     ios: platforms.includes("ios")
-      ? renderMasterIconCanvas(project, sourceImage, { scaleMultiplier: iosArtworkScaleMultiplier })
+      ? renderMasterIconCanvas(project, sourceImage, { platform: "ios", scaleMultiplier: iosArtworkScaleMultiplier })
       : null,
     windows: platforms.includes("windows")
-      ? renderMasterIconCanvas(project, sourceImage)
+      ? renderMasterIconCanvas(project, sourceImage, { platform: "windows" })
       : null,
     macos: platforms.includes("macos")
-      ? renderMasterIconCanvas(project, sourceImage)
+      ? renderMasterIconCanvas(project, sourceImage, { platform: "macos" })
       : null
   };
 
@@ -1476,8 +1647,14 @@ function updateIconStyles(element, textElement, defaultShape, mode = "editor") {
     return;
   }
 
+  const previewFillFrame = state.assetFullBleed && Number(state.padding) === 0;
+
   applyShape(element, defaultShape);
-  element.style.background = state.backgroundColor;
+  // Behind a full-bleed icon, match the exported square platforms: any sliver
+  // not covered by the artwork shows the icon's own edge colour, never white.
+  element.style.background = (previewFillFrame && state.assetEdgeColor)
+    ? state.assetEdgeColor
+    : state.backgroundColor;
   element.style.color = state.foregroundColor;
   element.style.transformOrigin = "center center";
 
@@ -1488,18 +1665,21 @@ function updateIconStyles(element, textElement, defaultShape, mode = "editor") {
     element.style.padding = `${state.padding}px`;
     element.style.transform = `scale(${state.zoom})`;
   } else if (mode === "ios-preview") {
-    const previewScale = Math.min(1.08, Math.max(0.9, 0.98 + ((state.zoom - 1) * 0.28)));
-    element.style.padding = hasAsset ? "0" : `${Math.max(8, Math.round(state.padding * 0.5))}px`;
-    element.style.transform = `scale(${previewScale})`;
+    element.style.padding = hasAsset ? "0" : `${Math.max(6, Math.round(state.padding * 0.5))}px`;
+    element.style.transform = "none";
   } else {
     element.style.padding = "0";
     element.style.transform = "none";
   }
 
+  const fillFrame = previewFillFrame;
+  const assetPercent = getAssetSize(mode);
+
   imageElement.src = hasAsset ? state.assetDataUrl : "";
   imageElement.hidden = !hasAsset;
-  imageElement.style.width = `${getAssetSize(mode)}%`;
-  imageElement.style.height = `${getAssetSize(mode)}%`;
+  imageElement.style.width = `${assetPercent}%`;
+  imageElement.style.height = `${assetPercent}%`;
+  imageElement.style.objectFit = fillFrame ? "fill" : "contain";
   imageElement.style.transform = hasAsset
     ? `translate(-50%, -50%) scale(${state.zoom})`
     : "translate(-50%, -50%) scale(1)";
@@ -1533,6 +1713,20 @@ async function applyStudioAssetFromSource(source, options = {}) {
   state.assetDataUrl = normalizedAsset.dataUrl;
   state.assetMimeType = normalizedAsset.mimeType || inferMimeTypeFromDataUrl(source);
   state.backgroundRemoved = Boolean(options.backgroundRemoved);
+  // A removed background always leaves transparency, so it can never be a
+  // full-bleed icon regardless of the source shape.
+  state.assetFullBleed = !options.backgroundRemoved && Boolean(normalizedAsset.isFullBleed);
+
+  if (state.assetFullBleed) {
+    try {
+      const fullBleedImage = await loadImageSource(state.assetDataUrl);
+      state.assetEdgeColor = getImageEdgeColorHex(fullBleedImage, state.backgroundColor);
+    } catch {
+      state.assetEdgeColor = state.backgroundColor;
+    }
+  } else {
+    state.assetEdgeColor = "";
+  }
 
   return normalizedAsset;
 }
@@ -1660,9 +1854,26 @@ async function loadUploadedAsset(file) {
   state.originalAssetMimeType = file.type || inferMimeTypeFromDataUrl(dataUrl);
   state.assetName = file.name;
   const normalizedAsset = await applyStudioAssetFromSource(dataUrl, { backgroundRemoved: false });
-  elements.apiStatus.textContent = normalizedAsset.wasTrimmed
-    ? `Asset loaded and centered: ${file.name}`
-    : `Asset loaded: ${file.name}`;
+
+  if (state.assetFullBleed) {
+    // A finished square icon should fill the frame exactly as uploaded.
+    state.padding = 0;
+    state.zoom = 1;
+
+    if (elements.padding) {
+      elements.padding.value = "0";
+    }
+
+    if (elements.zoom) {
+      elements.zoom.value = "1";
+    }
+  }
+
+  elements.apiStatus.textContent = state.assetFullBleed
+    ? `Finished icon detected - filling the frame edge to edge: ${file.name}`
+    : normalizedAsset.wasTrimmed
+      ? `Asset loaded and centered: ${file.name}`
+      : `Asset loaded: ${file.name}`;
   render();
 }
 
@@ -1678,6 +1889,8 @@ function clearUploadedAsset() {
   state.originalAssetDataUrl = null;
   state.originalAssetMimeType = "";
   state.backgroundRemoved = false;
+  state.assetFullBleed = false;
+  state.assetEdgeColor = "";
   state.isRemovingBackground = false;
   if (elements.assetUpload) {
     elements.assetUpload.value = "";
@@ -1719,6 +1932,8 @@ async function saveProject() {
   state.originalAssetDataUrl = data.project.icon.originalAssetDataUrl || data.project.icon.assetDataUrl || null;
   state.originalAssetMimeType = data.project.icon.originalAssetMimeType || data.project.icon.assetMimeType || "";
   state.backgroundRemoved = Boolean(data.project.icon.backgroundRemoved);
+  state.assetFullBleed = data.project.icon.fillMode === "fill" || data.project.icon.fillMode === "cover";
+  state.assetEdgeColor = data.project.icon.autoBackgroundColor || state.assetEdgeColor || "";
   state.exportFileName = defaultExportFileName;
   state.blendWhiteBackground = Boolean(data.project.icon.blendWhiteBackground);
   if (elements.apiStatus) {
@@ -1760,6 +1975,8 @@ function buildProjectPayload() {
       zoom: state.zoom,
       padding: state.padding,
       blendWhiteBackground: state.blendWhiteBackground,
+      fillMode: (state.assetFullBleed && Number(state.padding) === 0) ? "fill" : "contain",
+      autoBackgroundColor: state.assetEdgeColor || null,
       shape: state.shape
     }
   };
@@ -1821,6 +2038,8 @@ async function toggleBackgroundRemoval() {
     state.assetDataUrl = removedAsset.dataUrl;
     state.assetMimeType = removedAsset.mimeType;
     state.backgroundRemoved = true;
+    state.assetFullBleed = false;
+    state.assetEdgeColor = "";
     if (elements.apiStatus) {
       elements.apiStatus.textContent = `Background removed: ${state.assetName}`;
     }

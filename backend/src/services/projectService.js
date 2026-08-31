@@ -64,6 +64,8 @@ async function createProject(payload) {
       zoom: payload.icon?.zoom ?? 1,
       padding: payload.icon?.padding ?? 16,
       blendWhiteBackground: payload.icon?.blendWhiteBackground ?? false,
+      fillMode: payload.icon?.fillMode || "contain",
+      autoBackgroundColor: payload.icon?.autoBackgroundColor || null,
       positionX: payload.icon?.positionX ?? 0,
       positionY: payload.icon?.positionY ?? 0,
       shadow: payload.icon?.shadow ?? 12,
