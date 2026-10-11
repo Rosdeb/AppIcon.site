@@ -2,7 +2,7 @@
   "name": "androdios",
   "private": true,
   "engines": {
-    "node": "20.x"
+    "node": "24.x"
   },
   "scripts": {
     "dev": "npm --prefix backend run dev",
