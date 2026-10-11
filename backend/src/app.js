@@ -112,6 +112,17 @@ app.get("/app-icon-generator-free", (_req, res) => {
   res.sendFile(path.join(websiteDirectory, "app-icon-generator-free.html"));
 });
 
+// Keep clean image-tool URLs consistent between local Express and Vercel.
+const imageToolPages = ["image-cropper", "image-resizer", "image-converter", "image-compressor", "crop-resize-convert"];
+app.get("/tools", (_req, res) => {
+  res.sendFile(path.join(websiteDirectory, "tools/index.html"));
+});
+for (const tool of imageToolPages) {
+  app.get(`/tools/${tool}`, (_req, res) => {
+    res.sendFile(path.join(websiteDirectory, "tools", `${tool}.html`));
+  });
+}
+
 app.get("*", (req, res, next) => {
   if (req.path.startsWith("/api/")) {
     return next();

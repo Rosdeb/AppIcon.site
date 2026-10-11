@@ -24,6 +24,12 @@
     { "source": "/terms-of-service.html", "destination": "/terms-of-service", "permanent": true }
   ],
   "rewrites": [
+    {"source": "/tools", "destination": "/website/tools/index.html"},
+    {"source": "/tools/image-cropper", "destination": "/website/tools/image-cropper.html"},
+    {"source": "/tools/image-resizer", "destination": "/website/tools/image-resizer.html"},
+    {"source": "/tools/image-converter", "destination": "/website/tools/image-converter.html"},
+    {"source": "/tools/image-compressor", "destination": "/website/tools/image-compressor.html"},
+    {"source": "/tools/crop-resize-convert", "destination": "/website/tools/crop-resize-convert.html"},
     {
       "source": "/api/:path*",
       "destination": "/api/[...route]"

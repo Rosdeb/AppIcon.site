@@ -78,4 +78,10 @@
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
+  <url><loc>https://www.appicon.site/tools</loc></url>
+  <url><loc>https://www.appicon.site/tools/image-cropper</loc></url>
+  <url><loc>https://www.appicon.site/tools/image-resizer</loc></url>
+  <url><loc>https://www.appicon.site/tools/image-converter</loc></url>
+  <url><loc>https://www.appicon.site/tools/image-compressor</loc></url>
+  <url><loc>https://www.appicon.site/tools/crop-resize-convert</loc></url>
 </urlset>
