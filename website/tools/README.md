@@ -1,6 +1,6 @@
 # Image Tools
 
-The tools extend the existing static website. Processing uses browser Canvas and the locally vendored Cropper.js 1.7.0 (MIT), pinned from https://www.npmjs.com/package/cropperjs. No application npm dependency was added. Vendor files include the upstream license. No image requests are sent to the API.
+The tools extend the existing static website. Processing uses browser Canvas, the locally vendored Cropper.js 1.7.0 (MIT), pinned from https://www.npmjs.com/package/cropperjs, and JSZip 3.10.1 (MIT) for bulk downloads. No application npm dependency was added. Vendor files include the upstream license. No image requests are sent to the API. Single and bulk images are supported.
 
 Routes: `/tools`, `/tools/image-cropper`, `/tools/image-resizer`, `/tools/image-converter`, `/tools/image-compressor`, `/tools/crop-resize-convert`. Both Vercel rewrites and Express routes serve the same files. Each HTML page supplies metadata and a workspace mode. Shared `tools.js` handles decoding, cropping, resizing, encoding, object URL cleanup, preview and download; `tools.css` reuses existing design tokens with styles scoped to this section. To add another tool, add its page/mode and register its card, routes and sitemap entry.
 
@@ -15,7 +15,7 @@ The regression script requires Playwright as a separate testing dependency and a
 
 ## Limits
 
-Files are limited to 40 MB, 8192 pixels per side and 24 megapixels for both decoded input and output. Decoding depends on browser support; output supports PNG and available JPEG/WebP encoders. Animated images export a still frame; BMP and GIF output are not advertised. Modern browser image decoding supplies orientation; older browser EXIF behavior may differ. Canvas strips metadata, may alter color profiles, and re-encodes images. Compression can increase size, especially when exporting PNG. Batch processing and a separate favicon generator are deferred; the existing icon generator remains available. Rotation and horizontal flipping are included in crop workflows. Dimensions and file sizes are displayed.
+Files are limited to 40 MB, 8192 pixels per side and 24 megapixels for both decoded input and output. Decoding depends on browser support; output supports PNG and available JPEG/WebP encoders. Animated images export a still frame; BMP and GIF output are not advertised. Modern browser image decoding supplies orientation; older browser EXIF behavior may differ. Canvas strips metadata, may alter color profiles, and re-encodes images. Compression can increase size, especially when exporting PNG. Batch processing is supported for all tools with a thumbnail queue and ZIP packaging; a separate favicon generator is deferred; the existing icon generator remains available. Rotation and horizontal flipping are included in crop workflows. Dimensions and file sizes are displayed.
 
 ## Adaptive editing layout
 
