@@ -2112,11 +2112,6 @@ async function generateExportPlan() {
       : `Export ready: ${fileName}`;
   }
 
-  const adEl = document.getElementById("post-export-ad");
-  if (adEl && adEl.hidden) {
-    adEl.hidden = false;
-    try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (_) {}
-  }
 }
 
 function bindEvents() {
