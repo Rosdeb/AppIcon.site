@@ -1340,7 +1340,7 @@ function renderMasterIconCanvas(project, sourceImage, options = {}) {
     context.fillStyle = project.icon.foregroundColor || "#1a2130";
     context.textAlign = "center";
     context.textBaseline = "middle";
-    context.font = `700 ${getTextOverlayFontSize(text, masterIconSize, scaleMultiplier)}px Inter, Arial, sans-serif`;
+    context.font = `600 ${getTextOverlayFontSize(text, masterIconSize, scaleMultiplier)}px -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro", "Helvetica Neue", Arial, sans-serif`;
     context.fillText(text, masterIconSize / 2, Math.round(masterIconSize * 0.52));
     clipCanvasToShape(context, masterIconSize, policy.shape);
     return canvas;

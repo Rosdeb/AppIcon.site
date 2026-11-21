@@ -13,11 +13,13 @@
       "destination": "https://www.appicon.site/:path*",
       "permanent": true
     },
+    { "source": "/app-icon-generator-free", "destination": "/app-icon-generator", "permanent": true },
     { "source": "/website/blog-index.html", "destination": "/blog", "permanent": true },
     { "source": "/website/blog-ios-icon-sizes.html", "destination": "/blog/ios-app-icon-sizes", "permanent": true },
     { "source": "/website/blog-android-icon-guide.html", "destination": "/blog/android-adaptive-icons", "permanent": true },
     { "source": "/website/blog-app-icon-design-tips.html", "destination": "/blog/app-icon-design-tips", "permanent": true },
     { "source": "/about.html", "destination": "/about", "permanent": true },
+    { "source": "/contact.html", "destination": "/contact", "permanent": true },
     { "source": "/faq.html", "destination": "/faq", "permanent": true },
     { "source": "/how-it-works.html", "destination": "/how-it-works", "permanent": true },
     { "source": "/privacy-policy.html", "destination": "/privacy-policy", "permanent": true },
@@ -43,6 +45,26 @@
       "destination": "/website/blog-index.html"
     },
     {
+      "source": "/blog/app-store-optimization-icons",
+      "destination": "/website/blog-app-store-optimization-icons.html"
+    },
+    {
+      "source": "/blog/favicon-guide",
+      "destination": "/website/blog-favicon-complete-guide.html"
+    },
+    {
+      "source": "/blog/pwa-icon-guide",
+      "destination": "/website/blog-pwa-icon-guide.html"
+    },
+    {
+      "source": "/blog/windows-app-icons",
+      "destination": "/website/blog-windows-app-icons.html"
+    },
+    {
+      "source": "/blog/macos-app-icon-guide",
+      "destination": "/website/blog-macos-icon-guide.html"
+    },
+    {
       "source": "/blog/ios-app-icon-sizes",
       "destination": "/website/blog-ios-icon-sizes.html"
     },
@@ -57,6 +79,10 @@
     {
       "source": "/about",
       "destination": "/about.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/contact.html"
     },
     {
       "source": "/privacy-policy",
@@ -81,10 +107,6 @@
     {
       "source": "/app-icon-generator",
       "destination": "/website/app-icon-generator.html"
-    },
-    {
-      "source": "/app-icon-generator-free",
-      "destination": "/website/app-icon-generator-free.html"
     },
     {
       "source": "/",

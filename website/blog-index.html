@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>App Icon Design Blog — iOS &amp; Android Icon Guides | App Icon Studio</title>
-  <meta name="description" content="Guides and best practices for designing iOS and Android app icons — icon sizes, adaptive icons, App Store requirements, and export workflows." />
+  <title>App Icon Design Blog &amp; Guides | App Icon Studio</title>
+  <meta name="description" content="Guides and best practices for app icon design, macOS squircle grids, Windows high-DPI scaling, PWA manifests, modern favicons, and ASO conversion." />
   <link rel="canonical" href="https://www.appicon.site/blog" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <link rel="icon" href="/website/assets/icons/favicon.ico" sizes="any" />
@@ -13,8 +13,8 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="App Icon Studio" />
   <meta property="og:url" content="https://www.appicon.site/blog" />
-  <meta property="og:title" content="App Icon Design Blog — iOS &amp; Android Icon Guides" />
-  <meta property="og:description" content="Guides on iOS and Android app icon sizes, adaptive icons, and export workflows." />
+  <meta property="og:title" content="App Icon Design Blog &amp; Guides | App Icon Studio" />
+  <meta property="og:description" content="Master app icon requirements, desktop specifications, and store optimization strategies." />
   <meta property="og:image" content="https://www.appicon.site/website/assets/icons/screenshot1.png" />
   <meta name="twitter:card" content="summary_large_image" />
 
@@ -24,13 +24,18 @@
     "@type": "Blog",
     "name": "App Icon Studio Blog",
     "url": "https://www.appicon.site/blog",
-    "description": "Guides and best practices for designing iOS and Android app icons.",
+    "description": "Guides and best practices for designing iOS, Android, macOS, and Windows app icons.",
     "publisher": {
       "@type": "Organization",
       "name": "App Icon Studio",
       "logo": { "@type": "ImageObject", "url": "https://www.appicon.site/website/assets/icons/favicon-512x512.png" }
     },
     "blogPost": [
+      { "@type": "BlogPosting", "headline": "App Store Optimization (ASO): How Icon Design Impacts Conversion Rates", "url": "https://www.appicon.site/blog/app-store-optimization-icons", "datePublished": "2026-11-04" },
+      { "@type": "BlogPosting", "headline": "The Modern Favicon Guide: SVG, Apple Touch Icons & ICO Standards", "url": "https://www.appicon.site/blog/favicon-guide", "datePublished": "2026-10-18" },
+      { "@type": "BlogPosting", "headline": "Progressive Web App (PWA) Icon Guide: Manifest, Maskable Icons & Best Sizes", "url": "https://www.appicon.site/blog/pwa-icon-guide", "datePublished": "2026-09-28" },
+      { "@type": "BlogPosting", "headline": "Windows 11 App Icon & Tile Specifications: High-DPI .ICO Generation", "url": "https://www.appicon.site/blog/windows-app-icons", "datePublished": "2026-09-05" },
+      { "@type": "BlogPosting", "headline": "macOS App Icon Design Guide: Squircle Grid, Layers & ICNS Export", "url": "https://www.appicon.site/blog/macos-app-icon-guide", "datePublished": "2026-08-10" },
       { "@type": "BlogPosting", "headline": "Complete guide to iOS app icon sizes in 2026", "url": "https://www.appicon.site/blog/ios-app-icon-sizes", "datePublished": "2026-06-15" },
       { "@type": "BlogPosting", "headline": "Android adaptive icons: a practical design guide", "url": "https://www.appicon.site/blog/android-adaptive-icons", "datePublished": "2026-06-15" },
       { "@type": "BlogPosting", "headline": "5 app icon design tips that make your app stand out", "url": "https://www.appicon.site/blog/app-icon-design-tips", "datePublished": "2026-06-15" }
@@ -38,9 +43,9 @@
   }
   </script>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.cdnfonts.com" />
+  <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7548214699138468" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="/website/styles.css" />
   <style>
     .blog-hero {
@@ -61,7 +66,7 @@
     }
     .blog-hero h1 {
       font-size: 38px;
-      font-weight: 700;
+      font-weight: 600;
       color: #1a2130;
       letter-spacing: -1px;
       margin-bottom: 14px;
@@ -69,16 +74,16 @@
     .blog-hero p {
       font-size: 16px;
       color: #6b7280;
-      max-width: 480px;
+      max-width: 580px;
       margin: 0 auto;
       line-height: 1.7;
     }
 
     .blog-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 24px;
-      max-width: 980px;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 28px;
+      max-width: 1040px;
       margin: 0 auto;
       padding: 0 24px 72px;
     }
@@ -90,20 +95,26 @@
       overflow: hidden;
       transition: box-shadow .2s, transform .2s;
       text-decoration: none;
-      display: block;
+      display: flex;
+      flex-direction: column;
     }
     .blog-card:hover {
       box-shadow: 0 8px 32px rgba(108,143,245,.14);
       transform: translateY(-2px);
     }
     .blog-card-thumb {
-      height: 160px;
+      height: 150px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 48px;
+      font-size: 44px;
     }
-    .blog-card-body { padding: 20px 22px 24px; }
+    .blog-card-body {
+      padding: 20px 22px 24px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
     .blog-card-tag {
       display: inline-block;
       background: #f0f4ff;
@@ -115,10 +126,11 @@
       text-transform: uppercase;
       letter-spacing: .04em;
       margin-bottom: 10px;
+      align-self: flex-start;
     }
     .blog-card h2 {
-      font-size: 16px;
-      font-weight: 700;
+      font-size: 17px;
+      font-weight: 600;
       color: #1a2130;
       margin-bottom: 8px;
       line-height: 1.4;
@@ -128,10 +140,12 @@
       color: #6b7280;
       line-height: 1.6;
       margin-bottom: 16px;
+      flex-grow: 1;
     }
     .blog-card-meta {
       font-size: 12px;
       color: #9ca3af;
+      margin-top: auto;
     }
   </style>
 </head>
@@ -142,22 +156,79 @@
       <img class="brand-mark brand-mark-img" src="/website/assets/icons/Gemini_Generated_Image_wc0y3fwc0y3fwc0y-removebg-preview.png" alt="App Icon Studio logo" width="100" height="100" />
       <div><h1><a href="/" style="text-decoration:none;color:inherit;">App Icon Studio</a></h1></div>
     </div>
+    <nav class="topbar-links" aria-label="Primary navigation">
+      <a href="/">Generator</a>
+      <a href="/tools">Image Tools</a>
+      <a href="/blog" aria-current="page">Blog</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+    </nav>
   </header>
 
   <main>
     <div class="blog-hero">
-      <span class="eyebrow">Blog</span>
-      <h1>Icon design tips &amp; guides</h1>
-      <p>Everything you need to design, size, and ship great app icons for iOS and Android.</p>
+      <span class="eyebrow">Developer &amp; Designer Resources</span>
+      <h1>Icon Design Tips, Guides &amp; Specifications</h1>
+      <p>Comprehensive technical guides, sizing matrices, and design strategies for shipping high-converting icons across iOS, Android, macOS, Windows, and the Web.</p>
     </div>
 
     <div class="blog-grid">
+      <a href="/blog/app-store-optimization-icons" class="blog-card">
+        <div class="blog-card-thumb" style="background: linear-gradient(135deg, #fce7f3, #fbcfe8);">📈</div>
+        <div class="blog-card-body">
+          <span class="blog-card-tag" style="background:#fdf2f8; color:#db2777;">ASO &amp; Growth</span>
+          <h2>App Store Optimization (ASO): How Icon Design Impacts Conversion</h2>
+          <p>Learn how strategic icon design, competitive color benchmarking, and native A/B testing can improve store tap-through rates.</p>
+          <div class="blog-card-meta">November 2026 · 7 min read</div>
+        </div>
+      </a>
+
+      <a href="/blog/favicon-guide" class="blog-card">
+        <div class="blog-card-thumb" style="background: linear-gradient(135deg, #fef3c7, #fde68a);">🌐</div>
+        <div class="blog-card-body">
+          <span class="blog-card-tag" style="background:#fffbeb; color:#d97706;">Web Standards</span>
+          <h2>The Modern Favicon Guide: SVG, Apple Touch Icons &amp; ICO Standards</h2>
+          <p>Streamline your favicon implementation using scalable SVGs with automatic dark mode support and minimal HTML tags.</p>
+          <div class="blog-card-meta">October 2026 · 6 min read</div>
+        </div>
+      </a>
+
+      <a href="/blog/pwa-icon-guide" class="blog-card">
+        <div class="blog-card-thumb" style="background: linear-gradient(135deg, #dcfce7, #bbf7d0);">📱</div>
+        <div class="blog-card-body">
+          <span class="blog-card-tag" style="background:#f0fdf4; color:#16a34a;">PWA</span>
+          <h2>Progressive Web App (PWA) Icons: Manifest, Maskable Icons &amp; Sizes</h2>
+          <p>How to configure web app manifests, design maskable icons with safe zones, and prevent white border clipping on mobile.</p>
+          <div class="blog-card-meta">September 2026 · 7 min read</div>
+        </div>
+      </a>
+
+      <a href="/blog/windows-app-icons" class="blog-card">
+        <div class="blog-card-thumb" style="background: linear-gradient(135deg, #e0f2fe, #bae6fd);">🪟</div>
+        <div class="blog-card-body">
+          <span class="blog-card-tag" style="background:#f0f9ff; color:#0284c7;">Windows</span>
+          <h2>Windows 11 App Icon &amp; Tile Specifications: High-DPI .ICO Generation</h2>
+          <p>Build crystal-clear desktop icons following Microsoft Fluent Design principles with high-DPI scaling from 16px to 256px.</p>
+          <div class="blog-card-meta">September 2026 · 6 min read</div>
+        </div>
+      </a>
+
+      <a href="/blog/macos-app-icon-guide" class="blog-card">
+        <div class="blog-card-thumb" style="background: linear-gradient(135deg, #ede9fe, #ddd6fe);">💻</div>
+        <div class="blog-card-body">
+          <span class="blog-card-tag" style="background:#f5f3ff; color:#7c3aed;">macOS</span>
+          <h2>macOS App Icon Design Guide: The Squircle Grid, Layers &amp; ICNS Export</h2>
+          <p>Master Apple's uniform squircle grid, lighting bevels, and iconset folder structure to export production .icns packages.</p>
+          <div class="blog-card-meta">August 2026 · 7 min read</div>
+        </div>
+      </a>
+
       <a href="/blog/ios-app-icon-sizes" class="blog-card">
         <div class="blog-card-thumb" style="background: linear-gradient(135deg, #e8f0ff, #d4e0ff);">📐</div>
         <div class="blog-card-body">
           <span class="blog-card-tag">iOS</span>
-          <h2>Complete guide to iOS app icon sizes in 2026</h2>
-          <p>Every size Apple requires, from the home screen to the App Store listing — with a downloadable size reference.</p>
+          <h2>Complete Guide to iOS App Icon Sizes in 2026</h2>
+          <p>Every size Apple requires, from the home screen to App Store listings—with a downloadable size reference table.</p>
           <div class="blog-card-meta">June 2026 · 5 min read</div>
         </div>
       </a>
@@ -165,9 +236,9 @@
       <a href="/blog/android-adaptive-icons" class="blog-card">
         <div class="blog-card-thumb" style="background: linear-gradient(135deg, #e8fff0, #d4f5e0);">🤖</div>
         <div class="blog-card-body">
-          <span class="blog-card-tag">Android</span>
-          <h2>Android adaptive icons: a practical design guide</h2>
-          <p>How to design icons that look great across all Android launchers, shapes, and density buckets.</p>
+          <span class="blog-card-tag" style="background:#ecfdf5; color:#059669;">Android</span>
+          <h2>Android Adaptive Icons: A Practical Design Guide</h2>
+          <p>How to design icons that look great across all Android launchers, dynamic shapes, and density mipmaps.</p>
           <div class="blog-card-meta">June 2026 · 6 min read</div>
         </div>
       </a>
@@ -175,8 +246,8 @@
       <a href="/blog/app-icon-design-tips" class="blog-card">
         <div class="blog-card-thumb" style="background: linear-gradient(135deg, #fff4e8, #fde8cc);">🎨</div>
         <div class="blog-card-body">
-          <span class="blog-card-tag">Design</span>
-          <h2>5 app icon design tips that make your app stand out</h2>
+          <span class="blog-card-tag" style="background:#fff7ed; color:#ea580c;">Design</span>
+          <h2>5 App Icon Design Tips That Make Your App Stand Out</h2>
           <p>Simple principles used by top apps on the App Store to create icons that are memorable and tap-worthy.</p>
           <div class="blog-card-meta">June 2026 · 4 min read</div>
         </div>
@@ -185,12 +256,15 @@
   </main>
 
   <footer class="site-footer">
-    <p>&copy; 2026 Pilach. @Developed by Rosdeb Koch</p>
+    <p>&copy; 2026 Pilach. Developed by Rosdeb Koch.</p>
     <div class="site-footer-links">
+      <a href="/">Home</a>
+      <a href="/tools">Image Tools</a>
+      <a href="/blog">Blog</a>
       <a href="/about">About</a>
+      <a href="/contact">Contact</a>
       <a href="/how-it-works">How It Works</a>
       <a href="/faq">FAQ</a>
-      <a href="/">Generator</a>
       <a href="/privacy-policy">Privacy Policy</a>
       <a href="/terms-of-service">Terms</a>
       <a href="/sitemap.xml">Sitemap</a>

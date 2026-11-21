@@ -298,9 +298,9 @@ function buildTextOverlaySvg(project, size, scaleMultiplier = 1) {
           y="52%"
           text-anchor="middle"
           dominant-baseline="middle"
-          font-family="Inter, Arial, sans-serif"
+          font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro', 'Helvetica Neue', Arial, sans-serif"
           font-size="${fontSize}"
-          font-weight="700"
+          font-weight="600"
           fill="${escapeXml(project.icon.foregroundColor || "#1a2130")}">${escapeXml(text)}</text>
       </svg>
     `.trim()

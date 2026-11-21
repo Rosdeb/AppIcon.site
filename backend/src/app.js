@@ -37,12 +37,12 @@ app.get("/admin", (_req, res) => {
   res.sendFile(path.join(adminDirectory, "index.html"));
 });
 
-app.get("/about", (_req, res) => {
+app.get(["/about", "/about.html"], (_req, res) => {
   res.sendFile(path.join(projectRootDirectory, "about.html"));
 });
 
-app.get("/about.html", (_req, res) => {
-  res.sendFile(path.join(projectRootDirectory, "about.html"));
+app.get(["/contact", "/contact.html"], (_req, res) => {
+  res.sendFile(path.join(projectRootDirectory, "contact.html"));
 });
 
 app.get("/privacy-policy", (_req, res) => {
@@ -89,12 +89,27 @@ app.get("/ads.txt", (_req, res) => {
   res.sendFile(path.join(projectRootDirectory, "ads.txt"));
 });
 
-app.get(["/blog", "/blog/ios-app-icon-sizes", "/blog/android-adaptive-icons", "/blog/app-icon-design-tips"], (req, res) => {
+app.get([
+  "/blog",
+  "/blog/ios-app-icon-sizes",
+  "/blog/android-adaptive-icons",
+  "/blog/app-icon-design-tips",
+  "/blog/macos-app-icon-guide",
+  "/blog/windows-app-icons",
+  "/blog/pwa-icon-guide",
+  "/blog/favicon-guide",
+  "/blog/app-store-optimization-icons"
+], (req, res) => {
   const blogFiles = {
     "/blog": "blog-index.html",
     "/blog/ios-app-icon-sizes": "blog-ios-icon-sizes.html",
     "/blog/android-adaptive-icons": "blog-android-icon-guide.html",
-    "/blog/app-icon-design-tips": "blog-app-icon-design-tips.html"
+    "/blog/app-icon-design-tips": "blog-app-icon-design-tips.html",
+    "/blog/macos-app-icon-guide": "blog-macos-icon-guide.html",
+    "/blog/windows-app-icons": "blog-windows-app-icons.html",
+    "/blog/pwa-icon-guide": "blog-pwa-icon-guide.html",
+    "/blog/favicon-guide": "blog-favicon-complete-guide.html",
+    "/blog/app-store-optimization-icons": "blog-app-store-optimization-icons.html"
   };
 
   res.sendFile(path.join(websiteDirectory, blogFiles[req.path] || "blog-index.html"));
@@ -109,7 +124,7 @@ app.get("/app-icon-generator", (_req, res) => {
 });
 
 app.get("/app-icon-generator-free", (_req, res) => {
-  res.sendFile(path.join(websiteDirectory, "app-icon-generator-free.html"));
+  res.redirect(301, "/app-icon-generator");
 });
 
 // Keep clean image-tool URLs consistent between local Express and Vercel.

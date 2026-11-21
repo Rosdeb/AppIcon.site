@@ -9,17 +9,25 @@
     <link rel="canonical" href="https://www.appicon.site/tools/image-converter">
     <meta name="theme-color" content="#b98d4e">
     <link rel="icon" href="/website/assets/icons/favicon.ico">
+    <link rel="preconnect" href="https://fonts.cdnfonts.com">
+    <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet">
     <link rel="stylesheet" href="/website/styles.css">
     <link rel="stylesheet" href="/website/tools/tools.css">
     <link rel="stylesheet" href="/website/vendor/cropper.min.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7548214699138468" crossorigin="anonymous"></script>
 </head>
 
 <body class="theme-public image-tools">
     <div class="site-shell">
         <header class="workspace-header"><a class="brand-lockup" href="/"><img width="52" height="52"
-                    src="/website/assets/icons/header-icon.png" alt=""><strong>App Icon Studio</strong></a>
-            <nav class="topbar-links" aria-label="Primary navigation"><a href="/">Generator</a><a href="/tools"
-                    aria-current="false">Image Tools</a><a href="/blog">Blog</a></nav>
+                    src="/website/assets/icons/Gemini_Generated_Image_wc0y3fwc0y3fwc0y-removebg-preview.png" alt="App Icon Studio"><strong>App Icon Studio</strong></a>
+            <nav class="topbar-links" aria-label="Primary navigation">
+                <a href="/">Generator</a>
+                <a href="/tools" aria-current="false">Image Tools</a>
+                <a href="/blog">Blog</a>
+                <a href="/about">About</a>
+                <a href="/contact">Contact</a>
+            </nav>
         </header>
         <main><a class="back-link" href="/tools">← All image tools</a>
             <section class="tools-hero tools-title-card">
@@ -164,9 +172,62 @@
                     export. Output is limited to 8192 pixels per side and 24 megapixels. Compression may produce a
                     larger file; compare the sizes before downloading.</p>
             </div>
+
+            <div class="tool-guide-wrap">
+                <article class="tool-editorial-card">
+                    <h2>Private In-Browser Image Format Converter</h2>
+                    <p>
+                        Different digital platforms and web frameworks require specific image formats for optimal performance, quality, and transparency.
+                        Converting graphics with our client-side utility gives you granular control over container formats, quality tiers, and background color substitution.
+                    </p>
+                    <p>
+                        Format selection recommendations:
+                    </p>
+                    <ul>
+                        <li><strong>Convert to WebP:</strong> Recommended for modern web applications and blogs. WebP offers both lossy and lossless modes, supporting transparency while cutting file sizes by up to 30% compared to JPG/PNG.</li>
+                        <li><strong>Convert to PNG:</strong> Best for app icons, UI graphics, logos, and illustrations where crisp pixel edges and transparent backgrounds must be preserved with lossless quality.</li>
+                        <li><strong>Convert to JPEG:</strong> Ideal for rich photographic assets, camera pictures, and complex textures where lossy compression delivers massive bandwidth savings.</li>
+                    </ul>
+                </article>
+
+                <article class="tool-editorial-card">
+                    <h2>Image Conversion FAQ</h2>
+                    <div class="tool-faq-grid">
+                        <div class="tool-faq-item">
+                            <h4>What happens to transparent backgrounds in JPEG?</h4>
+                            <p>Because JPEG does not support alpha channels, transparent pixels are replaced with your chosen background matte color (default is pure white).</p>
+                        </div>
+                        <div class="tool-faq-item">
+                            <h4>Are image EXIF metadata tags preserved?</h4>
+                            <p>Metadata such as GPS coordinates and camera serials are stripped during export, protecting your privacy and slimming down file sizes.</p>
+                        </div>
+                        <div class="tool-faq-item">
+                            <h4>Can I convert bulk images?</h4>
+                            <p>Yes. Select or drag multiple files into the workspace to convert them one after another in your local browser session.</p>
+                        </div>
+                        <div class="tool-faq-item">
+                            <h4>Is the conversion performed on a remote server?</h4>
+                            <p>No. 100% of the conversion pipeline executes locally via the browser Canvas API, ensuring complete data privacy.</p>
+                        </div>
+                    </div>
+                </article>
+            </div>
         </main>
-        <footer class="tools-footer">Images stay on your device. No upload, account or server processing. <a
-                href="/privacy-policy">Privacy policy</a></footer>
+        <footer class="site-footer">
+            <p>&copy; 2026 Pilach. Developed by Rosdeb Koch.</p>
+            <div class="site-footer-links">
+                <a href="/">Home</a>
+                <a href="/tools">Image Tools</a>
+                <a href="/blog">Blog</a>
+                <a href="/about">About</a>
+                <a href="/contact">Contact</a>
+                <a href="/how-it-works">How It Works</a>
+                <a href="/faq">FAQ</a>
+                <a href="/privacy-policy">Privacy Policy</a>
+                <a href="/terms-of-service">Terms</a>
+                <a href="/sitemap.xml">Sitemap</a>
+            </div>
+        </footer>
     </div>
     <script src="/website/vendor/cropper.min.js" defer></script>
     <script src="/website/vendor/jszip.min.js" defer></script>

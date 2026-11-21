@@ -1,3 +1,5 @@
+@import url('https://fonts.cdnfonts.com/css/sf-pro-display');
+
 :root {
   --landing-bg: #f5f8fd;
   --landing-surface: rgba(255, 255, 255, 0.92);
@@ -22,12 +24,30 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: "Inter", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "SF Pro", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   color: var(--landing-text);
   background:
     radial-gradient(circle at top left, rgba(95, 149, 255, 0.18), transparent 30%),
     radial-gradient(circle at top right, rgba(142, 197, 255, 0.18), transparent 26%),
     linear-gradient(180deg, #fbfdff 0%, var(--landing-bg) 100%);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "SF Pro", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 600;
+}
+
+strong,
+b {
+  font-weight: 600;
 }
 
 a {
@@ -90,7 +110,7 @@ img {
   background: rgba(255, 255, 255, 0.78);
   color: var(--landing-accent-deep);
   font-size: 0.92rem;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .landing-hero {
@@ -124,7 +144,7 @@ img {
   background: var(--landing-accent-soft);
   color: var(--landing-accent-deep);
   font-size: 0.82rem;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -157,7 +177,7 @@ img {
   padding: 0 20px;
   border-radius: 999px;
   font-size: 0.95rem;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .landing-primary-button {

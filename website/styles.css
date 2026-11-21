@@ -1,3 +1,5 @@
+@import url('https://fonts.cdnfonts.com/css/sf-pro-display');
+
 /* Screen-reader-only text: keeps supplementary keyword/context wording in the
    DOM for search engines and assistive tech without any visual change. */
 .visually-hidden {
@@ -30,8 +32,8 @@
   --radius-lg: 22px;
   --radius-md: 16px;
   --radius-sm: 12px;
-  --font-heading: "Inter", sans-serif;
-  --font-body: "Inter", sans-serif;
+  --font-heading: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "SF Pro", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "SF Pro", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
 * {
@@ -46,6 +48,9 @@ body {
   margin: 0;
   min-height: 100vh;
   font-family: var(--font-body);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   color: var(--text);
   background: var(--bg);
 }
@@ -65,8 +70,16 @@ h1,
 h2,
 h3,
 h4,
-strong {
+h5,
+h6 {
   font-family: var(--font-heading);
+  font-weight: 600;
+}
+
+strong,
+b {
+  font-family: var(--font-heading);
+  font-weight: 600;
 }
 
 h1,
@@ -112,7 +125,7 @@ p {
   border-radius: 10px;
   color: #1f3966;
   background: #ffffff;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 /* Image-based brand mark (overrides text version) */
@@ -199,7 +212,7 @@ p {
   background: #f0f4ff;
   color: #5a78e8;
   font-size: 0.72rem;
-  font-weight: 800;
+  font-weight: 600;
   text-transform: uppercase;
 }
 
@@ -225,7 +238,7 @@ p {
 
 .blog-preview-more a {
   color: #023d79;
-  font-weight: 800;
+  font-weight: 500;
 }
 
 .simple-heading {
@@ -382,7 +395,7 @@ p {
 .legal-card h3 {
   margin-bottom: 8px;
   font-size: 1.15rem;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--ink);
 }
 
@@ -709,7 +722,7 @@ input[type="range"],
   margin-bottom: 2px;
   font-size: 0.72rem;
   color: #9aa8b8;
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: 0.1em;
 }
 
@@ -1149,7 +1162,7 @@ input[type="range"],
 .iphone-app-icon span {
   font-family: var(--font-heading);
   font-size: 0.66rem;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .iphone-dock {
@@ -1233,7 +1246,7 @@ input[type="range"],
 .editor-icon span,
 .app-icon span {
   font-family: var(--font-heading);
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .editor-icon span {
@@ -1337,7 +1350,7 @@ input[type="range"],
 .variant-icon span {
   font-family: var(--font-heading);
   font-size: 0.85rem;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 
@@ -1606,7 +1619,7 @@ input[type="range"],
 
 .export-section .size-list strong {
   color: #1a2130;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .export-section .export-platform-selector {
@@ -1810,7 +1823,7 @@ input[type="range"],
 
 .showcase-label {
   font-size: 0.76rem;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: #7a89a2;
@@ -1827,7 +1840,7 @@ input[type="range"],
 
 .showcase-store-icon span {
   font-size: clamp(2.8rem, 4vw, 4.6rem);
-  font-weight: 800;
+  font-weight: 600;
 }
 
 .showcase-phone-card {
@@ -1866,7 +1879,7 @@ input[type="range"],
 
 .showcase-phone-icon span {
   font-size: 1.8rem;
-  font-weight: 800;
+  font-weight: 600;
 }
 
 .showcase-phone-screen p {
@@ -1915,7 +1928,7 @@ input[type="range"],
 
 .example-icon span {
   font-size: 1.6rem;
-  font-weight: 800;
+  font-weight: 600;
 }
 
 .about-layout {
@@ -1973,7 +1986,7 @@ input[type="range"],
   background: rgba(235, 243, 255, 0.94);
   color: #295d97;
   font-size: 0.72rem;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.14);
@@ -2059,7 +2072,7 @@ input[type="range"],
 .trust-stats-heading span,
 .trust-card-label {
   font-size: 0.72rem;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #6480a7;
@@ -2127,7 +2140,7 @@ input[type="range"],
 
 .trust-stat-head span:last-child {
   font-size: 0.66rem;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.07em;
   text-transform: uppercase;
   color: #70809a;
@@ -2310,7 +2323,7 @@ input[type="range"],
 }
 
 .dropzone-label {
-  font-weight: 700;
+  font-weight: 600;
   color: var(--ink);
   font-size: 0.88rem;
 }

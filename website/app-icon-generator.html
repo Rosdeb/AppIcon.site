@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>App Icon Generator | App Icon Studio</title>
+    <title>Complete App Icon Generator Guide &amp; Asset Builder | App Icon Studio</title>
     <meta
       name="description"
-      content="App icon generator for iOS and Android. Upload one image, preview your app icon, and export the required app icon sizes in a single ZIP."
+      content="Comprehensive guide and online tool for generating production-ready iOS and Android app icons. Upload one image, preview device mockups, and export structured ZIP packages."
     />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <link rel="canonical" href="https://www.appicon.site/app-icon-generator" />
@@ -14,12 +14,12 @@
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="App Icon Studio" />
     <meta property="og:url" content="https://www.appicon.site/app-icon-generator" />
-    <meta property="og:title" content="App Icon Generator for iOS and Android" />
-    <meta property="og:description" content="Upload one image, preview your app icon, and export every required iOS and Android app icon size in a single ZIP." />
+    <meta property="og:title" content="Complete App Icon Generator Guide &amp; Asset Builder" />
+    <meta property="og:description" content="Master app icon requirements for Apple App Store and Google Play. Preview live mockups and export complete ZIP packages from one image." />
     <meta property="og:image" content="https://www.appicon.site/website/assets/icons/screenshot1.png" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="App Icon Generator for iOS and Android" />
-    <meta name="twitter:description" content="Upload one image and export every required iOS and Android app icon size in a single ZIP." />
+    <meta name="twitter:title" content="Complete App Icon Generator Guide &amp; Asset Builder" />
+    <meta name="twitter:description" content="Generate production-ready iOS and Android app icons from one master graphic with zero quality loss." />
     <meta name="twitter:image" content="https://www.appicon.site/website/assets/icons/screenshot1.png" />
 
     <script type="application/ld+json">
@@ -38,7 +38,7 @@
           "@type": "BreadcrumbList",
           "itemListElement": [
             { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.appicon.site/" },
-            { "@type": "ListItem", "position": 2, "name": "App Icon Generator", "item": "https://www.appicon.site/app-icon-generator" }
+            { "@type": "ListItem", "position": 2, "name": "App Icon Generator Guide", "item": "https://www.appicon.site/app-icon-generator" }
           ]
         },
         {
@@ -46,18 +46,23 @@
           "mainEntity": [
             {
               "@type": "Question",
-              "name": "What does an app icon generator do?",
-              "acceptedAnswer": { "@type": "Answer", "text": "An app icon generator takes one image and converts it into the icon sizes and file structure needed for mobile platforms such as iOS and Android." }
+              "name": "What master resolution should I use for generating app icons?",
+              "acceptedAnswer": { "@type": "Answer", "text": "We recommend starting with a 1024×1024 pixel PNG or vector SVG asset. A 1024×1024 master image ensures that downscaled versions for iPhone, iPad, Apple Watch, and Android density buckets retain crisp edge definitions and clean typography without blur." }
             },
             {
               "@type": "Question",
-              "name": "Can I generate both iOS and Android app icons together?",
-              "acceptedAnswer": { "@type": "Answer", "text": "Yes. The App Icon Studio workflow lets you select Android, iOS, or both before export, which reduces repeated setup work when preparing the same app icon for multiple platforms." }
+              "name": "Why does iOS reject app icons with transparent backgrounds?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Apple's Human Interface Guidelines strictly require all iOS app icons to be completely opaque without alpha channel transparency. If an app icon with transparent pixels is submitted to App Store Connect, Apple's automated validation system will reject the build with an ITMS-90717 error." }
             },
             {
               "@type": "Question",
-              "name": "Do I need design software to use an app icon generator?",
-              "acceptedAnswer": { "@type": "Answer", "text": "No. If you already have a source icon, logo, or graphic, you can upload it directly, adjust the visual settings in the browser, and generate the package from there." }
+              "name": "How does App Icon Studio organize the exported ZIP folder?",
+              "acceptedAnswer": { "@type": "Answer", "text": "The exported ZIP file contains pre-structured subdirectories: an 'ios/AppIcon.appiconset' folder containing all required @1x, @2x, and @3x PNGs with a pre-configured Contents.json manifest ready for Xcode drag-and-drop, and an 'android' folder structured with mipmap-mdpi, mipmap-hdpi, mipmap-xhdpi, mipmap-xxhdpi, mipmap-xxxhdpi directories plus the 512×512 Google Play graphic." }
+            },
+            {
+              "@type": "Question",
+              "name": "Are my artwork assets uploaded to external servers?",
+              "acceptedAnswer": { "@type": "Answer", "text": "No. All canvas rendering, color manipulation, safe-zone padding, and ZIP compression take place locally inside your browser via client-side JavaScript. Your confidential brand assets never leave your device." }
             }
           ]
         }
@@ -69,18 +74,67 @@
     <link rel="icon" href="/website/assets/icons/favicon-32x32.png" type="image/png" sizes="32x32" />
     <link rel="apple-touch-icon" href="/website/assets/icons/apple-touch-icon.png" />
     <link rel="manifest" href="/website/site.webmanifest" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preconnect" href="https://fonts.cdnfonts.com" />
+    <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
     <script
       async
       src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7548214699138468"
       crossorigin="anonymous"
     ></script>
     <link rel="stylesheet" href="/website/landing.css" />
+    <style>
+      .guide-content-section {
+        max-width: 1040px;
+        margin: 48px auto;
+        padding: 0 24px;
+      }
+      .spec-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 24px 0 32px;
+        background: #ffffff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      }
+      .spec-table th, .spec-table td {
+        padding: 14px 18px;
+        text-align: left;
+        border-bottom: 1px solid #edf2f7;
+        font-size: 14px;
+      }
+      .spec-table th {
+        background: #f8fafc;
+        font-weight: 600;
+        color: #1e293b;
+      }
+      .spec-table tr:last-child td {
+        border-bottom: none;
+      }
+      .spec-table code {
+        background: #f1f5f9;
+        padding: 2px 6px;
+        border-radius: 4px;
+        color: #3b82f6;
+        font-family: monospace;
+      }
+      .info-box {
+        background: #f0f7ff;
+        border-left: 4px solid #3b82f6;
+        padding: 18px 22px;
+        border-radius: 0 8px 8px 0;
+        margin: 24px 0;
+      }
+      .info-box h4 {
+        margin: 0 0 6px;
+        color: #1d4ed8;
+      }
+      .info-box p {
+        margin: 0;
+        font-size: 14px;
+        color: #1e3a8a;
+      }
+    </style>
   </head>
   <body>
     <div class="landing-shell">
@@ -89,33 +143,42 @@
           <img class="landing-brand-mark" src="/website/assets/icons/Gemini_Generated_Image_wc0y3fwc0y3fwc0y-removebg-preview.png" alt="App Icon Studio" width="52" height="52" />
           <span class="landing-brand-copy">
             <strong>App Icon Studio</strong>
-            <span>App icon generator for iOS and Android</span>
+            <span>App icon generator for iOS &amp; Android</span>
           </span>
         </a>
-        <a class="landing-topbar-link" href="/">Open The Generator</a>
+        <nav class="topbar-links" aria-label="Primary navigation" style="display:flex; gap:16px; align-items:center;">
+          <a href="/tools" style="color:#555; text-decoration:none; font-weight:500;">Image Tools</a>
+          <a href="/blog" style="color:#555; text-decoration:none; font-weight:500;">Blog</a>
+          <a href="/about" style="color:#555; text-decoration:none; font-weight:500;">About</a>
+          <a class="landing-topbar-link" href="/">Launch Studio</a>
+        </nav>
       </header>
 
       <section class="landing-hero">
         <div class="landing-hero-card">
-          <span class="landing-kicker">App Icon Generator</span>
-          <h1>Generate app icons for iOS and Android in one place.</h1>
-          <p>This app icon generator is built for founders, designers, and mobile developers who need a simple workflow from one image to export-ready icon packages. You can upload, preview, adjust, and export your app icon sizes without manually preparing every output.</p>
+          <span class="landing-kicker">Professional App Icon Architecture</span>
+          <h1>Generate Apple &amp; Google App Icons in One Unified Workspace</h1>
+          <p>
+            Designing high-impact app icons requires balancing strict Apple Human Interface Guidelines and Google Material Design
+            requirements. App Icon Studio transforms a single 1024×1024 master image into pixel-perfect, platform-compliant icon packages
+            with ready-to-import Xcode asset catalogs and Android mipmap resource directories.
+          </p>
           <div class="landing-actions">
-            <a class="landing-primary-button" href="/">Generate App Icons</a>
-            <a class="landing-secondary-button" href="#app-icon-faq">Read FAQ</a>
+            <a class="landing-primary-button" href="/#editor">Launch Free Generator</a>
+            <a class="landing-secondary-button" href="#technical-specifications">View Technical Specs</a>
           </div>
           <div class="landing-proof">
             <div class="landing-proof-card">
-              <strong>iOS + Android</strong>
-              <span>One workflow for the most common mobile app icon exports.</span>
+              <strong>All Required iOS Sizes</strong>
+              <span>iPhone, iPad, App Store 1024px, and Contents.json manifest.</span>
             </div>
             <div class="landing-proof-card">
-              <strong>Live preview</strong>
-              <span>See icon spacing and shape before you download the ZIP.</span>
+              <strong>Android Adaptive Mipmaps</strong>
+              <span>mdpi through xxxhdpi densities plus 512px Play Store artwork.</span>
             </div>
             <div class="landing-proof-card">
-              <strong>Simple export</strong>
-              <span>Package your generated icon sizes faster for development teams.</span>
+              <strong>100% In-Browser Privacy</strong>
+              <span>Client-side HTML5 canvas processing. Assets never leave your device.</span>
             </div>
           </div>
         </div>
@@ -131,67 +194,191 @@
                     <line x1="12" y1="3" x2="12" y2="15"></line>
                   </svg>
                 </span>
-                <strong>Upload one source image</strong>
-                <span>Use a square asset for iOS, Android, and export package generation.</span>
+                <strong>Start With One Master Image</strong>
+                <span>Drag &amp; drop 1024×1024 PNG, JPG, SVG, or WebP</span>
               </div>
             </div>
           </div>
           <ul class="landing-checklist">
-            <li>Create icon outputs for iOS app icons and Android launcher packages.</li>
-            <li>Adjust colors, padding, zoom, and shape from the same interface.</li>
-            <li>Preview the icon before export so it feels more product-ready.</li>
-            <li>Download a single ZIP file for handoff or implementation.</li>
+            <li>Instant live previews on iPhone, iPad, and Android device frames.</li>
+            <li>Custom background color controls, padding sliders, and automatic centering.</li>
+            <li>Zero account registration or subscription fees required.</li>
+            <li>Generates structured ZIP archives ready for direct IDE integration.</li>
           </ul>
         </aside>
       </section>
 
-      <section class="landing-section">
-        <div class="landing-section-heading">
-          <h2>Why use an app icon generator?</h2>
-          <p>Manually exporting app icon sizes is repetitive and easy to get wrong. A dedicated app icon generator can simplify the workflow by keeping previews, platform sizes, and packaging in one place.</p>
+      <div class="guide-content-section" id="technical-specifications">
+        <div class="landing-section-heading" style="text-align: left; margin-bottom: 24px;">
+          <h2>Required App Icon Specifications Matrix (2026 Edition)</h2>
+          <p>
+            When publishing to modern app stores, missing a single required resolution can halt your submission pipeline.
+            Below is the comprehensive matrix of asset sizes our generator compiles automatically into your export ZIP:
+          </p>
         </div>
-        <div class="landing-grid-three">
-          <article class="landing-panel">
-            <h3>One image in</h3>
-            <p>Start from a single square logo or icon source instead of hand-making every app icon file you need for mobile platforms.</p>
-          </article>
-          <article class="landing-panel">
-            <h3>Preview before export</h3>
-            <p>Use visual preview surfaces to catch spacing, padding, and readability issues before the icon package is downloaded and added to the app.</p>
-          </article>
-          <article class="landing-panel">
-            <h3>Platform-ready package</h3>
-            <p>Export the icon sizes needed for iOS and Android in a more organized ZIP package that is easier to review and hand off.</p>
-          </article>
-        </div>
-      </section>
 
-      <section class="landing-section" id="app-icon-faq">
-        <div class="landing-section-heading">
-          <h2>App icon generator FAQ</h2>
-          <p>People searching for an app icon generator usually want a faster route from source image to store-ready files.</p>
+        <table class="spec-table">
+          <thead>
+            <tr>
+              <th>Platform</th>
+              <th>Target Usage</th>
+              <th>Target Dimensions</th>
+              <th>Target Scale Factor</th>
+              <th>Export Filename Pattern</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>iOS / iPadOS</strong></td>
+              <td>iPhone Home Screen</td>
+              <td>120×120px &amp; 180×180px</td>
+              <td>@2x &amp; @3x</td>
+              <td><code>icon_60pt@2x.png</code>, <code>icon_60pt@3x.png</code></td>
+            </tr>
+            <tr>
+              <td><strong>iOS / iPadOS</strong></td>
+              <td>iPad Home Screen</td>
+              <td>152×152px &amp; 167×167px</td>
+              <td>@2x</td>
+              <td><code>icon_76pt@2x.png</code>, <code>icon_83.5pt@2x.png</code></td>
+            </tr>
+            <tr>
+              <td><strong>iOS / iPadOS</strong></td>
+              <td>Spotlight Search</td>
+              <td>80×80px &amp; 120×120px</td>
+              <td>@2x &amp; @3x</td>
+              <td><code>icon_40pt@2x.png</code>, <code>icon_40pt@3x.png</code></td>
+            </tr>
+            <tr>
+              <td><strong>iOS / iPadOS</strong></td>
+              <td>Settings &amp; Notifications</td>
+              <td>40×40px, 58×58px, 87×87px</td>
+              <td>@2x &amp; @3x</td>
+              <td><code>icon_20pt@2x.png</code>, <code>icon_29pt@3x.png</code></td>
+            </tr>
+            <tr>
+              <td><strong>App Store</strong></td>
+              <td>App Store Product Page</td>
+              <td>1024×1024px</td>
+              <td>@1x (RGB, No Alpha)</td>
+              <td><code>AppStore-1024.png</code></td>
+            </tr>
+            <tr>
+              <td><strong>Android</strong></td>
+              <td>Medium Density (mdpi)</td>
+              <td>48×48px</td>
+              <td>1.0x baseline</td>
+              <td><code>res/mipmap-mdpi/ic_launcher.png</code></td>
+            </tr>
+            <tr>
+              <td><strong>Android</strong></td>
+              <td>High Density (hdpi)</td>
+              <td>72×72px</td>
+              <td>1.5x baseline</td>
+              <td><code>res/mipmap-hdpi/ic_launcher.png</code></td>
+            </tr>
+            <tr>
+              <td><strong>Android</strong></td>
+              <td>Extra High (xhdpi)</td>
+              <td>96×96px</td>
+              <td>2.0x baseline</td>
+              <td><code>res/mipmap-xhdpi/ic_launcher.png</code></td>
+            </tr>
+            <tr>
+              <td><strong>Android</strong></td>
+              <td>Extra Extra High (xxhdpi)</td>
+              <td>144×144px</td>
+              <td>3.0x baseline</td>
+              <td><code>res/mipmap-xxhdpi/ic_launcher.png</code></td>
+            </tr>
+            <tr>
+              <td><strong>Android</strong></td>
+              <td>Ultra High (xxxhdpi)</td>
+              <td>192×192px</td>
+              <td>4.0x baseline</td>
+              <td><code>res/mipmap-xxxhdpi/ic_launcher.png</code></td>
+            </tr>
+            <tr>
+              <td><strong>Google Play</strong></td>
+              <td>Store Listing Graphic</td>
+              <td>512×512px</td>
+              <td>1.0x (32-bit PNG)</td>
+              <td><code>playstore-icon.png</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="info-box">
+          <h4>Xcode Asset Catalog Integration Note</h4>
+          <p>
+            When you extract our exported iOS package, you can drag the entire <code>AppIcon.appiconset</code> folder directly
+            into your Xcode project's <code>Assets.xcassets</code>. The included <code>Contents.json</code> manifest links every image
+            to its designated idiom (iPhone, iPad, App Store) without needing manual slot assignments.
+          </p>
         </div>
-        <div class="landing-faq-grid">
-          <article class="landing-faq-item">
-            <h3>What does an app icon generator do?</h3>
-            <p>An app icon generator takes one image and converts it into the icon sizes and file structure needed for mobile platforms such as iOS and Android.</p>
-          </article>
-          <article class="landing-faq-item">
-            <h3>Can I generate both iOS and Android app icons together?</h3>
-            <p>Yes. The existing App Icon Studio workflow lets you select Android, iOS, or both before export, which reduces repeated setup work when preparing the same app icon for multiple platforms.</p>
-          </article>
-          <article class="landing-faq-item">
-            <h3>Do I need design software to use an app icon generator?</h3>
-            <p>No. If you already have a source icon, logo, or graphic, you can upload it directly, adjust the visual settings in the browser, and generate the package from there.</p>
-          </article>
-        </div>
-      </section>
+
+        <section class="landing-section" style="padding: 24px 0;">
+          <div class="landing-section-heading" style="text-align: left;">
+            <h2>Three Essential Design Rules for High-Converting App Icons</h2>
+          </div>
+          <div class="landing-grid-three">
+            <article class="landing-panel">
+              <h3>1. Respect the Safe-Zone</h3>
+              <p>
+                Both Apple and Google apply rounded corner masks automatically. Never place crucial brand elements, text,
+                or focal details near the outer 15% perimeter of your canvas. Keep your central symbol comfortably padded.
+              </p>
+            </article>
+            <article class="landing-panel">
+              <h3>2. Avoid Small Text &amp; Busy Details</h3>
+              <p>
+                On an actual smartphone home screen, icons measure less than 1.5 inches wide. Detailed illustrations, fine line art,
+                and small slogans become illegible visual noise. Focus on one bold, recognizable silhouette.
+              </p>
+            </article>
+            <article class="landing-panel">
+              <h3>3. High Contrast Color Harmony</h3>
+              <p>
+                Users switch between light and dark home screen wallpapers, and iOS 18+ introduces tinted and dark icon modes.
+                Ensure your icon stands out clearly against both pitch black OLED displays and bright photographic wallpapers.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section class="landing-section" id="app-icon-faq" style="padding: 24px 0;">
+          <div class="landing-section-heading" style="text-align: left;">
+            <h2>Frequently Asked Questions</h2>
+          </div>
+          <div class="landing-faq-grid">
+            <article class="landing-faq-item">
+              <h3>What master resolution should I use for generating app icons?</h3>
+              <p>We recommend starting with a 1024×1024 pixel PNG or vector SVG asset. A 1024×1024 master image ensures that downscaled versions for iPhone, iPad, Apple Watch, and Android density buckets retain crisp edge definitions and clean typography without blur.</p>
+            </article>
+            <article class="landing-faq-item">
+              <h3>Why does iOS reject app icons with transparent backgrounds?</h3>
+              <p>Apple's Human Interface Guidelines strictly require all iOS app icons to be completely opaque without alpha channel transparency. If an app icon with transparent pixels is submitted to App Store Connect, Apple's automated validation system will reject the build with an ITMS-90717 error.</p>
+            </article>
+            <article class="landing-faq-item">
+              <h3>How does App Icon Studio organize the exported ZIP folder?</h3>
+              <p>The exported ZIP file contains pre-structured subdirectories: an 'ios/AppIcon.appiconset' folder containing all required @1x, @2x, and @3x PNGs with a pre-configured Contents.json manifest ready for Xcode drag-and-drop, and an 'android' folder structured with mipmap densities plus Google Play graphics.</p>
+            </article>
+            <article class="landing-faq-item">
+              <h3>Are my artwork assets uploaded to external servers?</h3>
+              <p>No. All canvas rendering, color manipulation, safe-zone padding, and ZIP compression take place locally inside your browser via client-side JavaScript. Your confidential brand assets never leave your device.</p>
+            </article>
+          </div>
+        </section>
+      </div>
 
       <footer class="landing-footer">
-        <p>&copy; 2026 Pilach. @Developed by Rosdeb Koch</p>
+        <p>&copy; 2026 Pilach. Developed by Rosdeb Koch.</p>
         <div class="landing-footer-links">
-          <a href="/">Generator</a>
+          <a href="/">Home</a>
+          <a href="/tools">Image Tools</a>
+          <a href="/blog">Blog</a>
           <a href="/about">About</a>
+          <a href="/contact">Contact</a>
           <a href="/how-it-works">How It Works</a>
           <a href="/faq">FAQ</a>
           <a href="/privacy-policy">Privacy Policy</a>

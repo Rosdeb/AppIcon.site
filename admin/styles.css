@@ -1,4 +1,6 @@
 /*
+@import url('https://fonts.cdnfonts.com/css/sf-pro-display');
+
 :root {
   --bg: #0d1021;
   --bg-soft: rgba(255, 255, 255, 0.06);
@@ -17,8 +19,8 @@
   --radius-lg: 24px;
   --radius-md: 18px;
   --radius-sm: 14px;
-  --font-heading: "Space Grotesk", sans-serif;
-  --font-body: "Outfit", sans-serif;
+  --font-heading: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "SF Pro", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "SF Pro", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
 * {
@@ -33,6 +35,9 @@ body {
   margin: 0;
   min-height: 100vh;
   font-family: var(--font-body);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   color: var(--text);
   background:
     radial-gradient(circle at top left, rgba(31, 111, 235, 0.28), transparent 28%),
@@ -90,7 +95,7 @@ select {
   place-items: center;
   border-radius: 18px;
   font-family: var(--font-heading);
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.08em;
   background: linear-gradient(145deg, #7dd3fc, #1f6feb 55%, #ff8a4c);
   box-shadow: 0 14px 34px rgba(31, 111, 235, 0.35);
@@ -108,8 +113,15 @@ h1,
 h2,
 h3,
 h4,
-strong {
+h5,
+h6 {
   font-family: var(--font-heading);
+  font-weight: 600;
+}
+
+strong,
+b {
+  font-weight: 600;
 }
 
 h1,
@@ -318,7 +330,7 @@ p {
 .app-icon span,
 .editor-icon span {
   font-family: var(--font-heading);
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.02em;
 }
 
@@ -893,7 +905,7 @@ p {
   place-items: center;
   border-radius: 14px;
   font-size: 0.8rem;
-  font-weight: 700;
+  font-weight: 600;
   color: #ffffff;
 }
 
@@ -1154,7 +1166,7 @@ p {
 }
 
 .trend-tooltip-title {
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .trend-tooltip-copy-success {
@@ -1267,7 +1279,7 @@ p {
   top: 50%;
   transform: translateY(-50%);
   color: rgba(255, 255, 255, 0.4);
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .funnel-step:last-child::after {
@@ -1295,7 +1307,7 @@ p {
   background: rgba(99, 230, 143, 0.14);
   color: var(--accent-green);
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .funnel-list {
@@ -1762,7 +1774,7 @@ p {
   padding-left: 18px;
   font-family: var(--font-heading);
   font-size: 1.05rem;
-  font-weight: 700;
+  font-weight: 600;
   color: #111827;
 }
 
@@ -1872,7 +1884,7 @@ p {
   background: #5a4ff8;
   color: #ffffff;
   font-size: 0.74rem;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1;
   white-space: nowrap;
   box-shadow: 0 8px 16px rgba(90, 79, 248, 0.28);
