@@ -980,6 +980,7 @@
         if ($('bulk-results')) $('bulk-results').hidden = true;
         previewDialog.showModal();
         status('Preview ready. Download your processed image.');
+        try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (_) {}
       } else {
         // Bulk images workflow (handles both Group mode and One-by-one mode)
         if (cropping && cropper) {
