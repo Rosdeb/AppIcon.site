@@ -69,34 +69,89 @@
   <link rel="stylesheet" href="/website/styles.css" />
   <style>
     .blog-hero {
-      padding: 64px 24px 48px;
-      text-align: center;
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 44px 24px 28px;
+      text-align: left;
     }
     .blog-hero .eyebrow {
-      display: inline-block;
-      background: #f0f4ff;
-      color: #5a78e8;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #eff6ff;
+      color: #2563eb;
+      border: 1px solid #bfdbfe;
       border-radius: 999px;
       padding: 4px 14px;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: .04em;
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: .06em;
       text-transform: uppercase;
-      margin-bottom: 18px;
+      margin-bottom: 14px;
     }
     .blog-hero h1 {
-      font-size: 38px;
-      font-weight: 600;
-      color: #1a2130;
-      letter-spacing: -1px;
-      margin-bottom: 14px;
+      font-size: clamp(28px, 3.6vw, 40px);
+      font-weight: 700;
+      color: #111827;
+      letter-spacing: -0.8px;
+      line-height: 1.2;
+      margin: 0 0 14px;
+      max-width: 840px;
     }
     .blog-hero p {
       font-size: 16px;
+      color: #4b5563;
+      max-width: 780px;
+      margin: 0;
+      line-height: 1.65;
+      text-wrap: pretty;
+    }
+
+    .blog-section-divider {
+      max-width: 992px;
+      margin: 8px auto 44px;
+      border: 0;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .blog-section-header {
+      max-width: 1040px;
+      margin: 0 auto 28px;
+      padding: 0 24px;
+      text-align: left;
+    }
+    .blog-section-header .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      padding: 4px 14px;
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .blog-section-header .eyebrow.eyebrow-gold {
+      background: #fbf7ee;
+      color: #77592e;
+      border: 1px solid #ebd9b8;
+    }
+    .blog-section-header h2 {
+      font-size: clamp(22px, 2.5vw, 28px);
+      font-weight: 700;
+      color: #111827;
+      letter-spacing: -0.5px;
+      line-height: 1.25;
+      margin: 0 0 10px;
+    }
+    .blog-section-header p {
+      font-size: 15px;
       color: #6b7280;
-      max-width: 580px;
-      margin: 0 auto;
-      line-height: 1.7;
+      max-width: 780px;
+      margin: 0;
+      line-height: 1.6;
+      text-wrap: pretty;
     }
 
     .blog-grid {
@@ -106,6 +161,21 @@
       max-width: 1040px;
       margin: 0 auto;
       padding: 0 24px 72px;
+    }
+
+    @media (max-width: 640px) {
+      .blog-hero {
+        padding: 32px 16px 20px;
+      }
+      .blog-section-header {
+        padding: 0 16px;
+      }
+      .blog-grid {
+        padding: 0 16px 48px;
+      }
+      .blog-section-divider {
+        margin: 8px 16px 36px;
+      }
     }
 
     .blog-card {
@@ -186,17 +256,11 @@
   </header>
 
   <main>
-    <div class="blog-hero">
+    <section class="blog-hero">
       <span class="eyebrow">Developer &amp; Designer Resources</span>
       <h1>Icon Design Tips, Guides &amp; Specifications</h1>
       <p>Comprehensive technical guides, sizing matrices, and design strategies for shipping high-converting icons across iOS, Android, macOS, Windows, and the Web.</p>
-    </div>
-
-    <div class="blog-section-header" style="max-width: 1040px; margin: 0 auto 24px; padding: 0 24px;">
-      <span class="eyebrow" style="display:inline-block;background:#f0f4ff;color:#5a78e8;border-radius:999px;padding:3px 12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;">App Icon Guides</span>
-      <h2 style="font-size:24px;font-weight:700;color:#1a2130;margin:0 0 6px;letter-spacing:-.5px;">Icon Design Specifications &amp; Standards</h2>
-      <p style="font-size:14px;color:#6b7280;margin:0;">Core guidelines, squircle matrices, asset catalogs, and sizing specifications for iOS, Android, macOS, Windows, and web apps.</p>
-    </div>
+    </section>
 
     <div class="blog-grid" style="padding-bottom: 48px;">
 <a href="/blog/app-store-optimization-icons" class="blog-card">
@@ -280,11 +344,13 @@
       </a>
     </div>
 
-    <div class="blog-section-header" style="max-width: 1040px; margin: 0 auto 24px; padding: 48px 24px 0; border-top: 1px solid #e8ecf4;">
-      <span class="eyebrow" style="display:inline-block;background:#fbf7ee;color:#77592e;border:1px solid #ebd9b8;border-radius:999px;padding:3px 12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;">Image Tools Masterclass</span>
-      <h2 style="font-size:24px;font-weight:700;color:#1a2130;margin:0 0 6px;letter-spacing:-.5px;">Image Processing, Optimization &amp; Codec Guides</h2>
-      <p style="font-size:14px;color:#6b7280;margin:0;">In-depth technical guides to in-browser cropping, aspect ratio composition, responsive scaling, lossless compression, and WebP conversion.</p>
-    </div>
+    <hr class="blog-section-divider" />
+
+    <section class="blog-section-header">
+      <span class="eyebrow eyebrow-gold">Image Tools Masterclass</span>
+      <h2>Image Processing, Optimization &amp; Codec Guides</h2>
+      <p>In-depth technical guides to in-browser cropping, aspect ratio composition, responsive scaling, lossless compression, and WebP conversion.</p>
+    </section>
 
     <div class="blog-grid">
 <a href="/blog/mastering-aspect-ratios" class="blog-card">
