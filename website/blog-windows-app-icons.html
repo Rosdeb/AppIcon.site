@@ -143,6 +143,32 @@
     }
     .callout h4 { margin: 0 0 6px; color: #0284c7; }
     .callout p { margin: 0; font-size: 15px; color: #374151; }
+    .article-img {
+      width: 100%;
+      max-width: 100%;
+      border-radius: 12px;
+      margin: 24px 0;
+      display: block;
+    }
+    .prototype-block {
+      background: #f8fafc;
+      border: 1px solid #e8ecf4;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 28px 0;
+      text-align: center;
+    }
+    .prototype-block img {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+    }
+    .prototype-block p {
+      font-size: 13px;
+      color: #6b7280;
+      margin: 12px 0 0;
+      font-style: italic;
+    }
   </style>
 </head>
 <body class="theme-public">
@@ -166,8 +192,10 @@
         <span class="article-tag">Windows Development</span>
         <h1>Windows 11 App Icon &amp; Tile Specifications: High-DPI .ICO Generation</h1>
         <div class="article-meta">
-          Published September 5, 2026 &middot; By Rosdeb Koch &middot; 6 min read
+          Published September 5, 2026 &middot; By Rosdeb Koch &middot; 12 min read
         </div>
+
+        <img src="/website/assets/blog/windows-laptop.jpg" alt="Windows 11 laptop showing desktop with app icons" class="article-img" loading="lazy" />
 
         <p>
           Windows 11 brought a major visual overhaul to the Microsoft desktop ecosystem with the modern <strong>Fluent Design System</strong>.
@@ -255,6 +283,76 @@
         <p>
           The generator automatically renders 10 individual high-resolution PNG sizes and packages them into a unified <code>app.ico</code> bundle ready for embedding into Visual Studio projects, Electron builders, or native C++ resources.
         </p>
+
+        <div class="prototype-block">
+          <img src="/website/assets/blog/prototype-upload-customize.svg" alt="App Icon Studio workflow for generating Windows .ICO files" />
+          <p>Upload once, customize your icon, and export a multi-resolution .ICO file for Windows 11</p>
+        </div>
+
+        <h2>4. High-DPI Scaling on Windows 11</h2>
+        <p>Windows 11 supports four primary display scaling multipliers that directly affect how your icon renders across different monitor configurations:</p>
+        <ul>
+          <li><strong>100% (96 DPI):</strong> Standard 1080p monitors. Icons display at their native pixel dimensions.</li>
+          <li><strong>125% (120 DPI):</strong> Common on 1440p monitors. A 32px icon needs to render at 40px effective resolution.</li>
+          <li><strong>150% (144 DPI):</strong> Typical for 4K displays at comfortable viewing distance. A 32px icon scales to 48px.</li>
+          <li><strong>200% (192 DPI):</strong> Used on high-density 4K monitors and Surface devices. A 32px icon scales to 64px.</li>
+        </ul>
+        <p>When Windows encounters a DPI scaling factor, it looks for the closest matching resolution inside your <code>.ico</code> file. If an exact match exists, the icon is rendered pixel-perfectly. If not, Windows applies bilinear interpolation scaling, which introduces visible blurriness — especially noticeable on text-heavy or fine-lined icons.</p>
+        <p>This is precisely why including the full range of resolutions (16, 24, 32, 48, 64, 128, 256) in your ICO container is essential for professional desktop software.</p>
+
+        <h2>5. Taskbar, Start Menu &amp; Jump List Icons</h2>
+        <p>Windows 11 uses your application's icon in multiple UI surfaces, each with its own size requirements:</p>
+        <ul>
+          <li><strong>Taskbar (Pinned &amp; Running):</strong> 24×24 at 100% scaling, scaling up with DPI. The centered taskbar in Windows 11 makes icon quality more visible than ever.</li>
+          <li><strong>Start Menu (Pinned Apps):</strong> 48×48 at 100% scaling. Appears in the new rounded-corner Start menu alongside Microsoft's own Fluent Design icons.</li>
+          <li><strong>Start Menu (All Apps List):</strong> 32×32 at 100% scaling. Displayed in the alphabetical app listing.</li>
+          <li><strong>Jump Lists:</strong> 16×16 at 100% scaling. Shown when users right-click your taskbar icon for quick actions.</li>
+          <li><strong>Desktop Shortcut:</strong> 48×48 to 256×256 depending on the user's icon size setting and DPI scaling.</li>
+          <li><strong>File Explorer:</strong> Ranges from 16×16 (details view) to 256×256 (extra-large icons view).</li>
+          <li><strong>Alt+Tab Switcher:</strong> Uses a medium-resolution version of your icon alongside the app's window thumbnail.</li>
+        </ul>
+
+        <h2>6. Creating Windows Installer Icons</h2>
+        <p>If you distribute your application via a Windows installer (Inno Setup, NSIS, WiX, or Advanced Installer), the installer itself needs icons in specific formats:</p>
+        <ul>
+          <li><strong>Setup Executable Icon:</strong> Embedded in the installer's <code>.exe</code> as a multi-resolution ICO resource. This is what users see when they download your installer file.</li>
+          <li><strong>Uninstaller Icon:</strong> Shown in Windows Settings &rarr; Apps &amp; Features (Add/Remove Programs). Should match your main app icon for brand consistency.</li>
+          <li><strong>Start Menu Shortcut Icon:</strong> Created during installation. Points to your app's ICO file or the icon resource embedded in your main executable.</li>
+        </ul>
+
+        <h2>7. MSIX &amp; Microsoft Store Requirements</h2>
+        <p>If you're distributing through the Microsoft Store using MSIX packaging, additional icon assets are required beyond the standard <code>.ico</code> file:</p>
+        <ul>
+          <li><strong>Square 44×44 Logo:</strong> Used in the Start menu's All Apps list. Provide at scales 100%, 125%, 150%, 200%, and 400% (44, 55, 66, 88, 176 pixels).</li>
+          <li><strong>Square 150×150 Logo:</strong> Medium tile icon. Same scaling variants.</li>
+          <li><strong>Wide 310×150 Logo:</strong> Wide tile format for Start menu pinned tiles.</li>
+          <li><strong>Square 310×310 Logo:</strong> Large tile format.</li>
+          <li><strong>Store Logo (50×50):</strong> Displayed in the Microsoft Store app listing.</li>
+          <li><strong>Badge Logo (24×24):</strong> Used for notification badges on the taskbar.</li>
+          <li><strong>Splash Screen (620×300):</strong> Displayed during app launch.</li>
+        </ul>
+        <p>All MSIX visual assets must be supplied as individual PNG files with transparent backgrounds (unless the tile has a custom background color specified in the app manifest).</p>
+
+        <h2>8. Cross-Platform Desktop Frameworks</h2>
+        <p>If you're building with Electron, Tauri, or .NET MAUI, each framework handles Windows icons differently:</p>
+        <ul>
+          <li><strong>Electron:</strong> Accepts a multi-resolution <code>.ico</code> file specified in <code>electron-builder.yml</code> or <code>forge.config.js</code>. The builder automatically embeds the ICO into the Windows executable resource table.</li>
+          <li><strong>Tauri:</strong> Requires a 256×256 PNG in <code>src-tauri/icons/</code> and uses it to generate the ICO at build time. You can also provide a pre-built <code>icon.ico</code> for maximum control.</li>
+          <li><strong>.NET MAUI / WinUI 3:</strong> Uses the standard MSIX visual asset system. Provide scaled PNG files in the <code>Assets</code> folder referenced by <code>Package.appxmanifest</code>.</li>
+        </ul>
+
+        <div class="callout">
+          <h4>Windows Icon Checklist</h4>
+          <p>
+            ✓ Multi-resolution .ico containing 16, 24, 32, 48, 64, 128, 256px layers<br>
+            ✓ All layers use 32-bit RGBA PNG compression<br>
+            ✓ 256×256 layer included for high-DPI and extra-large icon views<br>
+            ✓ Tested at 100%, 125%, 150%, and 200% display scaling<br>
+            ✓ Clean silhouette visible at 16px for system tray<br>
+            ✓ Fluent Design-aligned gradients and rounded geometry<br>
+            ✓ MSIX visual assets provided if targeting Microsoft Store
+          </p>
+        </div>
       </article>
 
     </main>

@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" fill="none">
+  <defs>
+    <linearGradient id="bgSZ" x1="0" y1="0" x2="500" y2="500" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#f0f4ff"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="500" height="500" fill="url(#bgSZ)"/>
+
+  <!-- Full canvas boundary -->
+  <rect x="20" y="20" width="460" height="460" rx="4" fill="none" stroke="#d0d8e8" stroke-width="1" stroke-dasharray="6 3"/>
+  <text x="30" y="16" font-family="system-ui,sans-serif" font-size="10" fill="#9ca3af">1024 x 1024 canvas</text>
+
+  <!-- Squircle tile -->
+  <rect x="60" y="60" width="380" height="380" rx="86" fill="#fff" stroke="#6c8ff5" stroke-width="2"/>
+  <text x="70" y="56" font-family="system-ui,sans-serif" font-size="10" fill="#6c8ff5" font-weight="600">824 x 824 squircle tile</text>
+
+  <!-- Primary content zone -->
+  <rect x="112" y="112" width="276" height="276" rx="40" fill="none" stroke="#a78bf5" stroke-width="1.5" stroke-dasharray="8 4"/>
+  <text x="122" y="108" font-family="system-ui,sans-serif" font-size="9" fill="#a78bf5">600 x 600 content zone</text>
+
+  <!-- Inner safe area -->
+  <circle cx="250" cy="250" r="110" fill="none" stroke="#22a34a" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="250" y="136" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#22a34a">Inner safe area (480px)</text>
+
+  <!-- Grid lines -->
+  <line x1="250" y1="20" x2="250" y2="480" stroke="#e0e4ea" stroke-width="0.75"/>
+  <line x1="20" y1="250" x2="480" y2="250" stroke="#e0e4ea" stroke-width="0.75"/>
+  <line x1="60" y1="60" x2="440" y2="440" stroke="#e0e4ea" stroke-width="0.5"/>
+  <line x1="440" y1="60" x2="60" y2="440" stroke="#e0e4ea" stroke-width="0.5"/>
+
+  <!-- Center icon glyph area -->
+  <rect x="195" y="195" width="110" height="110" rx="24" fill="#6c8ff5" opacity="0.1"/>
+  <text x="250" y="258" text-anchor="middle" font-family="system-ui,sans-serif" font-size="40" font-weight="700" fill="#6c8ff5" opacity="0.6">A</text>
+
+  <!-- Dimension annotations -->
+  <!-- Top margin -->
+  <line x1="470" y1="20" x2="470" y2="60" stroke="#f97316" stroke-width="1"/>
+  <line x1="465" y1="20" x2="475" y2="20" stroke="#f97316" stroke-width="1"/>
+  <line x1="465" y1="60" x2="475" y2="60" stroke="#f97316" stroke-width="1"/>
+  <text x="478" y="44" font-family="system-ui,sans-serif" font-size="8" fill="#f97316">100px margin</text>
+
+  <!-- Corner radius -->
+  <path d="M60 146 Q60 60 146 60" fill="none" stroke="#db2777" stroke-width="1.5"/>
+  <text x="62" y="176" font-family="system-ui,sans-serif" font-size="8" fill="#db2777">r=185px</text>
+
+  <!-- Legend -->
+  <rect x="20" y="460" width="460" height="30" rx="4" fill="#fff" opacity="0.8"/>
+  <line x1="30" y1="478" x2="50" y2="478" stroke="#6c8ff5" stroke-width="2"/>
+  <text x="54" y="482" font-family="system-ui,sans-serif" font-size="9" fill="#374151">Tile boundary</text>
+  <line x1="140" y1="478" x2="160" y2="478" stroke="#a78bf5" stroke-width="1.5" stroke-dasharray="4 2"/>
+  <text x="164" y="482" font-family="system-ui,sans-serif" font-size="9" fill="#374151">Content zone</text>
+  <line x1="260" y1="478" x2="280" y2="478" stroke="#22a34a" stroke-width="1.5" stroke-dasharray="3 2"/>
+  <text x="284" y="482" font-family="system-ui,sans-serif" font-size="9" fill="#374151">Safe area</text>
+  <line x1="360" y1="478" x2="380" y2="478" stroke="#d0d8e8" stroke-width="1" stroke-dasharray="4 2"/>
+  <text x="384" y="482" font-family="system-ui,sans-serif" font-size="9" fill="#374151">Canvas edge</text>
+</svg>

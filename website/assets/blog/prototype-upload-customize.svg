@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 340" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="680" y2="340" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#f0f4ff"/>
+      <stop offset="100%" stop-color="#e8ecfa"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#6c8ff5"/>
+      <stop offset="100%" stop-color="#a78bf5"/>
+    </linearGradient>
+    <linearGradient id="iconGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ff6b6b"/>
+      <stop offset="100%" stop-color="#ffa502"/>
+    </linearGradient>
+    <filter id="shadow" x="-4%" y="-4%" width="108%" height="112%">
+      <feDropShadow dx="0" dy="2" stdDeviation="6" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="680" height="340" rx="16" fill="url(#bg)"/>
+
+  <!-- Step 1: Upload -->
+  <rect x="24" y="24" width="190" height="292" rx="12" fill="#fff" filter="url(#shadow)"/>
+  <text x="119" y="52" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="600" fill="#6c8ff5" letter-spacing="0.5">STEP 1</text>
+  <text x="119" y="72" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" font-weight="600" fill="#1a2130">Upload Image</text>
+
+  <!-- Dropzone -->
+  <rect x="40" y="88" width="158" height="90" rx="8" fill="#f8fafc" stroke="#d0d8e8" stroke-width="1.5" stroke-dasharray="6 3"/>
+  <circle cx="119" cy="120" r="16" fill="#f0f4ff" stroke="#6c8ff5" stroke-width="1.5"/>
+  <path d="M119 112 L119 128 M111 120 L119 112 L127 120" stroke="#6c8ff5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="119" y="150" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#9ca3af">PNG, JPG, SVG, WEBP</text>
+  <text x="119" y="165" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#9ca3af">up to 10MB</text>
+
+  <!-- Format badges -->
+  <rect x="44" y="196" width="36" height="20" rx="4" fill="#f0f4ff"/>
+  <text x="62" y="210" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="600" fill="#6c8ff5">PNG</text>
+  <rect x="84" y="196" width="36" height="20" rx="4" fill="#f0f4ff"/>
+  <text x="102" y="210" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="600" fill="#6c8ff5">JPG</text>
+  <rect x="124" y="196" width="36" height="20" rx="4" fill="#f0f4ff"/>
+  <text x="142" y="210" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="600" fill="#6c8ff5">SVG</text>
+  <rect x="84" y="222" width="50" height="20" rx="4" fill="#f0f4ff"/>
+  <text x="109" y="236" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="600" fill="#6c8ff5">WEBP</text>
+
+  <!-- Remove BG button -->
+  <rect x="44" y="254" width="150" height="28" rx="6" fill="#fff" stroke="#e0e4ea" stroke-width="1"/>
+  <text x="119" y="272" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" font-weight="500" fill="#6b7280">Remove Background</text>
+
+  <!-- Arrow 1→2 -->
+  <path d="M224 170 L240 170" stroke="#6c8ff5" stroke-width="2" stroke-linecap="round" marker-end="url(#arrowhead)"/>
+  <defs><marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0 0 L8 3 L0 6Z" fill="#6c8ff5"/></marker></defs>
+
+  <!-- Step 2: Customize -->
+  <rect x="246" y="24" width="190" height="292" rx="12" fill="#fff" filter="url(#shadow)"/>
+  <text x="341" y="52" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="600" fill="#6c8ff5" letter-spacing="0.5">STEP 2</text>
+  <text x="341" y="72" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" font-weight="600" fill="#1a2130">Customize</text>
+
+  <!-- Color pickers -->
+  <text x="262" y="100" font-family="system-ui,sans-serif" font-size="10" fill="#6b7280">Background:</text>
+  <rect x="262" y="106" width="158" height="28" rx="6" fill="#fff" stroke="#e0e4ea" stroke-width="1"/>
+  <rect x="268" y="112" width="16" height="16" rx="4" fill="#ffffff" stroke="#d0d8e8" stroke-width="1"/>
+  <text x="290" y="124" font-family="system-ui,monospace" font-size="10" fill="#374151">#FFFFFF</text>
+
+  <text x="262" y="152" font-family="system-ui,sans-serif" font-size="10" fill="#6b7280">Foreground:</text>
+  <rect x="262" y="158" width="158" height="28" rx="6" fill="#fff" stroke="#e0e4ea" stroke-width="1"/>
+  <rect x="268" y="164" width="16" height="16" rx="4" fill="#1a2130"/>
+  <text x="290" y="176" font-family="system-ui,monospace" font-size="10" fill="#374151">#1A2130</text>
+
+  <!-- Shape selector -->
+  <text x="262" y="206" font-family="system-ui,sans-serif" font-size="10" fill="#6b7280">Shape:</text>
+  <rect x="262" y="212" width="158" height="28" rx="6" fill="#fff" stroke="#e0e4ea" stroke-width="1"/>
+  <text x="274" y="230" font-family="system-ui,sans-serif" font-size="10" fill="#374151">Rounded Square</text>
+
+  <!-- Sliders -->
+  <text x="262" y="258" font-family="system-ui,sans-serif" font-size="10" fill="#6b7280">Zoom:</text>
+  <rect x="262" y="264" width="158" height="4" rx="2" fill="#e0e4ea"/>
+  <rect x="262" y="264" width="90" height="4" rx="2" fill="url(#accent)"/>
+  <circle cx="352" cy="266" r="6" fill="#fff" stroke="#6c8ff5" stroke-width="2"/>
+
+  <text x="262" y="290" font-family="system-ui,sans-serif" font-size="10" fill="#6b7280">Padding:</text>
+  <rect x="262" y="296" width="158" height="4" rx="2" fill="#e0e4ea"/>
+  <rect x="262" y="296" width="70" height="4" rx="2" fill="url(#accent)"/>
+  <circle cx="332" cy="298" r="6" fill="#fff" stroke="#6c8ff5" stroke-width="2"/>
+
+  <!-- Arrow 2→3 -->
+  <path d="M446 170 L462 170" stroke="#6c8ff5" stroke-width="2" stroke-linecap="round" marker-end="url(#arrowhead)"/>
+
+  <!-- Step 3: Preview -->
+  <rect x="468" y="24" width="190" height="292" rx="12" fill="#fff" filter="url(#shadow)"/>
+  <text x="563" y="52" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="600" fill="#6c8ff5" letter-spacing="0.5">STEP 3</text>
+  <text x="563" y="72" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" font-weight="600" fill="#1a2130">Preview &amp; Export</text>
+
+  <!-- Mini iPhone frame -->
+  <rect x="516" y="86" width="94" height="170" rx="16" fill="#1a2130" stroke="#374151" stroke-width="1"/>
+  <rect x="520" y="92" width="86" height="158" rx="12" fill="#f8fafc"/>
+  <!-- Dynamic island -->
+  <rect x="547" y="96" width="32" height="10" rx="5" fill="#1a2130"/>
+  <!-- App icon on iPhone -->
+  <rect x="530" y="118" width="40" height="40" rx="10" fill="url(#iconGrad)"/>
+  <text x="550" y="142" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" font-weight="700" fill="#fff">A</text>
+  <text x="550" y="170" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="#374151">MyApp</text>
+  <!-- Ghost icons -->
+  <rect x="530" y="182" width="16" height="16" rx="4" fill="#e0e4ea" opacity="0.5"/>
+  <rect x="554" y="182" width="16" height="16" rx="4" fill="#e0e4ea" opacity="0.5"/>
+  <rect x="530" y="206" width="16" height="16" rx="4" fill="#e0e4ea" opacity="0.5"/>
+  <rect x="554" y="206" width="16" height="16" rx="4" fill="#e0e4ea" opacity="0.5"/>
+
+  <!-- Platform checkboxes -->
+  <rect x="484" y="268" width="12" height="12" rx="3" fill="#6c8ff5"/>
+  <path d="M487 274 L489 276 L493 272" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="500" y="278" font-family="system-ui,sans-serif" font-size="10" fill="#374151">iOS</text>
+
+  <rect x="530" y="268" width="12" height="12" rx="3" fill="#6c8ff5"/>
+  <path d="M533 274 L535 276 L539 272" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="546" y="278" font-family="system-ui,sans-serif" font-size="10" fill="#374151">Android</text>
+
+  <rect x="484" y="286" width="12" height="12" rx="3" fill="#e0e4ea"/>
+  <text x="500" y="296" font-family="system-ui,sans-serif" font-size="10" fill="#9ca3af">Windows</text>
+
+  <rect x="530" y="286" width="12" height="12" rx="3" fill="#e0e4ea"/>
+  <text x="546" y="296" font-family="system-ui,sans-serif" font-size="10" fill="#9ca3af">macOS</text>
+</svg>

@@ -67,6 +67,10 @@
     .article-cta h3 { color: #fff; font-size: 22px; font-weight: 600; margin-bottom: 10px; }
     .article-cta p { color: rgba(255,255,255,.85); margin-bottom: 20px; }
     .btn-white { background: #fff; color: #22a34a; border: none; border-radius: 8px; padding: 11px 26px; font-size: 14px; font-weight: 600; text-decoration: none; }
+    .article-img { width: 100%; max-width: 100%; border-radius: 12px; margin: 24px 0; display: block; }
+    .prototype-block { background: #f8fafc; border: 1px solid #e8ecf4; border-radius: 12px; padding: 20px; margin: 28px 0; text-align: center; }
+    .prototype-block img { width: 100%; max-width: 100%; height: auto; }
+    .prototype-block p { font-size: 13px; color: #6b7280; margin: 12px 0 0; font-style: italic; }
   </style>
 </head>
 <body class="theme-public">
@@ -82,7 +86,9 @@
       <a href="/blog" class="article-back">← Back to blog</a>
       <span class="article-tag">Android</span>
       <h1>Android adaptive icons: a practical design guide</h1>
-      <div class="article-meta">June 2026 · 6 min read · App Icon Studio</div>
+      <div class="article-meta">June 2026 · 10 min read · App Icon Studio</div>
+
+      <img src="/website/assets/blog/android-phone.jpg" alt="Android phone displaying app icons" class="article-img" loading="lazy" />
 
       <p>Android icon design is more complex than iOS because icons must look good across dozens of different launcher apps, each of which may apply a different shape mask — circle, squircle, rounded square, or even a teardrop. This is where Android's <strong>adaptive icon</strong> system comes in.</p>
       <p>This guide explains how Android icons work, what sizes you need for each density bucket, and how to export them correctly.</p>
@@ -115,6 +121,11 @@
       <h3>Adaptive icon canvas size</h3>
       <p>The full adaptive icon canvas is <strong>108×108dp</strong>. The center <strong>72×72dp</strong> is the "safe zone" — the area guaranteed to be visible regardless of the mask shape. Keep all important visual elements within this safe zone. The outer ring (18dp on each side) is used for parallax and motion effects by some launchers.</p>
 
+      <div class="prototype-block">
+        <img src="/website/assets/blog/prototype-adaptive-layers.svg" alt="Android adaptive icon layer system showing background and foreground combining with mask shapes" />
+        <p>Adaptive icons split into background + foreground layers — the launcher applies its own shape mask</p>
+      </div>
+
       <h2>Google Play Store icon requirements</h2>
       <p>The Play Store listing uses a separate 512×512px icon — this is not the same as your in-app icon. Requirements:</p>
       <ul>
@@ -145,6 +156,38 @@
       </ul>
       <p>The Google Play 512×512 icon is also included — just upload it directly in the Play Console under Store listing → App icon.</p>
 
+      <div class="prototype-block">
+        <img src="/website/assets/blog/prototype-export-kit.svg" alt="App Icon Studio Android export showing all mipmap density sizes" />
+        <p>All 6 Android density sizes plus Google Play icon — organized in mipmap folders ready for your project</p>
+      </div>
+
+      <h2>Monochrome themed icons (Android 13+)</h2>
+      <p>Android 13 introduced themed icons that apply the user's Material You dynamic color palette to app icons. When enabled, the system uses a monochrome version of your icon tinted with colors derived from the user's wallpaper.</p>
+      <p>To support this feature, provide a <code>monochrome</code> drawable in your adaptive icon definition:</p>
+      <pre style="background:#1e293b;color:#f8fafc;padding:18px 20px;border-radius:8px;overflow-x:auto;font-size:13px;line-height:1.6;margin:24px 0;"><code>&lt;adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android"&gt;
+  &lt;background android:drawable="@color/ic_background"/&gt;
+  &lt;foreground android:drawable="@drawable/ic_foreground"/&gt;
+  &lt;monochrome android:drawable="@drawable/ic_monochrome"/&gt;
+&lt;/adaptive-icon&gt;</code></pre>
+      <p>The monochrome drawable should be a simple, single-color silhouette version of your icon — think of it as the icon's shadow. Keep the design bold and recognizable since all color information is stripped away.</p>
+
+      <h2>Common Android icon mistakes to avoid</h2>
+      <ul>
+        <li><strong>Placing content outside the safe zone:</strong> Elements in the outer 18dp ring will be clipped by circular masks on Samsung devices, making your icon look broken.</li>
+        <li><strong>Using transparency in the background layer:</strong> Some launchers render transparent backgrounds as solid black, creating an ugly dark square behind your icon.</li>
+        <li><strong>Not testing on multiple launchers:</strong> Samsung One UI, Pixel Launcher, Xiaomi MIUI, and Nova Launcher all apply different mask shapes. What looks perfect on a Pixel may be clipped on a Samsung.</li>
+        <li><strong>Skipping the Google Play icon:</strong> The 512×512 Play Store icon is separate from your adaptive icon. Forgetting to update it means your store listing shows a different design than what appears on the user's home screen.</li>
+        <li><strong>Thin line art at small sizes:</strong> Detail that renders at 192px disappears at 48px (mdpi). Use bold, thick shapes that remain legible across all density buckets.</li>
+      </ul>
+
+      <h2>Testing your Android icons</h2>
+      <p>Before shipping, validate your icon across these scenarios:</p>
+      <ul>
+        <li><strong>Android Studio preview:</strong> Use the Image Asset Studio (File → New → Image Asset) to preview your icon under circle, squircle, rounded square, and teardrop masks simultaneously.</li>
+        <li><strong>Real device testing:</strong> Install your APK on at least one Samsung device (circle mask) and one Pixel device (squircle mask) to verify real-world rendering.</li>
+        <li><strong>Google Play Console preview:</strong> Upload your 512px store icon and preview it in the Play Console's store listing editor before publishing.</li>
+        <li><strong>Material You themed mode:</strong> On an Android 13+ device, enable themed icons in Settings → Wallpaper &amp; Style to verify your monochrome drawable renders correctly.</li>
+      </ul>
 
       <div class="article-cta">
         <h3>Generate your Android icon pack</h3>

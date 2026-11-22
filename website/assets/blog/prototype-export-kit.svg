@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" fill="none">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="680" y2="300" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#f0f4ff"/>
+      <stop offset="100%" stop-color="#e8ecfa"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#f97316"/>
+    </linearGradient>
+    <filter id="sh2" x="-2%" y="-2%" width="104%" height="108%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-opacity="0.06"/>
+    </filter>
+  </defs>
+
+  <rect width="680" height="300" rx="16" fill="url(#bg2)"/>
+
+  <!-- Header -->
+  <text x="340" y="32" text-anchor="middle" font-family="system-ui,sans-serif" font-size="16" font-weight="700" fill="#1a2130">Export Kit — Generated Size Matrix</text>
+  <text x="340" y="50" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#6b7280">Select platforms and generate all icon sizes in one click</text>
+
+  <!-- Platform toggles -->
+  <rect x="186" y="60" width="68" height="26" rx="6" fill="#6c8ff5"/>
+  <text x="220" y="77" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="600" fill="#fff">iOS</text>
+  <rect x="260" y="60" width="68" height="26" rx="6" fill="#6c8ff5"/>
+  <text x="294" y="77" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="600" fill="#fff">Android</text>
+  <rect x="334" y="60" width="68" height="26" rx="6" fill="#e0e4ea"/>
+  <text x="368" y="77" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="500" fill="#6b7280">Windows</text>
+  <rect x="408" y="60" width="68" height="26" rx="6" fill="#e0e4ea"/>
+  <text x="442" y="77" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="500" fill="#6b7280">macOS</text>
+
+  <!-- Android column -->
+  <rect x="24" y="100" width="152" height="186" rx="10" fill="#fff" filter="url(#sh2)"/>
+  <text x="100" y="122" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" font-weight="700" fill="#22a34a">Android</text>
+  <text x="36" y="142" font-family="system-ui,sans-serif" font-size="10" fill="#6b7280">mipmap-mdpi</text>
+  <text x="164" y="142" text-anchor="end" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#374151">48x48</text>
+  <text x="36" y="158" font-family="system-ui,sans-serif" font-size="10" fill="#6b7280">mipmap-hdpi</text>
+  <text x="164" y="158" text-anchor="end" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#374151">72x72</text>
+  <text x="36" y="174" font-family="system-ui,sans-serif" font-size="10" fill="#6b7280">mipmap-xhdpi</text>
+  <text x="164" y="174" text-anchor="end" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#374151">96x96</text>
+  <text x="36" y="190" font-family="system-ui,sans-serif" font-size="10" fill="#6b7280">mipmap-xxhdpi</text>
+  <text x="164" y="190" text-anchor="end" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#374151">144x144</text>
+  <text x="36" y="206" font-family="system-ui,sans-serif" font-size="10" fill="#6b7280">mipmap-xxxhdpi</text>
+  <text x="164" y="206" text-anchor="end" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#374151">192x192</text>
+  <line x1="36" y1="216" x2="164" y2="216" stroke="#e8ecf4" stroke-width="1"/>
+  <text x="36" y="232" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#22a34a">Google Play</text>
+  <text x="164" y="232" text-anchor="end" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#22a34a">512x512</text>
+  <text x="100" y="264" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#6b7280">6 files total</text>
+
+  <!-- iOS column -->
+  <rect x="186" y="100" width="152" height="186" rx="10" fill="#fff" filter="url(#sh2)"/>
+  <text x="262" y="122" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" font-weight="700" fill="#6c8ff5">iOS</text>
+  <text x="198" y="142" font-family="system-ui,sans-serif" font-size="10" fill="#6b7280">AppIcon Set</text>
+  <text x="326" y="142" text-anchor="end" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#374151">18 files</text>
+  <text x="198" y="158" font-family="system-ui,sans-serif" font-size="10" fill="#6b7280">App Store</text>
+  <text x="326" y="158" text-anchor="end" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#374151">1024x1024</text>
+  <text x="198" y="174" font-family="system-ui,sans-serif" font-size="10" fill="#6b7280">Contents.json</text>
+  <text x="326" y="174" text-anchor="end" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#374151">1 file</text>
+  <line x1="198" y1="186" x2="326" y2="186" stroke="#e8ecf4" stroke-width="1"/>
+  <text x="262" y="208" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#6c8ff5">20 files total</text>
+  <text x="262" y="226" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#9ca3af">Xcode-ready asset catalog</text>
+
+  <!-- Windows column -->
+  <rect x="348" y="100" width="152" height="186" rx="10" fill="#fff" filter="url(#sh2)"/>
+  <text x="424" y="122" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" font-weight="700" fill="#0284c7">Windows</text>
+  <text x="360" y="142" font-family="system-ui,sans-serif" font-size="10" fill="#6b7280">PNG Sizes</text>
+  <text x="488" y="142" text-anchor="end" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#374151">10 files</text>
+  <text x="360" y="158" font-family="system-ui,sans-serif" font-size="10" fill="#6b7280">ICO Bundle</text>
+  <text x="488" y="158" text-anchor="end" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#374151">1 file</text>
+  <text x="360" y="174" font-family="system-ui,sans-serif" font-size="10" fill="#6b7280">Range</text>
+  <text x="488" y="174" text-anchor="end" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#374151">16 to 256px</text>
+  <line x1="360" y1="186" x2="488" y2="186" stroke="#e8ecf4" stroke-width="1"/>
+  <text x="424" y="208" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#0284c7">11 files total</text>
+
+  <!-- macOS column -->
+  <rect x="510" y="100" width="152" height="186" rx="10" fill="#fff" filter="url(#sh2)"/>
+  <text x="586" y="122" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" font-weight="700" fill="#7c3aed">macOS</text>
+  <text x="522" y="142" font-family="system-ui,sans-serif" font-size="10" fill="#6b7280">Iconset PNGs</text>
+  <text x="650" y="142" text-anchor="end" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#374151">10 files</text>
+  <text x="522" y="158" font-family="system-ui,sans-serif" font-size="10" fill="#6b7280">ICNS Bundle</text>
+  <text x="650" y="158" text-anchor="end" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#374151">1 file</text>
+  <text x="522" y="174" font-family="system-ui,sans-serif" font-size="10" fill="#6b7280">Range</text>
+  <text x="650" y="174" text-anchor="end" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#374151">16 to 1024px</text>
+  <line x1="522" y1="186" x2="650" y2="186" stroke="#e8ecf4" stroke-width="1"/>
+  <text x="586" y="208" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#7c3aed">11 files total</text>
+</svg>

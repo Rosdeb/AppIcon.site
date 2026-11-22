@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 280" fill="none">
+  <defs>
+    <linearGradient id="bgM" x1="0" y1="0" x2="680" y2="280" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#f0fdf4"/>
+      <stop offset="100%" stop-color="#ecfdf5"/>
+    </linearGradient>
+    <linearGradient id="icoM" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#34d399"/>
+    </linearGradient>
+    <clipPath id="circleClip"><circle cx="90" cy="90" r="72"/></clipPath>
+    <clipPath id="squircleClip"><rect x="14" y="14" width="152" height="152" rx="36"/></clipPath>
+    <clipPath id="roundedClip"><rect x="8" y="8" width="164" height="164" rx="20"/></clipPath>
+    <filter id="shM" x="-4%" y="-4%" width="108%" height="112%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <rect width="680" height="280" rx="16" fill="url(#bgM)"/>
+
+  <text x="340" y="30" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" font-weight="700" fill="#1a2130">Maskable Icon — Safe Zone &amp; Shape Masks</text>
+  <text x="340" y="48" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#6b7280">Keep your logo within the 80% safe zone circle for all launcher shapes</text>
+
+  <!-- Full icon with safe zone -->
+  <g transform="translate(30, 68)">
+    <rect x="0" y="0" width="180" height="180" rx="8" fill="url(#icoM)" filter="url(#shM)"/>
+    <!-- Safe zone circle -->
+    <circle cx="90" cy="90" r="72" fill="none" stroke="#fff" stroke-width="2" stroke-dasharray="6 3" opacity="0.8"/>
+    <!-- Logo inside safe zone -->
+    <text x="90" y="100" text-anchor="middle" font-family="system-ui,sans-serif" font-size="48" font-weight="700" fill="#fff">A</text>
+    <!-- Label -->
+    <text x="90" y="200" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="600" fill="#374151">Full Canvas (512px)</text>
+    <text x="90" y="214" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#9ca3af">White circle = 80% safe zone</text>
+  </g>
+
+  <!-- Arrow -->
+  <text x="234" y="160" font-family="system-ui,sans-serif" font-size="20" fill="#059669">→</text>
+
+  <!-- Circle mask result -->
+  <g transform="translate(260, 68)">
+    <g clip-path="url(#circleClip)">
+      <rect x="0" y="0" width="180" height="180" fill="url(#icoM)"/>
+      <text x="90" y="100" text-anchor="middle" font-family="system-ui,sans-serif" font-size="48" font-weight="700" fill="#fff">A</text>
+    </g>
+    <circle cx="90" cy="90" r="72" fill="none" stroke="#e0e4ea" stroke-width="1.5" filter="url(#shM)"/>
+    <text x="90" y="200" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="600" fill="#374151">Circle Mask</text>
+    <text x="90" y="214" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#9ca3af">Samsung, Pixel</text>
+  </g>
+
+  <!-- Squircle mask result -->
+  <g transform="translate(410, 68)">
+    <g clip-path="url(#squircleClip)">
+      <rect x="0" y="0" width="180" height="180" fill="url(#icoM)"/>
+      <text x="90" y="100" text-anchor="middle" font-family="system-ui,sans-serif" font-size="48" font-weight="700" fill="#fff">A</text>
+    </g>
+    <rect x="14" y="14" width="152" height="152" rx="36" fill="none" stroke="#e0e4ea" stroke-width="1.5" filter="url(#shM)"/>
+    <text x="90" y="200" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="600" fill="#374151">Squircle Mask</text>
+    <text x="90" y="214" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#9ca3af">Xiaomi, OnePlus</text>
+  </g>
+</svg>

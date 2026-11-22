@@ -182,6 +182,32 @@
       font-weight: 600;
       text-decoration: none;
     }
+    .article-img {
+      width: 100%;
+      max-width: 100%;
+      border-radius: 12px;
+      margin: 24px 0;
+      display: block;
+    }
+    .prototype-block {
+      background: #f8fafc;
+      border: 1px solid #e8ecf4;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 28px 0;
+      text-align: center;
+    }
+    .prototype-block img {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+    }
+    .prototype-block p {
+      font-size: 13px;
+      color: #6b7280;
+      margin: 12px 0 0;
+      font-style: italic;
+    }
   </style>
 </head>
 <body class="theme-public">
@@ -198,7 +224,9 @@
       <a href="/blog" class="article-back">← Back to blog</a>
       <span class="article-tag">iOS</span>
       <h1>Complete guide to iOS app icon sizes in 2026</h1>
-      <div class="article-meta">June 2026 · 5 min read · App Icon Studio</div>
+      <div class="article-meta">June 2026 · 9 min read · App Icon Studio</div>
+
+      <img src="/website/assets/blog/iphone-homescreen.jpg" alt="iPhone home screen showing app icons" class="article-img" loading="lazy" />
 
       <p>Getting iOS app icon sizes right is one of those tasks that sounds simple but can catch you off-guard right before submission. Apple requires a specific set of sizes for different contexts — the home screen, the App Store, Spotlight search, and Settings — and a single missing size will get your submission rejected.</p>
 
@@ -239,6 +267,11 @@
         </tbody>
       </table>
 
+      <div class="prototype-block">
+        <img src="/website/assets/blog/prototype-ios-sizes.svg" alt="Visual comparison of iOS icon sizes from App Store 1024px to Notification 40px" />
+        <p>Your icon must remain clear and recognizable at every size — from 1024px App Store down to 40px notification</p>
+      </div>
+
       <h2>What is a Contents.json file?</h2>
       <p>When you import icons into Xcode via the Assets.xcassets catalog, Xcode needs a <code>Contents.json</code> file that maps each filename to the correct slot (usage + resolution). Without it, Xcode won't know which file goes where.</p>
       <p>App Icon Studio automatically generates this file and includes it in your export ZIP. To use it: unzip the export, open your Xcode project, navigate to <code>Assets.xcassets → AppIcon</code>, and drag the entire exported folder in. Xcode will pick up all files and the manifest automatically.</p>
@@ -262,6 +295,33 @@
         <li>Download the ZIP and drop the folder into Xcode</li>
       </ul>
 
+      <div class="prototype-block">
+        <img src="/website/assets/blog/prototype-export-kit.svg" alt="App Icon Studio iOS export kit with all 20 required files" />
+        <p>App Icon Studio generates all 20 required iOS icon files with correct filenames and Contents.json manifest</p>
+      </div>
+
+      <h2>Dark mode and tinted icons in iOS 18</h2>
+      <p>Starting with iOS 18, Apple introduced automatic dark mode and tinted icon rendering. The system can apply a dark tint or user-selected color wash over your app icon on the home screen. While this is handled by the OS and doesn't require additional icon assets, it has design implications:</p>
+      <ul>
+        <li><strong>High-contrast glyphs:</strong> Icons with a clear separation between foreground and background elements translate better when the system applies dark mode transformations.</li>
+        <li><strong>Avoid relying solely on color:</strong> If your icon's identity depends entirely on a specific color (e.g., a plain green square), it may become unrecognizable under tinted mode. Ensure your icon has a distinctive shape or symbol.</li>
+        <li><strong>Test with the iOS 18 simulator:</strong> Preview how your icon looks under automatic dark, light, and tinted modes before shipping.</li>
+      </ul>
+
+      <h2>visionOS and Apple Watch icon requirements</h2>
+      <p>If your app targets the full Apple ecosystem, you'll also need icons for these additional platforms:</p>
+      <ul>
+        <li><strong>Apple Watch (watchOS):</strong> Circular icon display requires a 1024×1024 source that looks good when cropped to a circle. Required sizes include 48×48 (38mm Notification), 55×55 (42mm Notification), 80×80 (Home Screen), 88×88 (Long Look), and 1024×1024 (App Store).</li>
+        <li><strong>Apple Vision Pro (visionOS):</strong> Uses a layered icon system with separate front, middle, and back layers that respond to head movement with a parallax depth effect. The standard layer size is 1024×1024, with each layer providing depth and dimensionality.</li>
+      </ul>
+
+      <h2>Automated icon generation workflows</h2>
+      <p>For teams shipping frequent updates across multiple platforms, manual icon generation is error-prone and time-consuming. Here are strategies for automating your icon pipeline:</p>
+      <ul>
+        <li><strong>CI/CD integration:</strong> Use scripts in your build pipeline to generate all icon sizes from a single 1024×1024 master file. Tools like ImageMagick or Sharp (Node.js) can automate resizing.</li>
+        <li><strong>Xcode asset catalog validation:</strong> Xcode validates your AppIcon asset catalog during the build process. Missing or incorrectly sized images generate build warnings. Treat these as errors in your CI pipeline.</li>
+        <li><strong>App Icon Studio API:</strong> For the simplest workflow, upload your master image to App Icon Studio, select your target platforms, and download a production-ready ZIP containing all sizes, correct filenames, and the Contents.json manifest.</li>
+      </ul>
 
       <div class="article-cta">
         <h3>Generate your iOS icon pack now</h3>

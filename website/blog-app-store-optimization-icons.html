@@ -115,6 +115,10 @@
     }
     .callout h4 { margin: 0 0 6px; color: #db2777; }
     .callout p { margin: 0; font-size: 15px; color: #374151; }
+    .article-img { width: 100%; max-width: 100%; border-radius: 12px; margin: 24px 0; display: block; }
+    .prototype-block { background: #f8fafc; border: 1px solid #e8ecf4; border-radius: 12px; padding: 20px; margin: 28px 0; text-align: center; }
+    .prototype-block img { width: 100%; max-width: 100%; height: auto; }
+    .prototype-block p { font-size: 13px; color: #6b7280; margin: 12px 0 0; font-style: italic; }
   </style>
 </head>
 <body class="theme-public">
@@ -138,8 +142,10 @@
         <span class="article-tag">Growth &amp; ASO</span>
         <h1>App Store Optimization (ASO): How Icon Design Impacts Conversion Rates</h1>
         <div class="article-meta">
-          Published November 4, 2026 &middot; By Rosdeb Koch &middot; 7 min read
+          Published November 4, 2026 &middot; By Rosdeb Koch &middot; 12 min read
         </div>
+
+        <img src="/website/assets/blog/app-store-search.jpg" alt="Smartphone showing app store search results" class="article-img" loading="lazy" />
 
         <p>
           In App Store Optimization (ASO), keywords and metadata dictate how easily users find your app in search queries.
@@ -191,6 +197,68 @@
         <p>
           With <a href="/#editor">App Icon Studio</a>, testing and exporting new variations takes seconds. Upload your variant artwork, preview it in simulated iPhone and Android docks, and download the full production package in a single click.
         </p>
+
+        <div class="prototype-block">
+          <img src="/website/assets/blog/prototype-upload-customize.svg" alt="App Icon Studio for testing icon variants" />
+          <p>Quickly test and export icon variations for A/B testing with App Icon Studio's live preview</p>
+        </div>
+
+        <h2>4. Color Psychology in App Icon Design</h2>
+        <p>Color choices in your app icon aren't just aesthetic decisions — they carry psychological weight that influences user perception and tap-through behavior:</p>
+        <ul>
+          <li><strong>Blue:</strong> Trust, security, professionalism. Dominant in finance (PayPal, Stripe), social media (Facebook, LinkedIn), and enterprise apps. Overused in many categories — consider whether blue truly differentiates you.</li>
+          <li><strong>Green:</strong> Growth, health, money, nature. Common in fitness (Strava), finance (Robinhood, Cash App), and sustainability apps. Fresh and approachable.</li>
+          <li><strong>Red/Orange:</strong> Energy, urgency, excitement. Used by entertainment (YouTube, Netflix), food delivery (DoorDash), and social apps (Reddit). Demands attention but can feel aggressive if overused.</li>
+          <li><strong>Purple:</strong> Creativity, premium quality, innovation. Gaining popularity in design tools (Figma), music apps (Beats), and AI products. Relatively underused, making it a strong differentiator.</li>
+          <li><strong>Black/Dark:</strong> Luxury, sophistication, power. Used by premium brands (Uber, Apple Music). Provides strong contrast for light-colored foreground elements.</li>
+          <li><strong>Yellow:</strong> Optimism, speed, visibility. Used by communication apps (Snapchat, Bumble) and productivity tools. Extremely eye-catching in search results.</li>
+        </ul>
+
+        <h2>5. A/B Testing Your Icon: A Step-by-Step Process</h2>
+        <p>Both app stores now provide native tools for testing icon variants against real traffic. Here's how to set up effective tests:</p>
+        <h3>Apple App Store (Product Page Optimization)</h3>
+        <ol style="margin:0 0 24px 20px;color:#374151;line-height:1.75;">
+          <li style="margin-bottom:8px;">Navigate to App Store Connect → your app → Product Page Optimization.</li>
+          <li style="margin-bottom:8px;">Create a new test with up to 3 icon treatments plus your original (control).</li>
+          <li style="margin-bottom:8px;">Each treatment can include a different icon, screenshots, and app preview videos.</li>
+          <li style="margin-bottom:8px;">Set the traffic split (Apple recommends at least 20% per variant for statistical significance).</li>
+          <li style="margin-bottom:8px;">Run the test for a minimum of 7 days to account for day-of-week traffic variations.</li>
+          <li style="margin-bottom:8px;">Review the results — Apple reports impressions, conversion rate, and improvement percentage with confidence intervals.</li>
+        </ol>
+
+        <h3>Google Play (Store Listing Experiments)</h3>
+        <ol style="margin:0 0 24px 20px;color:#374151;line-height:1.75;">
+          <li style="margin-bottom:8px;">Go to Google Play Console → your app → Store Listing Experiments.</li>
+          <li style="margin-bottom:8px;">Create a new experiment targeting your icon graphic.</li>
+          <li style="margin-bottom:8px;">Upload up to 3 variant icons to test against your current icon.</li>
+          <li style="margin-bottom:8px;">Google automatically splits traffic and tracks install conversion rates.</li>
+          <li style="margin-bottom:8px;">Wait for statistical significance (typically shown as a confidence percentage).</li>
+          <li style="margin-bottom:8px;">Apply the winning variant with one click.</li>
+        </ol>
+
+        <h2>6. Measuring Icon Performance Beyond Install Rate</h2>
+        <p>While install conversion rate is the primary metric, sophisticated ASO practitioners track additional signals:</p>
+        <ul>
+          <li><strong>Browse-to-install ratio:</strong> What percentage of users who see your icon in search results actually tap through to your product page?</li>
+          <li><strong>Competitor benchmarking:</strong> Track competitors' icon changes over time. When a top competitor changes their icon, it may signal an ongoing A/B test result — learn from their optimization.</li>
+          <li><strong>Seasonal performance:</strong> Some icon treatments perform better during specific seasons. Holiday-themed icons can boost conversion during November-December but hurt credibility outside that window.</li>
+          <li><strong>Category ranking correlation:</strong> Monitor whether icon changes correlate with ranking movements. While causation is hard to prove, sustained conversion improvements typically lead to higher organic rankings.</li>
+          <li><strong>User feedback and reviews:</strong> After an icon change, monitor app reviews for mentions of the icon. Negative feedback about a new icon is a signal to revert or iterate.</li>
+        </ul>
+
+        <div class="callout">
+          <h4>ASO Icon Design Checklist</h4>
+          <p>
+            ✓ Researched top 50 competitors' icon colors and styles<br>
+            ✓ Chosen a distinctive color that creates contrast in search results<br>
+            ✓ Single clear focal point visible at 30px thumbnail size<br>
+            ✓ No text, wordmarks, or small typography in the icon<br>
+            ✓ 4.5:1+ contrast ratio between foreground and background<br>
+            ✓ Set up A/B test with 2-3 variants before full rollout<br>
+            ✓ Test running for minimum 7 days with sufficient traffic<br>
+            ✓ Tracking browse-to-install ratio and conversion rate
+          </p>
+        </div>
       </article>
 
     </main>
