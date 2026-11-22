@@ -178,13 +178,14 @@
   const probe = document.createElement('canvas');
   probe.width = probe.height = 1;
   for (const option of $('format').options) {
+    if (option.value === 'image/svg+xml') continue;
     try { option.disabled = !probe.toDataURL(option.value).startsWith(`data:${option.value};`); }
     catch { option.disabled = true; }
   }
   if ($('format').selectedOptions[0].disabled) $('format').value = 'image/png';
 
   function formatControls() {
-    $('quality-control').hidden = $('format').value === 'image/png';
+    $('quality-control').hidden = ['image/png', 'image/svg+xml'].includes($('format').value);
     $('background-control').hidden = $('format').value !== 'image/jpeg';
   }
   formatControls();
@@ -956,16 +957,23 @@
         if (!source || !source.width || !source.height) throw new Error('Unable to render this crop. Try a smaller image or reset the selection.');
         ctx.drawImage(source, 0, 0, width, height);
         const mime = $('format').value;
-        const blob = await new Promise(resolve => canvas.toBlob(resolve, mime, Number($('quality').value) / 100));
+        let blob;
+        if (mime === 'image/svg+xml') {
+          const dataURL = canvas.toDataURL('image/png');
+          const svgString = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 ${width} ${height}" width="${width}" height="${height}"><image width="${width}" height="${height}" href="${dataURL}" xlink:href="${dataURL}"/></svg>`;
+          blob = new Blob([svgString], { type: 'image/svg+xml' });
+        } else {
+          blob = await new Promise(resolve => canvas.toBlob(resolve, mime, Number($('quality').value) / 100));
+        }
         if (revision !== current) return;
-        if (!blob || blob.type !== mime) throw new Error('Your browser cannot export that format. Choose PNG or JPEG.');
+        if (!blob || blob.type !== mime) throw new Error('Your browser cannot export that format. Choose PNG, JPEG, WebP or SVG.');
         resultURL = URL.createObjectURL(blob);
         cur.outputBlob = blob;
         cur.outputURL = resultURL;
         $('preview').src = resultURL;
         const reduction = (1 - blob.size / cur.file.size) * 100;
         $('output-info').textContent = `${width} × ${height} px · Original ${size(cur.file.size)} → Output ${size(blob.size)} · ${reduction >= 0 ? reduction.toFixed(1) + '% smaller' : (-reduction).toFixed(1) + '% larger'}`;
-        const ext = mime === 'image/jpeg' ? 'jpg' : mime.split('/')[1];
+        const ext = mime === 'image/jpeg' ? 'jpg' : (mime === 'image/svg+xml' ? 'svg' : mime.split('/')[1]);
         const outName = `${cur.file.name.replace(/\.[^.]+$/, '') || 'image'}-${mode}.${ext}`;
         $('download').href = resultURL;
         $('download').download = outName;
@@ -1110,7 +1118,14 @@
           outCtx.imageSmoothingQuality = 'high';
           outCtx.drawImage(srcCanvas, 0, 0, targetW, targetH);
 
-          const blob = await new Promise(res => outCanvas.toBlob(res, itemMime, itemQuality));
+          let blob;
+          if (itemMime === 'image/svg+xml') {
+            const dataURL = outCanvas.toDataURL('image/png');
+            const svgString = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 ${targetW} ${targetH}" width="${targetW}" height="${targetH}"><image width="${targetW}" height="${targetH}" href="${dataURL}" xlink:href="${dataURL}"/></svg>`;
+            blob = new Blob([svgString], { type: 'image/svg+xml' });
+          } else {
+            blob = await new Promise(res => outCanvas.toBlob(res, itemMime, itemQuality));
+          }
           outCanvas.width = outCanvas.height = 0;
           if (srcCanvas && srcCanvas !== item.original && typeof srcCanvas.width !== 'undefined') {
             srcCanvas.width = srcCanvas.height = 0;
@@ -1124,7 +1139,7 @@
           item.outputURL = URL.createObjectURL(blob);
           totalOutputSize += blob.size;
 
-          const ext = itemMime === 'image/jpeg' ? 'jpg' : itemMime.split('/')[1];
+          const ext = itemMime === 'image/jpeg' ? 'jpg' : (itemMime === 'image/svg+xml' ? 'svg' : itemMime.split('/')[1]);
           const rawBase = item.file.name.replace(/\.[^.]+$/, '') || `image-${i + 1}`;
           let finalName = `${rawBase}-${mode}.${ext}`;
           let num = 1;
