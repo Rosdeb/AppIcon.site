@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Windows 11 App Icon &amp; Tile Specifications: High-DPI .ICO Generation – App Icon Studio</title>
+  <meta name="description" content="Guide to Windows 11 app icon guidelines, Fluent Design principles, scaling multipliers, and multi-resolution .ico packaging." />
+  <link rel="canonical" href="https://www.appicon.site/blog/windows-app-icons" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <link rel="icon" href="/website/assets/icons/favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="/website/assets/icons/apple-touch-icon.png" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="App Icon Studio" />
+  <meta property="og:url" content="https://www.appicon.site/blog/windows-app-icons" />
+  <meta property="og:title" content="Windows 11 App Icon &amp; Tile Specifications: High-DPI .ICO Generation" />
+  <meta property="og:description" content="Build crystal-clear Windows 11 desktop icons with Microsoft Fluent Design principles and high-DPI scaling." />
+  <meta property="og:image" content="https://www.appicon.site/website/assets/icons/screenshot1.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Windows 11 App Icon &amp; Tile Specifications: High-DPI .ICO Generation" />
+  <meta name="twitter:description" content="Master Windows 11 Fluent Design icons, DPI scaling, and multi-resolution ICO file formats." />
+  <meta name="twitter:image" content="https://www.appicon.site/website/assets/icons/screenshot1.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Windows 11 App Icon & Tile Specifications: High-DPI .ICO Generation",
+    "description": "Guide to Windows 11 app icon guidelines, Fluent Design principles, scaling multipliers, and multi-resolution .ico packaging.",
+    "image": "https://www.appicon.site/website/assets/icons/screenshot1.png",
+    "datePublished": "2026-09-05",
+    "dateModified": "2026-11-12",
+    "author": { "@type": "Person", "name": "Rosdeb Koch" },
+    "publisher": {
+      "@type": "Organization",
+      "name": "App Icon Studio",
+      "logo": { "@type": "ImageObject", "url": "https://www.appicon.site/website/assets/icons/favicon-512x512.png" }
+    },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://www.appicon.site/blog/windows-app-icons" }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.cdnfonts.com" />
+  <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.cdnfonts.com/css/sf-pro-display" /></noscript>
+  <link rel="stylesheet" href="/website/styles.css" />
+  <style>
+    .article-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+    .article-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: #6b7280;
+      text-decoration: none;
+      margin-bottom: 32px;
+    }
+    .article-back:hover { color: #6c8ff5; }
+    .article-tag {
+      display: inline-block;
+      background: #f0f4ff;
+      color: #5a78e8;
+      border-radius: 999px;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      margin-bottom: 16px;
+    }
+    .article-wrap h1 {
+      font-size: 36px;
+      font-weight: 600;
+      color: #1a2130;
+      line-height: 1.25;
+      letter-spacing: -.8px;
+      margin-bottom: 16px;
+    }
+    .article-meta {
+      font-size: 13px;
+      color: #9ca3af;
+      margin-bottom: 36px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #e8ecf4;
+    }
+    .article-wrap h2 {
+      font-size: 24px;
+      font-weight: 600;
+      color: #1a2130;
+      margin: 40px 0 16px;
+      letter-spacing: -.4px;
+    }
+    .article-wrap h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1a2130;
+      margin: 28px 0 12px;
+    }
+    .article-wrap p {
+      font-size: 16px;
+      color: #374151;
+      line-height: 1.75;
+      margin-bottom: 20px;
+    }
+    .article-wrap ul, .article-wrap ol {
+      margin: 0 0 24px 20px;
+      color: #374151;
+      line-height: 1.75;
+    }
+    .article-wrap li { margin-bottom: 8px; }
+    .table-container {
+      overflow-x: auto;
+      margin: 28px 0;
+    }
+    .content-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .content-table th, .content-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid #edf2f7;
+      text-align: left;
+    }
+    .content-table th {
+      background: #f8fafc;
+      font-weight: 600;
+      color: #1e293b;
+    }
+    .callout {
+      background: #f8fafc;
+      border-left: 4px solid #0ea5e9;
+      padding: 20px;
+      border-radius: 0 8px 8px 0;
+      margin: 28px 0;
+    }
+    .callout h4 { margin: 0 0 6px; color: #0284c7; }
+    .callout p { margin: 0; font-size: 15px; color: #374151; }
+    .article-img {
+      width: 100%;
+      max-width: 100%;
+      border-radius: 12px;
+      margin: 24px 0;
+      display: block;
+    }
+    .prototype-block {
+      background: #f8fafc;
+      border: 1px solid #e8ecf4;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 28px 0;
+      text-align: center;
+    }
+    .prototype-block img {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+    }
+    .prototype-block p {
+      font-size: 13px;
+      color: #6b7280;
+      margin: 12px 0 0;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body class="theme-public">
+  <div class="site-shell">
+    <header class="workspace-header">
+      <a class="brand-lockup" href="/">
+        <img class="brand-mark brand-mark-img" src="/website/assets/icons/Gemini_Generated_Image_wc0y3fwc0y3fwc0y-removebg-preview.png" alt="App Icon Studio" width="52" height="52" />
+        <strong>App Icon Studio</strong>
+      </a>
+      <nav class="topbar-links" aria-label="Primary navigation">
+        <a href="/">Generator</a>
+        <a href="/tools">Image Tools</a>
+        <a href="/blog">Blog</a>
+        <a href="/contact">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <article class="article-wrap">
+        <a class="article-back" href="/blog">&larr; Back to all guides</a>
+        <span class="article-tag">Windows Development</span>
+        <h1>Windows 11 App Icon &amp; Tile Specifications: High-DPI .ICO Generation</h1>
+        <div class="article-meta">
+          Published September 5, 2026 &middot; By Rosdeb Koch &middot; 12 min read
+        </div>
+
+        <img src="/website/assets/blog/windows-laptop.jpg" alt="Windows 11 laptop showing desktop with app icons" class="article-img" loading="lazy" />
+
+        <p>
+          Windows 11 brought a major visual overhaul to the Microsoft desktop ecosystem with the modern <strong>Fluent Design System</strong>.
+          Centered taskbars, rounded window corners, Mica material transparencies, and rich desktop display scaling mean that desktop icons must be sharper and more versatile than ever before.
+        </p>
+        <p>
+          If you deploy Windows desktop software—whether via the Microsoft Store (MSIX), an installer (Inno Setup, NSIS, WiX), or cross-platform desktop frameworks like Electron, Tauri, or .NET MAUI—you must provide icons that scale gracefully from a tiny 16×16 system tray indicator to a massive 256×256 desktop shortcut.
+        </p>
+
+        <h2>1. Anatomy of the Multi-Resolution .ICO Container</h2>
+        <p>
+          Unlike macOS or mobile platforms that reference individual loose PNGs via a manifest file, Windows natively uses the <code>.ico</code> binary container. A single <code>.ico</code> file actually encapsulates multiple embedded PNG or BMP images at specific dimensions:
+        </p>
+
+        <div class="table-container">
+          <table class="content-table">
+            <thead>
+              <tr>
+                <th>Resolution</th>
+                <th>Target Windows Surface</th>
+                <th>Recommended Format</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>16×16 px</td>
+                <td>System tray notification area, small list view in File Explorer</td>
+                <td>32-bit RGBA PNG</td>
+              </tr>
+              <tr>
+                <td>24×24 px</td>
+                <td>Taskbar indicator on 150% scaled displays</td>
+                <td>32-bit RGBA PNG</td>
+              </tr>
+              <tr>
+                <td>32×32 px</td>
+                <td>Standard taskbar button, File Explorer detail view</td>
+                <td>32-bit RGBA PNG</td>
+              </tr>
+              <tr>
+                <td>48×48 px</td>
+                <td>Standard desktop icon grid, Start menu search result</td>
+                <td>32-bit RGBA PNG</td>
+              </tr>
+              <tr>
+                <td>64×64 px</td>
+                <td>High-DPI desktop view (150% &amp; 200% displays)</td>
+                <td>32-bit RGBA PNG</td>
+              </tr>
+              <tr>
+                <td>128×128 px</td>
+                <td>Large tile view in File Explorer</td>
+                <td>32-bit RGBA PNG</td>
+              </tr>
+              <tr>
+                <td>256×256 px</td>
+                <td>Extra-large icon view, High-DPI 4K and 8K monitor scaling</td>
+                <td>32-bit RGBA PNG (Compressed)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout">
+          <h4>Why 256×256px is Essential for Windows 11</h4>
+          <p>
+            When Windows users hit <code>Ctrl + Mouse Wheel Up</code> on their desktop or open File Explorer's "Extra Large Icons" view, Windows looks directly for the 256×256 pixel slot. If missing, the OS applies a blurry nearest-neighbor stretch on the 48px or 32px version.
+          </p>
+        </div>
+
+        <h2>2. Microsoft Fluent Design Icon Principles</h2>
+        <p>
+          To make your application look native on Windows 11:
+        </p>
+        <ul>
+          <li><strong>Soft Lighting &amp; Gradients:</strong> Use natural color gradients with slight illumination coming from the top left or top center.</li>
+          <li><strong>Rounded Geometry:</strong> Match Windows 11's overall corner radius styling (typically 4px to 8px rounded contours on interior shapes).</li>
+          <li><strong>Clean Silhouettes:</strong> Avoid busy background tiles unless your brand explicitly requires it. Standalone glyphs with soft drop shadows look exceptionally sleek against the Windows 11 centered taskbar.</li>
+        </ul>
+
+        <h2>3. Packaging Windows Icons with App Icon Studio</h2>
+        <p>
+          Creating multi-resolution <code>.ico</code> files by hand used to require specialized photo editing plugins. With <a href="/#editor">App Icon Studio</a>, you can simply upload your master 1024×1024 logo, select the <strong>Windows</strong> platform checkbox, and click "Generate Export Plan".
+        </p>
+        <p>
+          The generator automatically renders 10 individual high-resolution PNG sizes and packages them into a unified <code>app.ico</code> bundle ready for embedding into Visual Studio projects, Electron builders, or native C++ resources.
+        </p>
+
+        <div class="prototype-block">
+          <img src="/website/assets/blog/prototype-upload-customize.svg" alt="App Icon Studio workflow for generating Windows .ICO files" />
+          <p>Upload once, customize your icon, and export a multi-resolution .ICO file for Windows 11</p>
+        </div>
+
+        <h2>4. High-DPI Scaling on Windows 11</h2>
+        <p>Windows 11 supports four primary display scaling multipliers that directly affect how your icon renders across different monitor configurations:</p>
+        <ul>
+          <li><strong>100% (96 DPI):</strong> Standard 1080p monitors. Icons display at their native pixel dimensions.</li>
+          <li><strong>125% (120 DPI):</strong> Common on 1440p monitors. A 32px icon needs to render at 40px effective resolution.</li>
+          <li><strong>150% (144 DPI):</strong> Typical for 4K displays at comfortable viewing distance. A 32px icon scales to 48px.</li>
+          <li><strong>200% (192 DPI):</strong> Used on high-density 4K monitors and Surface devices. A 32px icon scales to 64px.</li>
+        </ul>
+        <p>When Windows encounters a DPI scaling factor, it looks for the closest matching resolution inside your <code>.ico</code> file. If an exact match exists, the icon is rendered pixel-perfectly. If not, Windows applies bilinear interpolation scaling, which introduces visible blurriness — especially noticeable on text-heavy or fine-lined icons.</p>
+        <p>This is precisely why including the full range of resolutions (16, 24, 32, 48, 64, 128, 256) in your ICO container is essential for professional desktop software.</p>
+
+        <h2>5. Taskbar, Start Menu &amp; Jump List Icons</h2>
+        <p>Windows 11 uses your application's icon in multiple UI surfaces, each with its own size requirements:</p>
+        <ul>
+          <li><strong>Taskbar (Pinned &amp; Running):</strong> 24×24 at 100% scaling, scaling up with DPI. The centered taskbar in Windows 11 makes icon quality more visible than ever.</li>
+          <li><strong>Start Menu (Pinned Apps):</strong> 48×48 at 100% scaling. Appears in the new rounded-corner Start menu alongside Microsoft's own Fluent Design icons.</li>
+          <li><strong>Start Menu (All Apps List):</strong> 32×32 at 100% scaling. Displayed in the alphabetical app listing.</li>
+          <li><strong>Jump Lists:</strong> 16×16 at 100% scaling. Shown when users right-click your taskbar icon for quick actions.</li>
+          <li><strong>Desktop Shortcut:</strong> 48×48 to 256×256 depending on the user's icon size setting and DPI scaling.</li>
+          <li><strong>File Explorer:</strong> Ranges from 16×16 (details view) to 256×256 (extra-large icons view).</li>
+          <li><strong>Alt+Tab Switcher:</strong> Uses a medium-resolution version of your icon alongside the app's window thumbnail.</li>
+        </ul>
+
+        <h2>6. Creating Windows Installer Icons</h2>
+        <p>If you distribute your application via a Windows installer (Inno Setup, NSIS, WiX, or Advanced Installer), the installer itself needs icons in specific formats:</p>
+        <ul>
+          <li><strong>Setup Executable Icon:</strong> Embedded in the installer's <code>.exe</code> as a multi-resolution ICO resource. This is what users see when they download your installer file.</li>
+          <li><strong>Uninstaller Icon:</strong> Shown in Windows Settings &rarr; Apps &amp; Features (Add/Remove Programs). Should match your main app icon for brand consistency.</li>
+          <li><strong>Start Menu Shortcut Icon:</strong> Created during installation. Points to your app's ICO file or the icon resource embedded in your main executable.</li>
+        </ul>
+
+        <h2>7. MSIX &amp; Microsoft Store Requirements</h2>
+        <p>If you're distributing through the Microsoft Store using MSIX packaging, additional icon assets are required beyond the standard <code>.ico</code> file:</p>
+        <ul>
+          <li><strong>Square 44×44 Logo:</strong> Used in the Start menu's All Apps list. Provide at scales 100%, 125%, 150%, 200%, and 400% (44, 55, 66, 88, 176 pixels).</li>
+          <li><strong>Square 150×150 Logo:</strong> Medium tile icon. Same scaling variants.</li>
+          <li><strong>Wide 310×150 Logo:</strong> Wide tile format for Start menu pinned tiles.</li>
+          <li><strong>Square 310×310 Logo:</strong> Large tile format.</li>
+          <li><strong>Store Logo (50×50):</strong> Displayed in the Microsoft Store app listing.</li>
+          <li><strong>Badge Logo (24×24):</strong> Used for notification badges on the taskbar.</li>
+          <li><strong>Splash Screen (620×300):</strong> Displayed during app launch.</li>
+        </ul>
+        <p>All MSIX visual assets must be supplied as individual PNG files with transparent backgrounds (unless the tile has a custom background color specified in the app manifest).</p>
+
+        <h2>8. Cross-Platform Desktop Frameworks</h2>
+        <p>If you're building with Electron, Tauri, or .NET MAUI, each framework handles Windows icons differently:</p>
+        <ul>
+          <li><strong>Electron:</strong> Accepts a multi-resolution <code>.ico</code> file specified in <code>electron-builder.yml</code> or <code>forge.config.js</code>. The builder automatically embeds the ICO into the Windows executable resource table.</li>
+          <li><strong>Tauri:</strong> Requires a 256×256 PNG in <code>src-tauri/icons/</code> and uses it to generate the ICO at build time. You can also provide a pre-built <code>icon.ico</code> for maximum control.</li>
+          <li><strong>.NET MAUI / WinUI 3:</strong> Uses the standard MSIX visual asset system. Provide scaled PNG files in the <code>Assets</code> folder referenced by <code>Package.appxmanifest</code>.</li>
+        </ul>
+
+        <div class="callout">
+          <h4>Windows Icon Checklist</h4>
+          <p>
+            ✓ Multi-resolution .ico containing 16, 24, 32, 48, 64, 128, 256px layers<br>
+            ✓ All layers use 32-bit RGBA PNG compression<br>
+            ✓ 256×256 layer included for high-DPI and extra-large icon views<br>
+            ✓ Tested at 100%, 125%, 150%, and 200% display scaling<br>
+            ✓ Clean silhouette visible at 16px for system tray<br>
+            ✓ Fluent Design-aligned gradients and rounded geometry<br>
+            ✓ MSIX visual assets provided if targeting Microsoft Store
+          </p>
+        </div>
+      </article>
+
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; 2026 Pilach. Developed by Rosdeb Koch.</p>
+      <div class="site-footer-links">
+        <a href="/">Home</a>
+        <a href="/tools">Image Tools</a>
+        <a href="/blog">Blog</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+        <a href="/how-it-works">How It Works</a>
+        <a href="/faq">FAQ</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/terms-of-service">Terms</a>
+        <a href="/sitemap.xml">Sitemap</a>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

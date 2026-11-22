@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PWA Icons &amp; Web App Manifest: Maskable Icons &amp; Sizing Guide – App Icon Studio</title>
+  <meta name="description" content="Complete guide to Progressive Web App (PWA) icons. Learn web app manifest configuration, maskable icons, splash screens, and Apple touch icons." />
+  <link rel="canonical" href="https://www.appicon.site/blog/pwa-icon-guide" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <link rel="icon" href="/website/assets/icons/favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="/website/assets/icons/apple-touch-icon.png" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="App Icon Studio" />
+  <meta property="og:url" content="https://www.appicon.site/blog/pwa-icon-guide" />
+  <meta property="og:title" content="PWA Icons &amp; Web App Manifest: Maskable Icons &amp; Sizing Guide" />
+  <meta property="og:description" content="Design flawless Progressive Web App icons for Android, iOS, ChromeOS, and Desktop web app manifests." />
+  <meta property="og:image" content="https://www.appicon.site/website/assets/icons/screenshot1.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="PWA Icons &amp; Web App Manifest: Maskable Icons &amp; Sizing Guide" />
+  <meta name="twitter:description" content="Master web app manifest icons, maskable safe zones, and Apple touch icon integration." />
+  <meta name="twitter:image" content="https://www.appicon.site/website/assets/icons/screenshot1.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "PWA Icons & Web App Manifest: Maskable Icons & Sizing Guide",
+    "description": "Complete guide to Progressive Web App (PWA) icons. Learn web app manifest configuration, maskable icons, splash screens, and Apple touch icons.",
+    "image": "https://www.appicon.site/website/assets/icons/screenshot1.png",
+    "datePublished": "2026-09-28",
+    "dateModified": "2026-11-12",
+    "author": { "@type": "Person", "name": "Rosdeb Koch" },
+    "publisher": {
+      "@type": "Organization",
+      "name": "App Icon Studio",
+      "logo": { "@type": "ImageObject", "url": "https://www.appicon.site/website/assets/icons/favicon-512x512.png" }
+    },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://www.appicon.site/blog/pwa-icon-guide" }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.cdnfonts.com" />
+  <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.cdnfonts.com/css/sf-pro-display" /></noscript>
+  <link rel="stylesheet" href="/website/styles.css" />
+  <style>
+    .article-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+    .article-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: #6b7280;
+      text-decoration: none;
+      margin-bottom: 32px;
+    }
+    .article-back:hover { color: #6c8ff5; }
+    .article-tag {
+      display: inline-block;
+      background: #f0f4ff;
+      color: #5a78e8;
+      border-radius: 999px;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      margin-bottom: 16px;
+    }
+    .article-wrap h1 {
+      font-size: 36px;
+      font-weight: 600;
+      color: #1a2130;
+      line-height: 1.25;
+      letter-spacing: -.8px;
+      margin-bottom: 16px;
+    }
+    .article-meta {
+      font-size: 13px;
+      color: #9ca3af;
+      margin-bottom: 36px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #e8ecf4;
+    }
+    .article-wrap h2 {
+      font-size: 24px;
+      font-weight: 600;
+      color: #1a2130;
+      margin: 40px 0 16px;
+      letter-spacing: -.4px;
+    }
+    .article-wrap h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1a2130;
+      margin: 28px 0 12px;
+    }
+    .article-wrap p {
+      font-size: 16px;
+      color: #374151;
+      line-height: 1.75;
+      margin-bottom: 20px;
+    }
+    .article-wrap ul, .article-wrap ol {
+      margin: 0 0 24px 20px;
+      color: #374151;
+      line-height: 1.75;
+    }
+    .article-wrap li { margin-bottom: 8px; }
+    pre {
+      background: #1e293b;
+      color: #f8fafc;
+      padding: 18px 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 13px;
+      line-height: 1.6;
+      margin: 24px 0;
+    }
+    .callout {
+      background: #f8fafc;
+      border-left: 4px solid #10b981;
+      padding: 20px;
+      border-radius: 0 8px 8px 0;
+      margin: 28px 0;
+    }
+    .callout h4 { margin: 0 0 6px; color: #059669; }
+    .callout p { margin: 0; font-size: 15px; color: #374151; }
+    .article-img {
+      width: 100%;
+      max-width: 100%;
+      border-radius: 12px;
+      margin: 24px 0;
+      display: block;
+    }
+    .article-img-caption {
+      text-align: center;
+      font-size: 13px;
+      color: #9ca3af;
+      margin: -16px 0 24px;
+      font-style: italic;
+    }
+    .prototype-block {
+      background: #f8fafc;
+      border: 1px solid #e8ecf4;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 28px 0;
+      text-align: center;
+    }
+    .prototype-block img {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+    }
+    .prototype-block p {
+      font-size: 13px;
+      color: #6b7280;
+      margin: 12px 0 0;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body class="theme-public">
+  <div class="site-shell">
+    <header class="workspace-header">
+      <a class="brand-lockup" href="/">
+        <img class="brand-mark brand-mark-img" src="/website/assets/icons/Gemini_Generated_Image_wc0y3fwc0y3fwc0y-removebg-preview.png" alt="App Icon Studio" width="52" height="52" />
+        <strong>App Icon Studio</strong>
+      </a>
+      <nav class="topbar-links" aria-label="Primary navigation">
+        <a href="/">Generator</a>
+        <a href="/tools">Image Tools</a>
+        <a href="/blog">Blog</a>
+        <a href="/contact">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <article class="article-wrap">
+        <a class="article-back" href="/blog">&larr; Back to all guides</a>
+        <span class="article-tag">PWA &amp; Web Standards</span>
+        <h1>Progressive Web App (PWA) Icon Guide: Manifest, Maskable Icons &amp; Best Sizes</h1>
+        <div class="article-meta">
+          Published September 28, 2026 &middot; By Rosdeb Koch &middot; 12 min read
+        </div>
+
+        <img src="/website/assets/blog/mobile-app-design.jpg" alt="Progressive Web App on mobile devices" class="article-img" loading="lazy" />
+
+        <p>
+          Progressive Web Apps (PWAs) bridge the gap between traditional websites and native mobile applications.
+          When a user taps "Install" or "Add to Home Screen" in Google Chrome, Safari, Edge, or Firefox, the browser relies on your
+          <code>manifest.json</code> (or <code>site.webmanifest</code>) to construct native home screen launchers, splash screens, and app switcher entries.
+        </p>
+        <p>
+          Configuring your PWA icon array improperly can cause jarring letterboxing, blurry splash screens, or automatic failure of Lighthouse PWA installation audits. In this guide, we explore the required icon sizes, explain how <strong>maskable icons</strong> prevent unsightly white backgrounds on Android, and show you how to write clean manifest entries.
+        </p>
+
+        <h2>1. The Two Core Sizes: 192×192px and 512×512px</h2>
+        <p>
+          At minimum, every installable Progressive Web App must supply two square PNG assets:
+        </p>
+        <ul>
+          <li><strong>192×192 px:</strong> Displayed on mobile home screens (Android, iOS Home Screen shortcuts, ChromeOS app drawer).</li>
+          <li><strong>512×512 px:</strong> Utilized by the browser to generate the automatic splash screen during launch, as well as the app installation prompt banner.</li>
+        </ul>
+
+        <h2>2. Understanding Maskable Icons (purpose: "maskable")</h2>
+        <p>
+          On Android devices with adaptive icons, if you submit a transparent PNG with <code>"purpose": "any"</code>, Android cannot guess what shape to apply. To prevent ugly clipping, Android places your icon inside a tiny white circular badge.
+        </p>
+        <p>
+          To deliver a full-bleed, edge-to-edge native appearance, Google created the <strong>Maskable Icon standard</strong>.
+          A maskable icon is an edge-to-edge graphic with a background color where the central logo is kept strictly within the <strong>minimum safe zone: an inner circle with a radius equal to 40% of the canvas size</strong> (or 80% diameter centered).
+        </p>
+
+        <div class="callout">
+          <h4>The Maskable Safe Zone Formula</h4>
+          <p>
+            For a 512×512px maskable icon, keep all critical logo artwork within a 410×410px centered circle. The outer 51px margin on all sides will be trimmed depending on whether the user's phone uses circular, squircle, or rounded square launcher shapes.
+          </p>
+        </div>
+
+        <div class="prototype-block">
+          <img src="/website/assets/blog/prototype-maskable-icon.svg" alt="PWA maskable icon safe zone showing how different launcher shapes clip the icon" />
+          <p>Maskable icon safe zone — keep your logo within the 80% circle for all launcher shapes</p>
+        </div>
+
+        <h2>3. Production-Ready Web App Manifest Template</h2>
+        <p>
+          Here is the recommended <code>site.webmanifest</code> configuration combining both standard and maskable icons:
+        </p>
+
+        <pre><code>{
+  "name": "My Progressive Web App",
+  "short_name": "MyPWA",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#5a78e8",
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-192x192-maskable.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512x512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}</code></pre>
+
+        <h2>4. Don't Forget Safari iOS: Apple Touch Icon</h2>
+        <p>
+          iOS Safari does not read the Web App Manifest for its home screen bookmark icon. Instead, you must specify the Apple touch icon tag inside your HTML <code>&lt;head&gt;</code>:
+        </p>
+        <pre><code>&lt;link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" /&gt;</code></pre>
+        <p>
+          The recommended resolution is <strong>180×180 pixels</strong> (or 1024×1024 downscaled). Remember that iOS automatically applies continuous rounded corners, so the source file must be a solid, non-transparent square.
+        </p>
+
+        <h2>5. Complete PWA Icon Size Matrix</h2>
+        <p>While the minimum viable manifest requires only 192px and 512px icons, production-grade PWAs benefit from supplying a comprehensive set of sizes. This prevents the browser from performing lossy runtime scaling and ensures pixel-perfect rendering across every device category:</p>
+
+        <div class="table-container" style="overflow-x:auto;margin:28px 0;">
+          <table style="width:100%;border-collapse:collapse;font-size:14px;background:#fff;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,0.06);">
+            <thead>
+              <tr>
+                <th style="padding:12px 16px;border-bottom:1px solid #edf2f7;background:#f8fafc;font-weight:600;text-align:left;">Size (px)</th>
+                <th style="padding:12px 16px;border-bottom:1px solid #edf2f7;background:#f8fafc;font-weight:600;text-align:left;">Where It's Used</th>
+                <th style="padding:12px 16px;border-bottom:1px solid #edf2f7;background:#f8fafc;font-weight:600;text-align:left;">Required?</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td style="padding:10px 16px;border-bottom:1px solid #edf2f7;">48×48</td><td style="padding:10px 16px;border-bottom:1px solid #edf2f7;">Android notification badge</td><td style="padding:10px 16px;border-bottom:1px solid #edf2f7;">Optional</td></tr>
+              <tr><td style="padding:10px 16px;border-bottom:1px solid #edf2f7;">72×72</td><td style="padding:10px 16px;border-bottom:1px solid #edf2f7;">Low-density Android home screens</td><td style="padding:10px 16px;border-bottom:1px solid #edf2f7;">Optional</td></tr>
+              <tr><td style="padding:10px 16px;border-bottom:1px solid #edf2f7;">96×96</td><td style="padding:10px 16px;border-bottom:1px solid #edf2f7;">Mid-density Android, ChromeOS shelf</td><td style="padding:10px 16px;border-bottom:1px solid #edf2f7;">Optional</td></tr>
+              <tr><td style="padding:10px 16px;border-bottom:1px solid #edf2f7;">128×128</td><td style="padding:10px 16px;border-bottom:1px solid #edf2f7;">ChromeOS app launcher</td><td style="padding:10px 16px;border-bottom:1px solid #edf2f7;">Optional</td></tr>
+              <tr><td style="padding:10px 16px;border-bottom:1px solid #edf2f7;">144×144</td><td style="padding:10px 16px;border-bottom:1px solid #edf2f7;">High-density Android home screens</td><td style="padding:10px 16px;border-bottom:1px solid #edf2f7;">Optional</td></tr>
+              <tr><td style="padding:10px 16px;border-bottom:1px solid #edf2f7;font-weight:600;">192×192</td><td style="padding:10px 16px;border-bottom:1px solid #edf2f7;">Android home screen, install prompt</td><td style="padding:10px 16px;border-bottom:1px solid #edf2f7;color:#059669;font-weight:600;">Required</td></tr>
+              <tr><td style="padding:10px 16px;border-bottom:1px solid #edf2f7;">256×256</td><td style="padding:10px 16px;border-bottom:1px solid #edf2f7;">Windows desktop shortcut (Edge PWA)</td><td style="padding:10px 16px;border-bottom:1px solid #edf2f7;">Recommended</td></tr>
+              <tr><td style="padding:10px 16px;border-bottom:1px solid #edf2f7;">384×384</td><td style="padding:10px 16px;border-bottom:1px solid #edf2f7;">High-DPI desktop shortcut</td><td style="padding:10px 16px;border-bottom:1px solid #edf2f7;">Optional</td></tr>
+              <tr><td style="padding:10px 16px;font-weight:600;">512×512</td><td style="padding:10px 16px;">Splash screen, store listings</td><td style="padding:10px 16px;color:#059669;font-weight:600;">Required</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>6. Designing Effective Maskable Icons: Step-by-Step</h2>
+        <p>Creating a maskable icon that looks professional across all Android launcher shapes requires careful attention to the safe zone. Here's a practical workflow:</p>
+        <ol style="margin:0 0 24px 20px;color:#374151;line-height:1.75;">
+          <li style="margin-bottom:8px;"><strong>Start with a 512×512 canvas</strong> in your design tool (Figma, Sketch, or Adobe Illustrator).</li>
+          <li style="margin-bottom:8px;"><strong>Fill the entire canvas</strong> with your brand's primary background color. No transparency — the entire square must be opaque.</li>
+          <li style="margin-bottom:8px;"><strong>Draw the safe zone circle</strong> — a centered circle with 204px radius (408px diameter) on the 512px canvas. This represents the 80% safe area.</li>
+          <li style="margin-bottom:8px;"><strong>Place your logo or glyph</strong> entirely within this circle. Leave additional internal padding (about 10-15%) for visual breathing room.</li>
+          <li style="margin-bottom:8px;"><strong>Test with shape overlays</strong> — preview your icon under circle, squircle, rounded square, and teardrop masks to verify nothing important gets clipped.</li>
+          <li style="margin-bottom:8px;"><strong>Export as PNG</strong> with no transparency. The file must be exactly 512×512 pixels.</li>
+        </ol>
+
+        <h2>7. Splash Screen Generation from PWA Icons</h2>
+        <p>When a user launches an installed PWA, most browsers generate an automatic splash screen using three manifest properties:</p>
+        <ul>
+          <li><strong><code>name</code></strong> — displayed as the app title on the splash screen.</li>
+          <li><strong><code>background_color</code></strong> — fills the splash screen background.</li>
+          <li><strong><code>icons</code> (512×512)</strong> — the largest icon is centered on the splash screen above the app name.</li>
+        </ul>
+        <p>If your 512px icon has excessive padding, transparent backgrounds, or low contrast against the specified background color, the splash screen will look unfinished and unprofessional. Always test the splash screen appearance by installing your PWA on a real Android device or Chrome DevTools device emulator.</p>
+
+        <div class="prototype-block">
+          <img src="/website/assets/blog/prototype-export-kit.svg" alt="App Icon Studio export kit showing all platform icon sizes" />
+          <p>App Icon Studio export kit — generate all PWA icon sizes for every platform in one click</p>
+        </div>
+
+        <h2>8. Lighthouse PWA Icon Audit Requirements</h2>
+        <p>Google's Lighthouse audit tool (built into Chrome DevTools) checks specific PWA installability criteria. For icons, Lighthouse verifies:</p>
+        <ul>
+          <li>At least one icon of 192×192px or larger exists in the manifest</li>
+          <li>At least one icon of 512×512px or larger exists for the splash screen</li>
+          <li>Icons are accessible (HTTP 200 response) and valid image files</li>
+          <li>At least one maskable icon is provided (for the "maskable icon" audit)</li>
+          <li>The manifest <code>start_url</code> responds with HTTP 200 when offline (service worker cache)</li>
+        </ul>
+        <p>Failing any of these checks will flag your PWA as "not installable" in Lighthouse, which can affect search engine ranking signals and prevent the browser from showing the native install prompt.</p>
+
+        <div class="callout">
+          <h4>Quick PWA Icon Checklist</h4>
+          <p>
+            ✓ 192×192 and 512×512 PNG icons in manifest<br>
+            ✓ Separate maskable versions with <code>"purpose": "maskable"</code><br>
+            ✓ Logo within 80% centered safe zone on maskable icons<br>
+            ✓ 180×180 Apple touch icon in HTML <code>&lt;head&gt;</code><br>
+            ✓ Opaque backgrounds on all icons (no transparency)<br>
+            ✓ <code>background_color</code> matches your icon's background<br>
+            ✓ Tested splash screen on real Android device<br>
+            ✓ All Lighthouse PWA installability audits passing
+          </p>
+        </div>
+      </article>
+
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; 2026 Pilach. Developed by Rosdeb Koch.</p>
+      <div class="site-footer-links">
+        <a href="/">Home</a>
+        <a href="/tools">Image Tools</a>
+        <a href="/blog">Blog</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+        <a href="/how-it-works">How It Works</a>
+        <a href="/faq">FAQ</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/terms-of-service">Terms</a>
+        <a href="/sitemap.xml">Sitemap</a>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

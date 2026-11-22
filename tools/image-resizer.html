@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Image Resizer Online | App Icon Studio</title>
+    <meta name="description" content="Resize by pixels, percentage or popular social image sizes.">
+    <link rel="canonical" href="https://www.appicon.site/tools/image-resizer">
+    <meta name="theme-color" content="#b98d4e">
+    <link rel="icon" href="/website/assets/icons/favicon.ico">
+    <link rel="preconnect" href="https://fonts.cdnfonts.com">
+    <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://fonts.cdnfonts.com/css/sf-pro-display"></noscript>
+    <link rel="stylesheet" href="/website/styles.css">
+    <link rel="stylesheet" href="/website/tools/tools.css">
+    <link rel="stylesheet" href="/website/vendor/cropper.min.css">
+</head>
+
+<body class="theme-public image-tools">
+    <div class="site-shell">
+        <header class="workspace-header"><a class="brand-lockup" href="/"><img width="52" height="52"
+                    src="/website/assets/icons/Gemini_Generated_Image_wc0y3fwc0y3fwc0y-removebg-preview.png" alt="App Icon Studio"><strong>App Icon Studio</strong></a>
+            <nav class="topbar-links" aria-label="Primary navigation">
+                <a href="/">Generator</a>
+                <a href="/tools" aria-current="false">Image Tools</a>
+                <a href="/blog">Blog</a>
+                <a href="/about">About</a>
+                <a href="/contact">Contact</a>
+            </nav>
+        </header>
+        <main><a class="back-link" href="/tools">← All image tools</a>
+            <section class="tools-hero tools-title-card">
+                <h1>Image Resizer Online</h1>
+            </section>
+            <div id="image-workspace" data-mode="resize"><label class="upload-zone" id="drop-zone"><span
+                        class="tool-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none"
+                            stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"
+                            aria-hidden="true">
+                            <path d="M12 16V3m-5 5 5-5 5 5M4 15v5a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-5" />
+                        </svg></span><strong>Drop your images here</strong><span>PNG, JPEG, WebP, BMP, GIF · Single or bulk upload up to 40 MB</span><span class="upload-action">Choose images <span
+                            aria-hidden="true">↗</span></span><input class="visually-hidden" id="upload" type="file"
+                        accept="image/*" multiple></label>
+                <p id="status" role="status" aria-live="polite">Choose an image to begin. Your original file stays
+                    unchanged.</p>
+                <div id="workspace-tabs" class="workspace-tabs" role="tablist" aria-label="Image workspace" hidden>
+                    <button id="edit-tab" type="button" role="tab" aria-controls="edit-panel" aria-selected="true">Edit
+                        image</button><button id="settings-tab" type="button" role="tab" aria-controls="settings-panel"
+                        aria-selected="false">Export settings</button></div>
+                <div id="editor" class="tools-workspace" data-active-tab="edit" hidden>
+                    <section id="edit-panel" class="tool-panel">
+                        <div class="panel-heading">
+                            <h2>Your image</h2>
+                        </div>
+                        <div id="image-queue-bar" class="image-queue-bar" hidden>
+                            <div class="queue-header">
+                                <span class="queue-title" id="queue-title">Uploaded images (0)</span>
+                                <div class="queue-actions">
+                                    <button type="button" id="prev-image-btn" class="queue-btn" title="Previous image" aria-label="Previous image">‹</button>
+                                    <span id="queue-counter" class="queue-counter">1 / 1</span>
+                                    <button type="button" id="next-image-btn" class="queue-btn" title="Next image" aria-label="Next image">›</button>
+                                    <label class="queue-add-btn" title="Add more images">
+                                        + Add
+                                        <input type="file" id="upload-more" accept="image/*" multiple class="visually-hidden">
+                                    </label>
+                                    <button type="button" id="clear-queue-btn" class="queue-btn queue-clear" title="Clear all images">Clear</button>
+                                </div>
+                            </div>
+                            <div class="scope-selector-wrap" id="scope-selector-wrap">
+                                <span class="scope-label">Apply changes:</span>
+                                <div class="scope-toggle" role="radiogroup" aria-label="Editing scope">
+                                    <button type="button" id="scope-group-btn" class="scope-btn active" data-scope="all" aria-pressed="true">👥 All (Group)</button>
+                                    <button type="button" id="scope-single-btn" class="scope-btn" data-scope="single" aria-pressed="false">👤 One by one</button>
+                                </div>
+                                <button type="button" id="apply-to-all-btn" class="apply-to-all-btn" hidden title="Copy current image settings to all images">Apply this to all</button>
+                            </div>
+                            <div id="image-queue-list" class="image-queue-list" role="tablist" aria-label="Uploaded images"></div>
+                        </div>
+                        <p id="original-info"></p>
+                        <div class="image-stage"><img id="source-image" alt="Uploaded image for editing"></div>
+                        <div id="crop-controls" class="control-group">
+                            <h3>Crop &amp; position</h3><label>Aspect ratio<select id="ratio">
+                                    <option value="free">Freeform</option>
+                                    <option value="1">1:1 · Square</option>
+                                    <option value="1.3333333333">4:3 · Landscape</option>
+                                    <option value="1.5">3:2 · Photo</option>
+                                    <option value="1.7777777778">16:9 · Widescreen</option>
+                                    <option value="0.5625">9:16 · Portrait</option>
+                                    <option value="custom">Custom</option>
+                                </select></label>
+                            <div id="custom-ratio" class="field-row" hidden><label>Ratio width<input id="ratio-width"
+                                        type="number" min="1" max="1000" value="4"></label><label>Ratio height<input
+                                        id="ratio-height" type="number" min="1" max="1000" value="3"></label></div>
+                            <div class="toolbar"><button type="button" data-action="zoom-in">Zoom +</button><button
+                                    type="button" data-action="zoom-out">Zoom −</button><button type="button"
+                                    data-action="rotate">Rotate 90°</button><button type="button"
+                                    data-action="flip">Flip image</button><button type="button"
+                                    data-action="reset">Reset edits</button></div>
+                            <details>
+                                <summary>Set exact crop coordinates</summary>
+                                <p>Adjust the selection in original image pixels.</p>
+                                <div class="field-row"><label>X<input id="crop-x" type="number" value="0"
+                                            step="1"></label><label>Y<input id="crop-y" type="number" value="0"
+                                            step="1"></label><label>Width<input id="crop-width" type="number" min="1"
+                                            step="1"></label><label>Height<input id="crop-height" type="number" min="1"
+                                            step="1"></label></div><button id="apply-crop" type="button">Apply
+                                    selection</button>
+                            </details>
+                        </div>
+                    </section>
+                    <aside id="settings-panel" class="tool-panel">
+                        <div class="panel-heading">
+                            <h2>Adjust &amp; export</h2>
+                        </div>
+                        <div id="bulk-settings-hint" class="bulk-settings-hint" hidden>
+                            <span class="bulk-hint-badge" id="bulk-hint-badge">Group mode</span>
+                            <span id="bulk-hint-text">Settings apply to all <span id="bulk-hint-count">0</span> images.</span>
+                        </div>
+                        <div id="resize-controls" class="control-group">
+                            <h3>Image size</h3><label>Size preset<select id="size-preset">
+                                    <option value="">Custom / original size</option>
+                                    <option value="400,400">Profile · 400 × 400</option>
+                                    <option value="1080,1080">Square post · 1080 × 1080</option>
+                                    <option value="1080,1920">Story · 1080 × 1920</option>
+                                    <option value="1280,720">Thumbnail · 1280 × 720</option>
+                                    <option value="1920,1080">Website · 1920 × 1080</option>
+                                </select></label>
+                            <div class="field-row"><label>Width (px)<input id="width" type="number" min="1" max="8192"
+                                        step="1"></label><label>Height (px)<input id="height" type="number" min="1"
+                                        max="8192" step="1"></label></div><label class="check-label"><input id="lock"
+                                    type="checkbox" checked> Maintain aspect ratio</label><label>Resize percentage<input
+                                    id="percentage" type="number" min="1" max="1000" value="100" step="1"></label>
+                        </div>
+                        <div class="control-group export-group">
+                            <h3>File format</h3><label>Format<select id="format">
+                                    <option value="image/png">PNG · Transparent</option>
+                                    <option value="image/jpeg">JPEG · Photos</option>
+                                    <option value="image/webp">WebP · Web images</option>
+                                </select></label>
+                            <div id="quality-control"><label>Quality <output id="quality-value">85%</output><input
+                                        id="quality" type="range" min="1" max="100" value="85"></label>
+                                <p>Higher quality keeps more detail and creates a larger file.</p>
+                            </div><label id="background-control">Background color<input id="background" type="color"
+                                    value="#ffffff"><span>JPEG replaces transparent areas with this
+                                    color.</span></label>
+                        </div>
+                    </aside>
+                </div>
+                <div id="workspace-actions" class="workspace-actions" hidden>
+                    <div class="action-summary"><strong id="action-title">Ready to export</strong><span
+                            id="action-detail">Preview your changes before downloading.</span></div>
+                    <div class="action-buttons"><button id="process" class="tools-primary" type="button">Preview
+                            image</button><a id="quick-download" class="tools-primary" download hidden>Download
+                            Image</a></div>
+                </div>
+                <dialog id="preview-dialog" aria-labelledby="preview-heading">
+                    <div class="preview-heading">
+                        <h2 id="preview-heading">Your image is ready</h2><button id="close-preview" type="button"
+                            aria-label="Close preview and continue editing">✕</button>
+                    </div>
+                    <section id="result" hidden><img id="preview" alt="Processed image preview">
+                        <p id="output-info"></p>
+                        <div id="bulk-results" class="bulk-results" hidden>
+                            <h3>Processed Images</h3>
+                            <div id="bulk-results-list" class="bulk-results-list"></div>
+                        </div>
+                        <div class="preview-actions"><button id="continue-editing" type="button">Continue
+                                editing</button><a id="download" class="tools-primary" download>Download Image</a></div>
+                    </section>
+                </dialog>
+                <p class="tools-note">GIF and animated WebP exports use a single still frame. Metadata is removed on
+                    export. Output is limited to 8192 pixels per side and 24 megapixels. Compression may produce a
+                    larger file; compare the sizes before downloading.</p>
+            </div>
+
+            <div class="tool-guide-wrap">
+                <article class="tool-editorial-card">
+                    <h2>High-Fidelity Online Image Resizing</h2>
+                    <p>
+                        Resizing graphics properly requires preserving sharp line edges, subtle vector geometry, and natural color gradients without introducing stair-step pixelation or blur.
+                        Our client-side resizing engine leverages HTML5 bicubic and bilinear resampling algorithms directly in your browser.
+                    </p>
+                    <p>
+                        Key resizing controls available in our workbench:
+                    </p>
+                    <ul>
+                        <li><strong>Exact Pixel Dimensions:</strong> Set explicit width and height targets (e.g. 1920×1080px for desktop banners, 512×512px for app stores).</li>
+                        <li><strong>Aspect Ratio Lock:</strong> Keep original proportions constrained so images never appear stretched or squashed.</li>
+                        <li><strong>Percentage Downsampling:</strong> Quickly reduce bulky photography by 25%, 50%, or 75% for fast web loading.</li>
+                    </ul>
+                </article>
+
+
+                <article class="tool-editorial-card">
+                    <h2>Image Resizing FAQ</h2>
+                    <div class="tool-faq-grid">
+                        <div class="tool-faq-item">
+                            <h4>Can I enlarge small images without quality loss?</h4>
+                            <p>Raster images (PNG/JPG) have fixed pixels. While our tool can scale up to 8192px, minor softening is expected when scaling beyond native resolution.</p>
+                        </div>
+                        <div class="tool-faq-item">
+                            <h4>Can I resize multiple images at once?</h4>
+                            <p>Yes. You can drag and drop multiple files into the dropzone and cycle through your queue to process and download them individually.</p>
+                        </div>
+                        <div class="tool-faq-item">
+                            <h4>What output formats can I select?</h4>
+                            <p>You can export your resized output to lossless PNG, high-efficiency WebP, or compact JPEG format with adjustable compression.</p>
+                        </div>
+                        <div class="tool-faq-item">
+                            <h4>Are my files stored or logged?</h4>
+                            <p>Never. Every resizing calculation occurs client-side in your browser's private memory sandbox.</p>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </main>
+        <footer class="site-footer">
+            <p>&copy; 2026 Pilach. Developed by Rosdeb Koch.</p>
+            <div class="site-footer-links">
+                <a href="/">Home</a>
+                <a href="/tools">Image Tools</a>
+                <a href="/blog">Blog</a>
+                <a href="/about">About</a>
+                <a href="/contact">Contact</a>
+                <a href="/how-it-works">How It Works</a>
+                <a href="/faq">FAQ</a>
+                <a href="/privacy-policy">Privacy Policy</a>
+                <a href="/terms-of-service">Terms</a>
+                <a href="/sitemap.xml">Sitemap</a>
+            </div>
+        </footer>
+    </div>
+    <script src="/website/vendor/cropper.min.js" defer></script>
+    <script src="/website/vendor/jszip.min.js" defer></script>
+    <script src="/website/tools/tools.js" defer></script>
+</body>
+
+</html>

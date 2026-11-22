@@ -89,30 +89,48 @@ app.get("/ads.txt", (_req, res) => {
   res.sendFile(path.join(projectRootDirectory, "ads.txt"));
 });
 
-app.get([
-  "/blog",
-  "/blog/ios-app-icon-sizes",
-  "/blog/android-adaptive-icons",
-  "/blog/app-icon-design-tips",
-  "/blog/macos-app-icon-guide",
-  "/blog/windows-app-icons",
-  "/blog/pwa-icon-guide",
-  "/blog/favicon-guide",
-  "/blog/app-store-optimization-icons"
-], (req, res) => {
-  const blogFiles = {
-    "/blog": "blog-index.html",
-    "/blog/ios-app-icon-sizes": "blog-ios-icon-sizes.html",
-    "/blog/android-adaptive-icons": "blog-android-icon-guide.html",
-    "/blog/app-icon-design-tips": "blog-app-icon-design-tips.html",
-    "/blog/macos-app-icon-guide": "blog-macos-icon-guide.html",
-    "/blog/windows-app-icons": "blog-windows-app-icons.html",
-    "/blog/pwa-icon-guide": "blog-pwa-icon-guide.html",
-    "/blog/favicon-guide": "blog-favicon-complete-guide.html",
-    "/blog/app-store-optimization-icons": "blog-app-store-optimization-icons.html"
-  };
+const blogFiles = {
+  "/blog": "blog-index.html",
+  "/blog/ios-app-icon-sizes": "blog-ios-icon-sizes.html",
+  "/blog/android-adaptive-icons": "blog-android-icon-guide.html",
+  "/blog/app-icon-design-tips": "blog-app-icon-design-tips.html",
+  "/blog/macos-app-icon-guide": "blog-macos-icon-guide.html",
+  "/blog/windows-app-icons": "blog-windows-app-icons.html",
+  "/blog/pwa-icon-guide": "blog-pwa-icon-guide.html",
+  "/blog/favicon-guide": "blog-favicon-complete-guide.html",
+  "/blog/app-store-optimization-icons": "blog-app-store-optimization-icons.html",
+  "/blog/mastering-aspect-ratios": "blog-mastering-aspect-ratios.html",
+  "/blog/client-side-image-privacy": "blog-client-side-image-privacy.html",
+  "/blog/lossy-vs-lossless-compression": "blog-lossy-vs-lossless-compression.html",
+  "/blog/webp-conversion-guide": "blog-webp-conversion-guide.html",
+  "/blog/retina-display-pixel-density": "blog-retina-display-pixel-density.html",
+  "/blog/rule-of-thirds-image-cropping": "blog-rule-of-thirds-image-cropping.html",
+  "/blog/png-transparency-alpha-channels": "blog-png-transparency-alpha-channels.html",
+  "/blog/batch-image-resizing-ecommerce": "blog-batch-image-resizing-ecommerce.html",
+  "/blog/nextgen-image-formats-webp-avif": "blog-nextgen-image-formats-webp-avif.html",
+  "/blog/stripping-exif-metadata-privacy": "blog-stripping-exif-metadata-privacy.html",
+  "/blog/responsive-image-breakpoints-srcset": "blog-responsive-image-breakpoints-srcset.html",
+  "/blog/color-profiles-srgb-display-p3": "blog-color-profiles-srgb-display-p3.html",
+  "/blog/vector-to-raster-svg-conversion": "blog-vector-to-raster-svg-conversion.html",
+  "/blog/optimizing-hero-banners-web": "blog-optimizing-hero-banners-web.html",
+  "/blog/draggable-image-cropper-ux": "blog-draggable-image-cropper-ux.html",
+  "/blog/background-color-replacement-png-jpg": "blog-background-color-replacement-png-jpg.html",
+  "/blog/mobile-app-image-compression": "blog-mobile-app-image-compression.html",
+  "/blog/social-media-open-graph-images": "blog-social-media-open-graph-images.html",
+  "/blog/image-resampling-algorithms": "blog-image-resampling-algorithms.html",
+  "/blog/all-in-one-image-workflow": "blog-all-in-one-image-workflow.html"
+};
 
+app.get(Object.keys(blogFiles), (req, res) => {
   res.sendFile(path.join(websiteDirectory, blogFiles[req.path] || "blog-index.html"));
+});
+
+app.get("/blog/:slug", (req, res, next) => {
+  const target = blogFiles[`/blog/${req.params.slug}`];
+  if (target) {
+    return res.sendFile(path.join(websiteDirectory, target));
+  }
+  return next();
 });
 
 app.get("/android-icon-generator", (_req, res) => {
@@ -133,7 +151,7 @@ app.get("/tools", (_req, res) => {
   res.sendFile(path.join(websiteDirectory, "tools/index.html"));
 });
 for (const tool of imageToolPages) {
-  app.get(`/tools/${tool}`, (_req, res) => {
+  app.get([`/tools/${tool}`, `/tools/${tool}.html`], (_req, res) => {
     res.sendFile(path.join(websiteDirectory, "tools", `${tool}.html`));
   });
 }

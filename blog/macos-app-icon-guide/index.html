@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>macOS App Icon Design Guide: Squircle Grid, Layers &amp; ICNS Export – App Icon Studio</title>
+  <meta name="description" content="A comprehensive guide to designing macOS app icons according to Apple Human Interface Guidelines. Learn squircle grid geometry, depth, materials, and .icns export." />
+  <link rel="canonical" href="https://www.appicon.site/blog/macos-app-icon-guide" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <link rel="icon" href="/website/assets/icons/favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="/website/assets/icons/apple-touch-icon.png" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="App Icon Studio" />
+  <meta property="og:url" content="https://www.appicon.site/blog/macos-app-icon-guide" />
+  <meta property="og:title" content="macOS App Icon Design Guide: Squircle Grid, Layers &amp; ICNS Export" />
+  <meta property="og:description" content="Design pixel-perfect macOS app icons conforming to Apple's uniform squircle grid and export ready-to-use .icns files." />
+  <meta property="og:image" content="https://www.appicon.site/website/assets/icons/screenshot1.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="macOS App Icon Design Guide: Squircle Grid, Layers &amp; ICNS Export" />
+  <meta name="twitter:description" content="Everything you need to know about macOS icon grid geometry, materials, and ICNS packaging." />
+  <meta name="twitter:image" content="https://www.appicon.site/website/assets/icons/screenshot1.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "macOS App Icon Design Guide: Squircle Grid, Layers & ICNS Export",
+    "description": "A comprehensive guide to designing macOS app icons according to Apple Human Interface Guidelines. Learn squircle grid geometry, depth, materials, and .icns export.",
+    "image": "https://www.appicon.site/website/assets/icons/screenshot1.png",
+    "datePublished": "2026-08-10",
+    "dateModified": "2026-11-12",
+    "author": { "@type": "Person", "name": "Rosdeb Koch" },
+    "publisher": {
+      "@type": "Organization",
+      "name": "App Icon Studio",
+      "logo": { "@type": "ImageObject", "url": "https://www.appicon.site/website/assets/icons/favicon-512x512.png" }
+    },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://www.appicon.site/blog/macos-app-icon-guide" }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.cdnfonts.com" />
+  <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.cdnfonts.com/css/sf-pro-display" /></noscript>
+  <link rel="stylesheet" href="/website/styles.css" />
+  <style>
+    .article-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+    .article-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: #6b7280;
+      text-decoration: none;
+      margin-bottom: 32px;
+    }
+    .article-back:hover { color: #6c8ff5; }
+    .article-tag {
+      display: inline-block;
+      background: #f0f4ff;
+      color: #5a78e8;
+      border-radius: 999px;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      margin-bottom: 16px;
+    }
+    .article-wrap h1 {
+      font-size: 36px;
+      font-weight: 600;
+      color: #1a2130;
+      line-height: 1.25;
+      letter-spacing: -.8px;
+      margin-bottom: 16px;
+    }
+    .article-meta {
+      font-size: 13px;
+      color: #9ca3af;
+      margin-bottom: 36px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #e8ecf4;
+    }
+    .article-wrap h2 {
+      font-size: 24px;
+      font-weight: 600;
+      color: #1a2130;
+      margin: 40px 0 16px;
+      letter-spacing: -.4px;
+    }
+    .article-wrap h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1a2130;
+      margin: 28px 0 12px;
+    }
+    .article-wrap p {
+      font-size: 16px;
+      color: #374151;
+      line-height: 1.75;
+      margin-bottom: 20px;
+    }
+    .article-wrap ul, .article-wrap ol {
+      margin: 0 0 24px 20px;
+      color: #374151;
+      line-height: 1.75;
+    }
+    .article-wrap li { margin-bottom: 8px; }
+    .table-container {
+      overflow-x: auto;
+      margin: 28px 0;
+    }
+    .content-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .content-table th, .content-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid #edf2f7;
+      text-align: left;
+    }
+    .content-table th {
+      background: #f8fafc;
+      font-weight: 600;
+      color: #1e293b;
+    }
+    .callout {
+      background: #f8fafc;
+      border-left: 4px solid #6366f1;
+      padding: 20px;
+      border-radius: 0 8px 8px 0;
+      margin: 28px 0;
+    }
+    .callout h4 { margin: 0 0 6px; color: #4338ca; }
+    .callout p { margin: 0; font-size: 15px; color: #374151; }
+    .article-img {
+      width: 100%;
+      max-width: 100%;
+      border-radius: 12px;
+      margin: 24px 0;
+      display: block;
+    }
+    .article-img-caption {
+      text-align: center;
+      font-size: 13px;
+      color: #9ca3af;
+      margin: -16px 0 24px;
+      font-style: italic;
+    }
+    .prototype-block {
+      background: #f8fafc;
+      border: 1px solid #e8ecf4;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 28px 0;
+      text-align: center;
+    }
+    .prototype-block img {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+    }
+    .prototype-block p {
+      font-size: 13px;
+      color: #6b7280;
+      margin: 12px 0 0;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body class="theme-public">
+  <div class="site-shell">
+    <header class="workspace-header">
+      <a class="brand-lockup" href="/">
+        <img class="brand-mark brand-mark-img" src="/website/assets/icons/Gemini_Generated_Image_wc0y3fwc0y3fwc0y-removebg-preview.png" alt="App Icon Studio" width="52" height="52" />
+        <strong>App Icon Studio</strong>
+      </a>
+      <nav class="topbar-links" aria-label="Primary navigation">
+        <a href="/">Generator</a>
+        <a href="/tools">Image Tools</a>
+        <a href="/blog">Blog</a>
+        <a href="/contact">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <article class="article-wrap">
+        <a class="article-back" href="/blog">&larr; Back to all guides</a>
+        <span class="article-tag">macOS Design</span>
+        <h1>macOS App Icon Design Guide: The Squircle Grid, Layers &amp; ICNS Export</h1>
+        <div class="article-meta">
+          Published August 10, 2026 &middot; By Rosdeb Koch &middot; 12 min read
+        </div>
+
+        <img src="/website/assets/blog/macos-desktop-icons.jpg" alt="macOS desktop with app icons in the Dock" class="article-img" loading="lazy" />
+
+        <p>
+          Since the release of macOS Big Sur and continued through macOS Sonoma and macOS Sequoia, Apple established a unified design language across the Mac and iOS. The era of freeform circular, slanted, and skeuomorphic desktop icons was replaced by a standardized, rounded-rectangle silhouette (commonly referred to as the <strong>squircle</strong>).
+        </p>
+        <p>
+          While macOS icons share the same squircle silhouette as iOS icons, designing for Mac requires a distinctly different visual approach: subtle 3D dimensionality, tactile materials, gentle lighting gradients, and floating physical objects that break outside the bounds of the tile. In this guide, we break down Apple's macOS Human Interface Guidelines, explain the icon grid, and show you how to generate macOS <code>.icns</code> and iconset bundles.
+        </p>
+
+        <h2>1. The macOS Icon Canvas &amp; Squircle Geometry</h2>
+        <p>
+          The master macOS icon canvas is <strong>1024×1024 pixels</strong>. Unlike iOS where the entire canvas is opaque and filled to the outer edges, macOS icons float on the user's desktop Dock. Therefore, the outer area surrounding the squircle tile must remain completely <strong>transparent</strong> to cast a realistic system drop shadow.
+        </p>
+        <ul>
+          <li><strong>Full Canvas Size:</strong> 1024×1024 px.</li>
+          <li><strong>Squircle Tile Size:</strong> 824×824 px (centered on the 1024×1024 canvas).</li>
+          <li><strong>Corner Radius:</strong> 185 px (using a continuous curvature superellipse).</li>
+          <li><strong>Drop Shadow:</strong> The 100px border margin around the squircle gives room for realistic ambient lighting and contact shadows.</li>
+        </ul>
+
+        <div class="callout">
+          <h4>Pro Tip on Elements Breaking the Mask</h4>
+          <p>
+            One of the defining aesthetics of macOS icons is allowing physical tools—such as pens, wrenches, paintbrushes, or magnifying glasses—to subtly overlap the top or bottom edge of the squircle tile up to the full 1024px canvas boundary. This adds personality while preserving uniform Dock alignment.
+          </p>
+        </div>
+
+        <div class="prototype-block">
+          <img src="/website/assets/blog/prototype-safe-zone.svg" alt="macOS icon canvas showing squircle grid, content zones, and safe area with dimensions" />
+          <p>macOS icon grid anatomy — 1024px canvas, 824px squircle tile, content zone, and inner safe area</p>
+        </div>
+
+        <h2>2. Complete macOS Resolution &amp; Iconset Matrix</h2>
+        <p>
+          Xcode compiles macOS app icons into an <code>.icns</code> binary format using an underlying <code>.iconset</code> folder containing standard (@1x) and high-DPI Retina (@2x) PNG files:
+        </p>
+
+        <div class="table-container">
+          <table class="content-table">
+            <thead>
+              <tr>
+                <th>Target Display Size</th>
+                <th>Standard Resolution (@1x)</th>
+                <th>Retina Resolution (@2x)</th>
+                <th>Iconset Filename</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>16×16 pt</td>
+                <td>16×16 px</td>
+                <td>32×32 px</td>
+                <td><code>icon_16x16.png</code> / <code>icon_16x16@2x.png</code></td>
+              </tr>
+              <tr>
+                <td>32×32 pt</td>
+                <td>32×32 px</td>
+                <td>64×64 px</td>
+                <td><code>icon_32x32.png</code> / <code>icon_32x32@2x.png</code></td>
+              </tr>
+              <tr>
+                <td>128×128 pt</td>
+                <td>128×128 px</td>
+                <td>256×256 px</td>
+                <td><code>icon_128x128.png</code> / <code>icon_128x128@2x.png</code></td>
+              </tr>
+              <tr>
+                <td>256×256 pt</td>
+                <td>256×256 px</td>
+                <td>512×512 px</td>
+                <td><code>icon_256x256.png</code> / <code>icon_256x256@2x.png</code></td>
+              </tr>
+              <tr>
+                <td>512×512 pt</td>
+                <td>512×512 px</td>
+                <td>1024×1024 px</td>
+                <td><code>icon_512x512.png</code> / <code>icon_512x512@2x.png</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>3. Lighting, Materiality &amp; Depth</h2>
+        <p>
+          Apple recommends treating your icon background tile as a tangible physical object:
+        </p>
+        <ul>
+          <li><strong>Simulated Light Source:</strong> Light in the macOS environment consistently originates from above (top-down lighting). Apply a subtle top-to-bottom vertical gradient, where the top edge is slightly lighter than the base.</li>
+          <li><strong>Inner Edge Highlight:</strong> Add a 1px inner stroke with 15–20% white opacity at the top edge to simulate a polished chamfered bevel.</li>
+          <li><strong>Tactile Materials:</strong> Matte plastic, brushed aluminum, frosted glass, or textured leather work wonderfully when kept understated. Avoid garish reflections that distract from the central glyph.</li>
+        </ul>
+
+        <h2>4. Exporting .ICNS Automatically with App Icon Studio</h2>
+        <p>
+          Historically, macOS developers had to use command-line utilities like <code>iconutil -c icns MyIcon.iconset</code> in macOS Terminal to produce a valid <code>.icns</code> bundle.
+        </p>
+        <p>
+          With <a href="/#editor">App Icon Studio</a>, you can simply upload your master 1024×1024 asset, check the <strong>macOS</strong> export platform, and instantly receive a structured package containing both the organized <code>.iconset</code> PNG files and the compiled binary <code>AppIcon.icns</code> ready for immediate deployment in Swift, Electron, Tauri, or Flutter Mac apps.
+        </p>
+
+        <div class="prototype-block">
+          <img src="/website/assets/blog/prototype-upload-customize.svg" alt="App Icon Studio workflow: Upload, Customize, and Preview your macOS icon" />
+          <p>App Icon Studio workflow — upload your icon, customize shape and colors, preview on devices, and export .icns</p>
+        </div>
+
+        <h2>5. Understanding the macOS Icon Optical Grid</h2>
+        <p>Apple provides an official icon design template that includes a detailed optical grid system. This grid isn't just about the outer squircle boundary — it establishes internal alignment guides that help you position your icon's central glyph, secondary elements, and floating objects with mathematical precision.</p>
+        <p>The optical grid divides the 824×824 squircle tile into concentric regions:</p>
+        <ul>
+          <li><strong>Outer Boundary (824×824):</strong> The full squircle tile area. Background colors, gradients, and texture fills extend to this boundary.</li>
+          <li><strong>Primary Content Zone (600×600 centered):</strong> The recommended area for your main glyph or symbol. Keeping the primary element within this zone ensures it doesn't feel cramped against the tile edges.</li>
+          <li><strong>Inner Safe Area (480×480 centered):</strong> Critical details like small text elements (if absolutely necessary) or fine icon details should stay within this innermost zone to remain legible at smaller display sizes like 32×32 and 16×16 points.</li>
+        </ul>
+
+        <h2>6. macOS vs. iOS Icon Design: Key Differences</h2>
+        <p>While both platforms share the same superellipse (squircle) silhouette since macOS Big Sur, there are fundamental design philosophy differences that every icon designer must understand:</p>
+        <ul>
+          <li><strong>Transparency:</strong> macOS icons float on a transparent canvas with system-rendered drop shadows. iOS icons are always opaque with no transparency allowed.</li>
+          <li><strong>Dimensionality:</strong> macOS icons embrace rich 3D rendering — physical materials, realistic lighting, cast shadows, and floating objects that break the tile boundary. iOS icons favor flat or subtly graduated designs.</li>
+          <li><strong>Breaking the Silhouette:</strong> macOS icons can (and often should) have elements that extend beyond the squircle boundary into the transparent margin. iOS icons are strictly contained within their rounded rectangle.</li>
+          <li><strong>Size Range:</strong> macOS icons must render clearly from 16×16 pixels (menu bar) to 1024×1024 pixels (Finder preview). iOS icons typically range from 60×60 to 1024×1024.</li>
+          <li><strong>Context:</strong> macOS icons appear on varied desktop wallpapers, in dark and light Dock modes, and in Finder sidebars. iOS icons appear on grid-aligned home screens with consistent spacing.</li>
+        </ul>
+
+        <h2>7. Best Practices for macOS Icon Materials</h2>
+        <p>Apple's design language encourages treating icon tiles as physical objects made from real-world materials. Here are the most effective material treatments used by Apple's own first-party apps and top Mac App Store applications:</p>
+
+        <h3>Matte Surfaces</h3>
+        <p>Matte finishes work exceptionally well for utility and productivity apps. Apply a subtle noise texture (1-2% opacity) over your base gradient to simulate a soft, tactile surface. The key is restraint — the texture should be felt rather than seen at normal viewing distances.</p>
+
+        <h3>Brushed Metal</h3>
+        <p>For tools and system utilities, brushed aluminum or steel conveys precision and reliability. Create horizontal directional highlights with 3-5% opacity white streaks, combined with a slight darkening toward the edges to simulate cylindrical curvature.</p>
+
+        <h3>Glass and Transparency</h3>
+        <p>Frosted glass effects (similar to macOS's own vibrancy materials) add sophistication. Layer a semi-transparent white gradient over a colored base, then add a thin bright edge highlight at the top to simulate light refraction through glass.</p>
+
+        <h3>Paper and Fabric</h3>
+        <p>Creative and note-taking apps often use paper or fabric textures. These should be extremely subtle — just enough to suggest the material without creating visual noise that competes with the foreground glyph.</p>
+
+        <h2>8. Common macOS Icon Design Mistakes</h2>
+        <p>Avoid these frequently seen errors when designing macOS app icons:</p>
+        <ul>
+          <li><strong>Flat iOS-style icons on macOS:</strong> Simply reusing your iOS icon on macOS without adding depth, materials, and lighting looks out of place in the Dock alongside Apple's own richly rendered icons.</li>
+          <li><strong>Ignoring small-size rendering:</strong> An icon with intricate detail at 1024px becomes an unrecognizable blob at 16×16. Always test your icon across the full size range and consider simplifying detail at smaller sizes.</li>
+          <li><strong>Missing transparency:</strong> Shipping a macOS icon with an opaque 1024×1024 canvas (instead of transparent margins around the squircle) causes ugly square backgrounds in the Dock and Launchpad.</li>
+          <li><strong>Wrong corner radius:</strong> Using a standard rounded rectangle instead of Apple's continuous-curvature superellipse creates a visible mismatch when your icon sits next to system apps.</li>
+          <li><strong>Overly aggressive element overflow:</strong> While breaking the squircle boundary is encouraged, elements that extend too far into the margin area get clipped at smaller sizes and create alignment issues in the Dock.</li>
+        </ul>
+
+        <div class="callout">
+          <h4>Quick Reference: macOS Icon Checklist</h4>
+          <p>
+            ✓ 1024×1024 canvas with transparent background<br>
+            ✓ 824×824 squircle tile centered on canvas<br>
+            ✓ 185px continuous-curvature corner radius<br>
+            ✓ Top-down lighting with subtle gradient<br>
+            ✓ 1px inner edge highlight at top<br>
+            ✓ Tactile material treatment on tile background<br>
+            ✓ Central glyph within 600×600 content zone<br>
+            ✓ All 10 iconset PNGs (@1x and @2x)<br>
+            ✓ Tested at 16pt, 32pt, 128pt, 256pt, and 512pt
+          </p>
+        </div>
+      </article>
+
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; 2026 Pilach. Developed by Rosdeb Koch.</p>
+      <div class="site-footer-links">
+        <a href="/">Home</a>
+        <a href="/tools">Image Tools</a>
+        <a href="/blog">Blog</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+        <a href="/how-it-works">How It Works</a>
+        <a href="/faq">FAQ</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/terms-of-service">Terms</a>
+        <a href="/sitemap.xml">Sitemap</a>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

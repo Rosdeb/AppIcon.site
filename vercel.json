@@ -9,29 +9,96 @@
   "redirects": [
     {
       "source": "/:path*",
-      "has": [{ "type": "host", "value": "appicon.site" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "appicon.site"
+        }
+      ],
       "destination": "https://www.appicon.site/:path*",
       "permanent": true
     },
-    { "source": "/app-icon-generator-free", "destination": "/app-icon-generator", "permanent": true },
-    { "source": "/website/blog-index.html", "destination": "/blog", "permanent": true },
-    { "source": "/website/blog-ios-icon-sizes.html", "destination": "/blog/ios-app-icon-sizes", "permanent": true },
-    { "source": "/website/blog-android-icon-guide.html", "destination": "/blog/android-adaptive-icons", "permanent": true },
-    { "source": "/website/blog-app-icon-design-tips.html", "destination": "/blog/app-icon-design-tips", "permanent": true },
-    { "source": "/about.html", "destination": "/about", "permanent": true },
-    { "source": "/contact.html", "destination": "/contact", "permanent": true },
-    { "source": "/faq.html", "destination": "/faq", "permanent": true },
-    { "source": "/how-it-works.html", "destination": "/how-it-works", "permanent": true },
-    { "source": "/privacy-policy.html", "destination": "/privacy-policy", "permanent": true },
-    { "source": "/terms-of-service.html", "destination": "/terms-of-service", "permanent": true }
+    {
+      "source": "/app-icon-generator-free",
+      "destination": "/app-icon-generator",
+      "permanent": true
+    },
+    {
+      "source": "/website/blog-index.html",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/website/blog-ios-icon-sizes.html",
+      "destination": "/blog/ios-app-icon-sizes",
+      "permanent": true
+    },
+    {
+      "source": "/website/blog-android-icon-guide.html",
+      "destination": "/blog/android-adaptive-icons",
+      "permanent": true
+    },
+    {
+      "source": "/website/blog-app-icon-design-tips.html",
+      "destination": "/blog/app-icon-design-tips",
+      "permanent": true
+    },
+    {
+      "source": "/about.html",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/contact.html",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/faq.html",
+      "destination": "/faq",
+      "permanent": true
+    },
+    {
+      "source": "/how-it-works.html",
+      "destination": "/how-it-works",
+      "permanent": true
+    },
+    {
+      "source": "/privacy-policy.html",
+      "destination": "/privacy-policy",
+      "permanent": true
+    },
+    {
+      "source": "/terms-of-service.html",
+      "destination": "/terms-of-service",
+      "permanent": true
+    }
   ],
   "rewrites": [
-    {"source": "/tools", "destination": "/website/tools/index.html"},
-    {"source": "/tools/image-cropper", "destination": "/website/tools/image-cropper.html"},
-    {"source": "/tools/image-resizer", "destination": "/website/tools/image-resizer.html"},
-    {"source": "/tools/image-converter", "destination": "/website/tools/image-converter.html"},
-    {"source": "/tools/image-compressor", "destination": "/website/tools/image-compressor.html"},
-    {"source": "/tools/crop-resize-convert", "destination": "/website/tools/crop-resize-convert.html"},
+    {
+      "source": "/tools",
+      "destination": "/website/tools/index.html"
+    },
+    {
+      "source": "/tools/image-cropper",
+      "destination": "/website/tools/image-cropper.html"
+    },
+    {
+      "source": "/tools/image-resizer",
+      "destination": "/website/tools/image-resizer.html"
+    },
+    {
+      "source": "/tools/image-converter",
+      "destination": "/website/tools/image-converter.html"
+    },
+    {
+      "source": "/tools/image-compressor",
+      "destination": "/website/tools/image-compressor.html"
+    },
+    {
+      "source": "/tools/crop-resize-convert",
+      "destination": "/website/tools/crop-resize-convert.html"
+    },
     {
       "source": "/api/:path*",
       "destination": "/api/[...route]"
@@ -75,6 +142,86 @@
     {
       "source": "/blog/app-icon-design-tips",
       "destination": "/website/blog-app-icon-design-tips.html"
+    },
+    {
+      "source": "/blog/mastering-aspect-ratios",
+      "destination": "/website/blog-mastering-aspect-ratios.html"
+    },
+    {
+      "source": "/blog/client-side-image-privacy",
+      "destination": "/website/blog-client-side-image-privacy.html"
+    },
+    {
+      "source": "/blog/lossy-vs-lossless-compression",
+      "destination": "/website/blog-lossy-vs-lossless-compression.html"
+    },
+    {
+      "source": "/blog/webp-conversion-guide",
+      "destination": "/website/blog-webp-conversion-guide.html"
+    },
+    {
+      "source": "/blog/retina-display-pixel-density",
+      "destination": "/website/blog-retina-display-pixel-density.html"
+    },
+    {
+      "source": "/blog/rule-of-thirds-image-cropping",
+      "destination": "/website/blog-rule-of-thirds-image-cropping.html"
+    },
+    {
+      "source": "/blog/png-transparency-alpha-channels",
+      "destination": "/website/blog-png-transparency-alpha-channels.html"
+    },
+    {
+      "source": "/blog/batch-image-resizing-ecommerce",
+      "destination": "/website/blog-batch-image-resizing-ecommerce.html"
+    },
+    {
+      "source": "/blog/nextgen-image-formats-webp-avif",
+      "destination": "/website/blog-nextgen-image-formats-webp-avif.html"
+    },
+    {
+      "source": "/blog/stripping-exif-metadata-privacy",
+      "destination": "/website/blog-stripping-exif-metadata-privacy.html"
+    },
+    {
+      "source": "/blog/responsive-image-breakpoints-srcset",
+      "destination": "/website/blog-responsive-image-breakpoints-srcset.html"
+    },
+    {
+      "source": "/blog/color-profiles-srgb-display-p3",
+      "destination": "/website/blog-color-profiles-srgb-display-p3.html"
+    },
+    {
+      "source": "/blog/vector-to-raster-svg-conversion",
+      "destination": "/website/blog-vector-to-raster-svg-conversion.html"
+    },
+    {
+      "source": "/blog/optimizing-hero-banners-web",
+      "destination": "/website/blog-optimizing-hero-banners-web.html"
+    },
+    {
+      "source": "/blog/draggable-image-cropper-ux",
+      "destination": "/website/blog-draggable-image-cropper-ux.html"
+    },
+    {
+      "source": "/blog/background-color-replacement-png-jpg",
+      "destination": "/website/blog-background-color-replacement-png-jpg.html"
+    },
+    {
+      "source": "/blog/mobile-app-image-compression",
+      "destination": "/website/blog-mobile-app-image-compression.html"
+    },
+    {
+      "source": "/blog/social-media-open-graph-images",
+      "destination": "/website/blog-social-media-open-graph-images.html"
+    },
+    {
+      "source": "/blog/image-resampling-algorithms",
+      "destination": "/website/blog-image-resampling-algorithms.html"
+    },
+    {
+      "source": "/blog/all-in-one-image-workflow",
+      "destination": "/website/blog-all-in-one-image-workflow.html"
     },
     {
       "source": "/about",
