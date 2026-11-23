@@ -89,6 +89,11 @@ app.get("/ads.txt", (_req, res) => {
   res.sendFile(path.join(projectRootDirectory, "ads.txt"));
 });
 
+app.get(["/feed.xml", "/rss.xml"], (_req, res) => {
+  res.type("application/xml");
+  res.sendFile(path.join(projectRootDirectory, "feed.xml"));
+});
+
 app.get(["/site.webmanifest", "/manifest.json"], (_req, res) => {
   res.sendFile(path.join(websiteDirectory, "site.webmanifest"));
 });

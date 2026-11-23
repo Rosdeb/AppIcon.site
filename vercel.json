@@ -264,6 +264,14 @@
       "destination": "/website/site.webmanifest"
     },
     {
+      "source": "/feed.xml",
+      "destination": "/feed.xml"
+    },
+    {
+      "source": "/rss.xml",
+      "destination": "/feed.xml"
+    },
+    {
       "source": "/",
       "destination": "/website/index.html"
     }

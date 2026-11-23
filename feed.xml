@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>App Icon Studio — App Icon &amp; Image Design Guides</title>
+    <link>https://www.appicon.site/blog</link>
+    <description>Technical guides, sizing matrices, and design strategies for shipping high-converting icons and images across iOS, Android, macOS, and Web.</description>
+    <language>en-us</language>
+    <atom:link href="https://www.appicon.site/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>App Store Optimization (ASO): How Icon Design Impacts Conversion</title>
+      <link>https://www.appicon.site/blog/app-store-optimization-icons</link>
+      <guid isPermaLink="true">https://www.appicon.site/blog/app-store-optimization-icons</guid>
+      <description>Learn how strategic icon design, competitive color benchmarking, and native A/B testing can improve store tap-through rates.</description>
+      <pubDate>Wed, 04 Nov 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>The Modern Favicon Guide: SVG, Apple Touch Icons &amp; ICO Standards</title>
+      <link>https://www.appicon.site/blog/favicon-guide</link>
+      <guid isPermaLink="true">https://www.appicon.site/blog/favicon-guide</guid>
+      <description>Streamline your favicon implementation using scalable SVGs with automatic dark mode support and minimal HTML tags.</description>
+      <pubDate>Sun, 18 Oct 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Progressive Web App (PWA) Icons: Manifest, Maskable Icons &amp; Sizes</title>
+      <link>https://www.appicon.site/blog/pwa-icon-guide</link>
+      <guid isPermaLink="true">https://www.appicon.site/blog/pwa-icon-guide</guid>
+      <description>How to configure web app manifests, design maskable icons with safe zones, and prevent white border clipping on mobile.</description>
+      <pubDate>Mon, 28 Sep 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Windows 11 App Icon &amp; Tile Specifications: High-DPI .ICO Generation</title>
+      <link>https://www.appicon.site/blog/windows-app-icons</link>
+      <guid isPermaLink="true">https://www.appicon.site/blog/windows-app-icons</guid>
+      <description>Build crystal-clear desktop icons following Microsoft Fluent Design principles with high-DPI scaling from 16px to 256px.</description>
+      <pubDate>Sat, 05 Sep 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>macOS App Icon Design Guide: The Squircle Grid, Layers &amp; ICNS Export</title>
+      <link>https://www.appicon.site/blog/macos-app-icon-guide</link>
+      <guid isPermaLink="true">https://www.appicon.site/blog/macos-app-icon-guide</guid>
+      <description>Master Apple's uniform squircle grid, lighting bevels, and iconset folder structure to export production .icns packages.</description>
+      <pubDate>Mon, 10 Aug 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Complete Guide to iOS App Icon Sizes in 2026</title>
+      <link>https://www.appicon.site/blog/ios-app-icon-sizes</link>
+      <guid isPermaLink="true">https://www.appicon.site/blog/ios-app-icon-sizes</guid>
+      <description>Every size Apple requires, from the home screen to App Store listings—with a downloadable size reference table.</description>
+      <pubDate>Mon, 15 Jun 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Android Adaptive Icons: A Practical Design Guide</title>
+      <link>https://www.appicon.site/blog/android-adaptive-icons</link>
+      <guid isPermaLink="true">https://www.appicon.site/blog/android-adaptive-icons</guid>
+      <description>How to design icons that look great across all Android launchers, dynamic shapes, and density mipmaps.</description>
+      <pubDate>Mon, 15 Jun 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>5 App Icon Design Tips That Make Your App Stand Out</title>
+      <link>https://www.appicon.site/blog/app-icon-design-tips</link>
+      <guid isPermaLink="true">https://www.appicon.site/blog/app-icon-design-tips</guid>
+      <description>Simple principles used by top apps on the App Store to create icons that are memorable and tap-worthy.</description>
+      <pubDate>Mon, 15 Jun 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Mastering Aspect Ratios: From 1:1 Squares to 16:9 Cinematic Formats</title>
+      <link>https://www.appicon.site/blog/mastering-aspect-ratios</link>
+      <guid isPermaLink="true">https://www.appicon.site/blog/mastering-aspect-ratios</guid>
+      <description>Learn how aspect ratios shape viewer perception, prevent unwanted device cropping, and maintain balanced framing.</description>
+      <pubDate>Sun, 22 Nov 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Client-Side In-Browser Image Processing: Complete Privacy &amp; Zero Cloud Uploads</title>
+      <link>https://www.appicon.site/blog/client-side-image-privacy</link>
+      <guid isPermaLink="true">https://www.appicon.site/blog/client-side-image-privacy</guid>
+      <description>Discover why modern client-side Canvas and WebAssembly architecture delivers instant zero-latency processing.</description>
+      <pubDate>Sun, 22 Nov 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Lossy vs Lossless Image Compression: Finding the Visual Sweet Spot</title>
+      <link>https://www.appicon.site/blog/lossy-vs-lossless-compression</link>
+      <guid isPermaLink="true">https://www.appicon.site/blog/lossy-vs-lossless-compression</guid>
+      <description>An engineer's breakdown of lossy vs lossless compression algorithms, perceptual quantization, and SSIM metrics.</description>
+      <pubDate>Sun, 22 Nov 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>The Ultimate WebP Conversion Guide: Slashing Load Times by 35%</title>
+      <link>https://www.appicon.site/blog/webp-conversion-guide</link>
+      <guid isPermaLink="true">https://www.appicon.site/blog/webp-conversion-guide</guid>
+      <description>How converting raster graphics to next-gen WebP cuts payload by 35% without visual degradation.</description>
+      <pubDate>Sun, 22 Nov 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Pixel Density &amp; High-DPI Displays: Preparing Crisp 1x, 2x, and 3x Graphics</title>
+      <link>https://www.appicon.site/blog/retina-display-pixel-density</link>
+      <guid isPermaLink="true">https://www.appicon.site/blog/retina-display-pixel-density</guid>
+      <description>Calculate DPR scaling, prevent downsampling artifacts, and export pixel-aligned assets for mobile screens.</description>
+      <pubDate>Sun, 22 Nov 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Smart Composition: The Golden Ratio &amp; Rule of Thirds in Image Cropping</title>
+      <link>https://www.appicon.site/blog/rule-of-thirds-image-cropping</link>
+      <guid isPermaLink="true">https://www.appicon.site/blog/rule-of-thirds-image-cropping</guid>
+      <description>Elevate visual balance by aligning focal points along intersecting thirds and golden spirals.</description>
+      <pubDate>Sun, 22 Nov 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>PNG Transparency Mastery: Alpha Channels, Matting &amp; Halo Elimination</title>
+      <link>https://www.appicon.site/blog/png-transparency-alpha-channels</link>
+      <guid isPermaLink="true">https://www.appicon.site/blog/png-transparency-alpha-channels</guid>
+      <description>Clean up dirty halos, premultiplied alpha fringing, and background blending artifacts.</description>
+      <pubDate>Sun, 22 Nov 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Batch Image Resizing for E-Commerce: Consistent Product Catalogs at Scale</title>
+      <link>https://www.appicon.site/blog/batch-image-resizing-ecommerce</link>
+      <guid isPermaLink="true">https://www.appicon.site/blog/batch-image-resizing-ecommerce</guid>
+      <description>Streamline bulk image operations, standardize product square ratios, and automate processing.</description>
+      <pubDate>Sun, 22 Nov 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Next-Gen Image Formats Compared: WebP vs AVIF vs JPEG XL</title>
+      <link>https://www.appicon.site/blog/nextgen-image-formats-webp-avif</link>
+      <guid isPermaLink="true">https://www.appicon.site/blog/nextgen-image-formats-webp-avif</guid>
+      <description>Benchmark compression efficiency, decoding speed, and browser support matrices for modern codecs.</description>
+      <pubDate>Sun, 22 Nov 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Eliminating Image Bloat: Stripping EXIF Metadata &amp; Geolocation for Web Privacy</title>
+      <link>https://www.appicon.site/blog/stripping-exif-metadata-privacy</link>
+      <guid isPermaLink="true">https://www.appicon.site/blog/stripping-exif-metadata-privacy</guid>
+      <description>Sanitize hidden camera EXIF tags, GPS coordinates, and embedded thumbnail bloat to protect privacy.</description>
+      <pubDate>Sun, 22 Nov 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Responsive Image Breakpoints: Mastering HTML srcset &amp; Picture Tags</title>
+      <link>https://www.appicon.site/blog/responsive-image-breakpoints-srcset</link>
+      <guid isPermaLink="true">https://www.appicon.site/blog/responsive-image-breakpoints-srcset</guid>
+      <description>Serve optimal image resolutions to every screen size using modern HTML5 picture elements and srcset.</description>
+      <pubDate>Sun, 22 Nov 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Color Profiles Demystified: sRGB vs Display P3 for Web &amp; Mobile Graphics</title>
+      <link>https://www.appicon.site/blog/color-profiles-srgb-display-p3</link>
+      <guid isPermaLink="true">https://www.appicon.site/blog/color-profiles-srgb-display-p3</guid>
+      <description>Understand color gamuts, profile embedding, and rendering differences across Apple P3 and standard sRGB screens.</description>
+      <pubDate>Sun, 22 Nov 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Mastering Vector to Raster: Converting SVG to Crisp PNG &amp; WebP</title>
+      <link>https://www.appicon.site/blog/vector-to-raster-svg-conversion</link>
+      <guid isPermaLink="true">https://www.appicon.site/blog/vector-to-raster-svg-conversion</guid>
+      <description>Solve blurry stroke rendering and anti-aliasing issues when rasterizing vector SVGs into fixed pixel grids.</description>
+      <pubDate>Sun, 22 Nov 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Optimizing Web Hero Banners: Ultra-Wide 4K Graphics Under 100KB</title>
+      <link>https://www.appicon.site/blog/optimizing-hero-banners-web</link>
+      <guid isPermaLink="true">https://www.appicon.site/blog/optimizing-hero-banners-web</guid>
+      <description>Compress wide hero banners for lightning-fast Largest Contentful Paint (LCP) Core Web Vitals.</description>
+      <pubDate>Sun, 22 Nov 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Draggable Cropping UX: Building Smooth Touch &amp; Zoom Controls</title>
+      <link>https://www.appicon.site/blog/draggable-image-cropper-ux</link>
+      <guid isPermaLink="true">https://www.appicon.site/blog/draggable-image-cropper-ux</guid>
+      <description>Engineered UX patterns for fluid touch cropping, multi-touch pinch zooming, and drag physics.</description>
+      <pubDate>Sun, 22 Nov 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Background Color Replacement: Converting Transparent PNGs to Solid JPGs</title>
+      <link>https://www.appicon.site/blog/background-color-replacement-png-jpg</link>
+      <guid isPermaLink="true">https://www.appicon.site/blog/background-color-replacement-png-jpg</guid>
+      <description>Prevent black alpha background glitching by cleanly matting transparent PNGs to solid hex colors.</description>
+      <pubDate>Sun, 22 Nov 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Asset Optimization for Mobile Apps: Shrinking iOS &amp; Android Bundles</title>
+      <link>https://www.appicon.site/blog/mobile-app-image-compression</link>
+      <guid isPermaLink="true">https://www.appicon.site/blog/mobile-app-image-compression</guid>
+      <description>Slash iOS IPA and Android AAB download sizes with precision quantization, crunching, and WebP.</description>
+      <pubDate>Sun, 22 Nov 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Designing Social Share Cards: Open Graph &amp; Twitter Card Specifications</title>
+      <link>https://www.appicon.site/blog/social-media-open-graph-images</link>
+      <guid isPermaLink="true">https://www.appicon.site/blog/social-media-open-graph-images</guid>
+      <description>Craft high-converting 1200x630 Open Graph banners and Twitter cards that render cleanly across feeds.</description>
+      <pubDate>Sun, 22 Nov 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Resampling Algorithms Explained: Nearest Neighbor vs Bilinear vs Bicubic</title>
+      <link>https://www.appicon.site/blog/image-resampling-algorithms</link>
+      <guid isPermaLink="true">https://www.appicon.site/blog/image-resampling-algorithms</guid>
+      <description>A deep dive into convolution kernels, Lanczos filtering, and downsampling trade-offs for developers.</description>
+      <pubDate>Sun, 22 Nov 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>All-in-One Image Workbench: Unifying Crop, Resize, Convert &amp; Compress</title>
+      <link>https://www.appicon.site/blog/all-in-one-image-workflow</link>
+      <guid isPermaLink="true">https://www.appicon.site/blog/all-in-one-image-workflow</guid>
+      <description>Combine multi-step image operations into a single continuous client-side pipeline without re-encoding loss.</description>
+      <pubDate>Sun, 22 Nov 2026 12:00:00 GMT</pubDate>
+    </item>
+  </channel>
+</rss>

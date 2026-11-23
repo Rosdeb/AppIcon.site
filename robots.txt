@@ -4,3 +4,4 @@ Disallow: /admin
 Disallow: /api/
 
 Sitemap: https://www.appicon.site/sitemap.xml
+Sitemap: https://www.appicon.site/feed.xml
