@@ -256,6 +256,14 @@
       "destination": "/website/app-icon-generator.html"
     },
     {
+      "source": "/site.webmanifest",
+      "destination": "/website/site.webmanifest"
+    },
+    {
+      "source": "/manifest.json",
+      "destination": "/website/site.webmanifest"
+    },
+    {
       "source": "/",
       "destination": "/website/index.html"
     }

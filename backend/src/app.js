@@ -89,6 +89,10 @@ app.get("/ads.txt", (_req, res) => {
   res.sendFile(path.join(projectRootDirectory, "ads.txt"));
 });
 
+app.get(["/site.webmanifest", "/manifest.json"], (_req, res) => {
+  res.sendFile(path.join(websiteDirectory, "site.webmanifest"));
+});
+
 const blogFiles = {
   "/blog": "blog-index.html",
   "/blog/ios-app-icon-sizes": "blog-ios-icon-sizes.html",

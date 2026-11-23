@@ -1,7 +1,7 @@
 {
-  "name": "App Icon Studio — Free App Icon Generator",
-  "short_name": "App Icon Studio",
-  "description": "Free online app icon generator by App Icon Studio. Upload one image and instantly export every required iOS, Android, Windows and macOS app icon size.",
+  "name": "AppIcon Studio (AppIcon) — Free App Icon Generator",
+  "short_name": "AppIcon Studio",
+  "description": "AppIcon Studio / AppIcon: Free online app icon generator for iOS, Android, Windows, and macOS. Upload one master image and instantly export all required app icon sizes.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
