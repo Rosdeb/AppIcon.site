@@ -6,16 +6,47 @@
       "maxDuration": 60
     }
   },
+  "headers": [
+    {
+      "source": "/website/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/website/vendor/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ],
   "redirects": [
     {
-      "source": "/:path*",
+      "source": "/",
       "has": [
         {
           "type": "host",
           "value": "appicon.site"
         }
       ],
-      "destination": "https://www.appicon.site/:path*",
+      "destination": "https://www.appicon.site/",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "appicon.site"
+        }
+      ],
+      "destination": "https://www.appicon.site/$1",
       "permanent": true
     },
     {
